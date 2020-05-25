@@ -1,0 +1,17 @@
+p#notice = notice
+
+p
+  strong Date:
+  = @entry.date
+
+p
+  strong Directive:
+  = @entry.directive
+
+p
+  strong Arguments:
+  = @entry.arguments
+
+= link_to 'Edit', edit_entry_path(@entry)
+|  |  
+= link_to 'Back', entries_path
