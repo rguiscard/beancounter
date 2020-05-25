@@ -15,7 +15,7 @@
 
   div.field
     = form.label :directive
-    = form.text_field :directive
+    = form.select :directive, Entry.directives.keys.to_a, {}
 
   div.field
     = form.label :arguments

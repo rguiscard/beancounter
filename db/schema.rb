@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 2020_05_25_091807) do
 
   create_table "entries", force: :cascade do |t|
     t.datetime "date", null: false
-    t.string "directive", default: "*", null: false
+    t.integer "directive", default: 0, null: false
     t.text "arguments"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
