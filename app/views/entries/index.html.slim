@@ -3,19 +3,10 @@ p#notice = notice
 h1 Entries
 
 table
-  thead
-    tr
-      th Date
-      th Directive
-      th Arguments
-      th colspan="4"
-
   tbody
     - @entries.each do |entry|
       tr
-        td = entry.date
-        td = entry.directive
-        td = entry.arguments
+        td = entry.to_bean
         td = link_to 'Show', entry
         td = link_to 'Edit', edit_entry_path(entry)
         td = link_to 'Destroy', entry, method: :delete, data: { confirm: 'Are you sure?' }

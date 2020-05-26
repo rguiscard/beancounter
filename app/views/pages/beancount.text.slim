@@ -1,0 +1,11 @@
+- Entry.all.each do |entry|
+  = entry.to_bean
+  = "\n"
+  - entry.postings.each do |posting|
+    |   
+    = posting.to_bean
+    = "\n"
+  = "\n"
+- Account.all.each do |account|
+  = account.to_bean
+  = "\n"

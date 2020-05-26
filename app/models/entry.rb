@@ -5,6 +5,7 @@ class Entry < ApplicationRecord
 
   def to_bean
     words = [date.strftime('%Y-%m-%d')]
+    words << self.directive
     words << self.arguments
     words.join(' ')
   end

@@ -2,10 +2,10 @@
 
 one:
   date: 2020-05-25 05:18:07
-  directive: MyString
-  arguments: MyText
+  directive: txn
+  arguments: "Buy Grocery"
 
 two:
   date: 2020-05-25 05:18:07
-  directive: MyString
-  arguments: MyText
+  directive: txn
+  arguments: "Gas"

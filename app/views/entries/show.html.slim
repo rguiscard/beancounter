@@ -1,23 +1,5 @@
 p#notice = notice
-
-p
-  strong Date:
-  = @entry.date
-
-p
-  strong Directive:
-  = @entry.directive
-
-p
-  strong Arguments:
-  = @entry.arguments
-
-= link_to 'Edit', edit_entry_path(@entry)
-|  |  
-= link_to 'Back', entries_path
-
 div
-  p --
   pre
     = @entry.to_bean
     br
@@ -27,3 +9,8 @@ div
       => link_to 'edit', edit_entry_posting_path(@entry, posting)
       => link_to 'destroy', entry_posting_path(@entry, posting), method: :delete, data: { confirm: 'Are you sure?' }
       br
+    | &nbsp;&nbsp;
+    = link_to 'Add Posting', new_entry_posting_path(@entry)
+= link_to 'Edit', edit_entry_path(@entry)
+|  |  
+= link_to 'Back', entries_path

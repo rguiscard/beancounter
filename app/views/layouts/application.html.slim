@@ -10,7 +10,11 @@ html
 
   body
     div
-      => link_to 'Transactions', entries_path
+      => link_to 'Entries', entries_path
       |
       => link_to 'Accounts', accounts_path
+      |
+      => link_to 'Beancount', pages_beancount_path
+      |
+      => link_to 'Import', pages_import_path
     = yield
