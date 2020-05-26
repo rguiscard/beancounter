@@ -1,0 +1,17 @@
+2018-01-01 * "Opening Balance for checking account"
+  Assets:US:BofA:Checking                         3614.47 USD
+  Equity:Opening-Balances                        -3614.47 USD
+
+2018-01-02 balance Assets:US:BofA:Checking        3614.47 USD
+
+2018-01-04 * "BANK FEES" "Monthly bank fee"
+  Assets:US:BofA:Checking                           -4.00 USD
+  Expenses:Financial:Fees                            4.00 USD
+
+2018-01-04 * "RiverBank Properties" "Paying the rent"
+  Assets:US:BofA:Checking                        -2400.00 USD
+  Expenses:Home:Rent                              2400.00 USD
+
+2018-01-08 * "EDISON POWER" ""
+  Assets:US:BofA:Checking                          -65.00 USD
+  Expenses:Home:Electricity                         65.00 USD
