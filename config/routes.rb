@@ -5,8 +5,8 @@ Rails.application.routes.draw do
   resources :accounts
 
   get 'pages/beancount'
-  get 'pages/import'
-  post 'pages/import', controller: :pages, action: :parse
+  get 'pages/input'
+  post 'pages/import'
 
   root "entries#index" 
 end
