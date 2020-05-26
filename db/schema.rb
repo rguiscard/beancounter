@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_26_013416) do
+ActiveRecord::Schema.define(version: 2020_05_26_024744) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,4 +34,18 @@ ActiveRecord::Schema.define(version: 2020_05_26_013416) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "postings", force: :cascade do |t|
+    t.string "flag"
+    t.bigint "account_id", null: false
+    t.text "arguments", null: false
+    t.text "comment"
+    t.bigint "entry_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_postings_on_account_id"
+    t.index ["entry_id"], name: "index_postings_on_entry_id"
+  end
+
+  add_foreign_key "postings", "accounts", on_delete: :cascade
+  add_foreign_key "postings", "entries", on_delete: :cascade
 end

@@ -15,3 +15,15 @@ p
 = link_to 'Edit', edit_entry_path(@entry)
 |  |  
 = link_to 'Back', entries_path
+
+div
+  p --
+  pre
+    = @entry.to_bean
+    br
+    - @entry.postings.each do |posting|
+      | &nbsp;&nbsp;
+      => posting.to_bean
+      => link_to 'edit', edit_entry_posting_path(@entry, posting)
+      => link_to 'destroy', entry_posting_path(@entry, posting), method: :delete, data: { confirm: 'Are you sure?' }
+      br

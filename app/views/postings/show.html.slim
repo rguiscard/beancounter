@@ -1,0 +1,21 @@
+p#notice = notice
+
+pre
+  = @entry.to_bean
+
+p
+  strong Flag:
+  = @posting.flag
+p
+  strong Account:
+  = @posting.account.name
+p
+  strong Arguments:
+  = @posting.arguments
+p
+  strong Comment:
+  = @posting.comment
+
+=> link_to 'Edit', edit_entry_posting_path(@entry, @posting)
+'|
+=< link_to 'Back', entry_path(@entry)
