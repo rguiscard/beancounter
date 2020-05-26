@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_25_091807) do
+ActiveRecord::Schema.define(version: 2020_05_26_013416) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "accounts", force: :cascade do |t|
+    t.datetime "date", null: false
+    t.integer "directive", default: 0, null: false
+    t.string "name", null: false
+    t.string "currencies", default: [], null: false, array: true
+    t.string "booking"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["currencies"], name: "index_accounts_on_currencies", using: :gin
+  end
 
   create_table "entries", force: :cascade do |t|
     t.datetime "date", null: false

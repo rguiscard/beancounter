@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2020-05-25 21:34:17
+  directive: 1
+  name: MyString
+  currencies: MyString
+  booking: MyString
+
+two:
+  date: 2020-05-25 21:34:17
+  directive: 1
+  name: MyString
+  currencies: MyString
+  booking: MyString

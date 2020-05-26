@@ -1,0 +1,24 @@
+p#notice = notice
+
+h1 Account
+
+p
+  strong Name:
+  = @account.name
+p
+  strong Directive:
+  = @account.directive
+p
+  strong Date:
+  = @account.date
+p
+  strong Currencies:
+  = @account.currency_list
+
+=> link_to 'Edit', edit_account_path(@account)
+'|
+=< link_to 'Back', accounts_path
+
+div
+  p --
+  pre = @account.to_bean
