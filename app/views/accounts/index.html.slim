@@ -3,8 +3,6 @@ h1 Listing accounts
 table
   thead
     tr
-      th Date
-      th Directive
       th Name
       th Currencies
       th
@@ -14,8 +12,6 @@ table
   tbody
     - @accounts.each do |account|
       tr
-        td = account.date
-        td = account.directive
         td = account.name
         td = account.currency_list
         td = link_to 'Show', account
@@ -23,5 +19,6 @@ table
         td = link_to 'Destroy', account, data: { confirm: 'Are you sure?' }, method: :delete
 
 br
-
-= link_to 'New Account', new_account_path
+p
+  | Create account using
+  =< link_to 'entries', entries_path

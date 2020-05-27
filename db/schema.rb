@@ -16,11 +16,8 @@ ActiveRecord::Schema.define(version: 2020_05_26_024744) do
   enable_extension "plpgsql"
 
   create_table "accounts", force: :cascade do |t|
-    t.datetime "date", null: false
-    t.integer "directive", default: 0, null: false
     t.string "name", null: false
     t.string "currencies", default: [], null: false, array: true
-    t.string "booking"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["currencies"], name: "index_accounts_on_currencies", using: :gin

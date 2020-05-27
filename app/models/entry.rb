@@ -1,5 +1,5 @@
 class Entry < ApplicationRecord
-  enum directive: [:txn, :commodity, :balance, :pad, :note, :document, :price, :event, :query, :custom]
+  enum directive: [:txn, :open, :close, :commodity, :balance, :pad, :note, :document, :price, :event, :query, :custom]
 
   has_many :postings
 

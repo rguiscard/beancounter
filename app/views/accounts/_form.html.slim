@@ -7,12 +7,6 @@
           li = message
 
   .field
-    = f.label :date
-    = f.date_select :date
-  .field
-    = f.label :directive
-    = f.select :directive, Account.directives.keys.to_a, {}
-  .field
     = f.label :name
     = f.text_field :name
   .field

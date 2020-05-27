@@ -1,15 +1,9 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  date: 2020-05-25 21:34:17
-  directive: 1
   name: Assets:BoA
   currencies: ['USD']
-  booking:
 
 two:
-  date: 2020-05-25 21:34:17
-  directive: 1
   name: Assets:CreditUnion
   currencies: ['USD', 'JPN']
-  booking:

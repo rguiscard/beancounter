@@ -16,7 +16,7 @@ class ParseServiceTest < ActiveSupport::TestCase
       1980-05-12 open Equity:Opening-Balances USD,JPN
     EOF
 
-    ParseService.parse(content) do |entry|
+    ParseService.parse(content) do |klass, entry|
       assert_equal entry[:name], "Equity:Opening-Balances"
       assert_equal entry[:currency_list], "USD,JPN"
     end
@@ -27,7 +27,7 @@ class ParseServiceTest < ActiveSupport::TestCase
       1980-05-12 open Liabilities:AccountsPayable
     EOF
 
-    ParseService.parse(content) do |entry|
+    ParseService.parse(content) do |klass, entry|
       assert_equal entry[:name], "Liabilities:AccountsPayable"
       assert entry[:currency_list].blank?
     end
@@ -35,7 +35,7 @@ class ParseServiceTest < ActiveSupport::TestCase
 
   test "can parse simple transaction" do
     content = file_fixture('simple-transactions.beancount').read
-    ParseService.parse(content) do |entry|
+    ParseService.parse(content) do |klass, entry|
 #      puts entry
     end
   end
