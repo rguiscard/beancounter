@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   resources :entries do
     resources :postings, except: [:index]
   end
-  resources :accounts, except: [:new, :create]
+  resources :accounts, except: [:new, :create] do
+    get 'balances', on: :collection
+  end
 
   get 'pages/beancount'
   get 'pages/input'

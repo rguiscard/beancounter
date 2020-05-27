@@ -1,6 +1,13 @@
 class AccountsController < ApplicationController
   before_action :set_account, only: [:show, :edit, :update, :destroy]
 
+  def balances
+    AccountBalanceJob.perform_now
+    respond_to do |format|
+      format.html { redirect_to accounts_path, notice: 'Account balances refreshed.' }
+    end
+  end
+
   # GET /accounts
   # GET /accounts.json
   def index

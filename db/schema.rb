@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_26_024744) do
+ActiveRecord::Schema.define(version: 2020_05_27_064305) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,15 @@ ActiveRecord::Schema.define(version: 2020_05_26_024744) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["currencies"], name: "index_accounts_on_currencies", using: :gin
+  end
+
+  create_table "balances", force: :cascade do |t|
+    t.integer "amount", default: 0
+    t.string "currency", null: false
+    t.bigint "account_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_balances_on_account_id"
   end
 
   create_table "entries", force: :cascade do |t|
@@ -43,6 +52,7 @@ ActiveRecord::Schema.define(version: 2020_05_26_024744) do
     t.index ["entry_id"], name: "index_postings_on_entry_id"
   end
 
+  add_foreign_key "balances", "accounts", on_delete: :cascade
   add_foreign_key "postings", "accounts", on_delete: :cascade
   add_foreign_key "postings", "entries", on_delete: :cascade
 end
