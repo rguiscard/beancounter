@@ -7,7 +7,7 @@ class Entry < ApplicationRecord
     content = Entry.all.collect do |entry|
       s = entry.to_bean+"\n"
       s = s + entry.postings.collect do |posting|
-        posting.to_bean
+        "  "+posting.to_bean
       end.join("\n")
     end.join("\n")
     file = Tempfile.new('beancounter')

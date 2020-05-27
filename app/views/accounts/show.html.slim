@@ -2,12 +2,22 @@ p#notice = notice
 
 h1 Account
 
-p
-  strong Name:
-  = @account.name
-p
-  strong Currencies:
-  = @account.currency_list
+h4 = @account.name
+
+table
+  thead
+    tr
+      th date
+      th narration
+      th position
+      th balance
+  tbody
+    - CSV.parse(@account.journal, headers: :first_row) do |row|
+      tr
+        td = row['date']
+        td = row['narration']
+        td.align-right = MoneyService.split_amount(row['position']) { |x, y| "#{number_to_currency(x)} #{y}" }
+        td.align-right = MoneyService.split_amount(row['balance']) { |x, y| "#{number_to_currency(x)} #{y}" }
 
 => link_to 'Edit', edit_account_path(@account)
 '|
