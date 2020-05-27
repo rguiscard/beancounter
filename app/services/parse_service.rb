@@ -1,6 +1,6 @@
 class ParseService
   ENTRY_REGEX = /^\s*(?<date>\d{4}-\d{2}-\d{2})\s+(?<directive>\S+)\s+(?<arguments>.*)$/
-  POSTING_REGEX = /^\s*(?<flag>!?\s*)(?<account>\S+)\s+(?<arguments>[^;]+)(?<comment>;.*)?/
+  POSTING_REGEX = /^\s*(?<flag>!?\s*)(?<account>\S+)\s*(?<arguments>[^;]*)(?<comment>;.*)?/
   OPEN_REGEX = /(?<name>\S+)\s*(?<currency>.*)/
 
   def self.validate(content)

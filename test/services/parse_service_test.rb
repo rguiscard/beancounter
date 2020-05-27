@@ -1,6 +1,17 @@
 require 'test_helper'
 
 class ParseServiceTest < ActiveSupport::TestCase
+  test "can parse posting without amount" do
+    content = <<~EOF
+      2020-05-15 * "信用卡轉帳"
+        Liabilities:台灣銀行               225 TWD ; comment
+        Income:Cashback
+    EOF
+
+    ParseService.parse(content) do |klass, entry|
+    end
+  end
+
   test "can validate account" do
     content = file_fixture('open-accounts.beancount').read
     assert_nil ParseService.validate(content)
