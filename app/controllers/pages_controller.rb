@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
   def beancount
+    @entries = Entry.order("date DESC")
   end
 
   def input

@@ -1,7 +1,7 @@
 h1 Beancount
 = link_to 'plain text', pages_beancount_path(format: :text)
 pre
-  - Entry.all.each do |entry|
+  - @entries.each do |entry|
     = entry.to_bean
     br
     - entry.postings.each do |posting|

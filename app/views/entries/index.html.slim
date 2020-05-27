@@ -10,7 +10,8 @@ table
         td = link_to 'Show', entry
         td = link_to 'Edit', edit_entry_path(entry)
         td = link_to 'Destroy', entry, method: :delete, data: { confirm: 'Are you sure?' }
-        td = link_to 'New Posting', new_entry_posting_path(entry)
+        - if entry.transaction?
+          td = link_to 'New Posting', new_entry_posting_path(entry)
 
 br
 

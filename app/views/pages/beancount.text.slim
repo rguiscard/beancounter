@@ -1,7 +1,7 @@
-- Entry.all.each do |entry|
-  = entry.to_bean
+- @entries.each do |entry|
+  == entry.to_bean
   - entry.postings.each do |posting|
-    |   
-    = posting.to_bean
     = "\n"
+    |   
+    == posting.to_bean
   = "\n"
