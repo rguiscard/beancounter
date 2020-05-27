@@ -1,9 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: Assets:BoA
+  name: Assets:US:BofA:Checking
   currencies: ['USD']
 
 two:
-  name: Assets:CreditUnion
+  name: Equity:Opening-Balances
   currencies: ['USD', 'JPN']
+
+three:
+  name: Expenses:Financial:Fees
+  currencies: []

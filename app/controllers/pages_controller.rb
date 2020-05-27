@@ -20,8 +20,8 @@ class PagesController < ApplicationController
               Account.create(name: data[:name])
             end
           when :posting
-            if entry.present? && entry.txn? && (account = Account.find_by(name: data[:account]))
-              posting = entry.postings.create(account: account, amount: data[:amount], comment: data[:comment])
+            if entry.present? && entry.transaction? && (account = Account.find_by(name: data[:account]))
+              posting = entry.postings.create(account: account, arguments: data[:arguments], comment: data[:comment])
             else
               puts "Cannot save posting: #{data}"
             end

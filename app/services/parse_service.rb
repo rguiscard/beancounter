@@ -1,6 +1,6 @@
 class ParseService
   ENTRY_REGEX = /^\s*(?<date>\d{4}-\d{2}-\d{2})\s+(?<directive>\S+)\s+(?<arguments>.*)$/
-  POSTING_REGEX = /^\s*(?<flag>!?\s*)(?<account>\S+)\s+(?<amount>[^;]+)(?<comment>;.*)?/
+  POSTING_REGEX = /^\s*(?<flag>!?\s*)(?<account>\S+)\s+(?<arguments>[^;]+)(?<comment>;.*)?/
   OPEN_REGEX = /(?<name>\S+)\s*(?<currency>.*)/
 
   def self.validate(content)
@@ -42,8 +42,16 @@ class ParseService
         when 'close'
           data[:name] = m[:arguments]
           yield :entry, data if block_given?
-        when 'txn', '*', '!'
+        when 'txn'
           txn_entry = line
+          yield :entry, data if block_given?
+        when '*'
+          txn_entry = line
+          data[:directive] = 'asterisk'
+          yield :entry, data if block_given?
+        when '!'
+          txn_entry = line
+          data[:directive] = 'exclamation'
           yield :entry, data if block_given?
         when 'balance', 'pad'
           yield :entry, data if block_given?
@@ -53,7 +61,7 @@ class ParseService
       elsif txn_entry.present? && m = line.match(POSTING_REGEX)
         data = {
           account: m[:account],
-          amount: m[:amount],
+          arguments: m[:arguments],
           comment: m[:comment]
         }
         yield :posting, data if block_given?
