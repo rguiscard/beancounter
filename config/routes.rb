@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resources :postings, except: [:index]
 
     get 'transactions', on: :collection
+    get 'search', on: :collection
   end
 
   resources :accounts, except: [:new, :create] do

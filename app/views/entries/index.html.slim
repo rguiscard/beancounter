@@ -1,5 +1,10 @@
 h1 Entries
 
+- if @search_params.present?
+  p
+    | search on
+    =< @search_params.to_unsafe_h
+
 table
   tbody
     = render @entries

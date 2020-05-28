@@ -2,6 +2,9 @@ class EntriesController < ApplicationController
   before_action :set_entry, only: [:show, :edit, :update, :destroy]
   after_action :delete_beancount, only: [:update, :create, :destroy]
 
+  def search
+  end
+
   # only show transactions
   def transactions
     @entries = current_user.entries.transactions.includes(postings: :account).order("date DESC")
@@ -11,7 +14,14 @@ class EntriesController < ApplicationController
   # GET /entries
   # GET /entries.json
   def index
-    @entries = current_user.entries.includes(postings: :account).order("date DESC")
+    @entries = current_user.entries.includes(postings: :account)
+    if params[:q].present? && @search_params = params.require(:q)
+      if @search_params.kind_of?(String)
+        @search_params = SearchService::Base.parse_keyword_search(@search_params)
+      end
+      @entries = SearchService::Entry.new(@entries).search(query: @search_params)
+    end
+    @entries = @entries.order("date DESC")
     @pagy, @entries = pagy(@entries, items: 30)
   end
 

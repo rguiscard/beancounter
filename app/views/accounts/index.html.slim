@@ -1,28 +1,16 @@
 h1 Listing accounts
 
-= link_to 'Refresh', balances_accounts_path
-
 table
-  thead
-    tr
-      th Name
-      th Balance
-      th Currency
-      th
-      th
-      th
-
   tbody
     - @accounts.each do |account|
       tr
-        td = account.name
+        td = link_to account.name, account
         td.align-right = account.balances.collect { |x| number_to_currency(x.amount) }.join("\n")
         td = account.balances.collect { |x| x.currency }.join("\n")
-        td = link_to 'Show', account
-        td = link_to 'Edit', edit_account_path(account)
-        td = link_to 'Destroy', account, data: { confirm: 'Are you sure?' }, method: :delete
+        / = link_to 'Destroy', account, data: { confirm: 'Are you sure?' }, method: :delete
 
 br
+= link_to 'Refresh', balances_accounts_path
 p
   | Create account using
   =< link_to 'entries', entries_path

@@ -1,0 +1,9 @@
+h1 Entries
+
+= form_with scope: :q, url: entries_url, method: :get, local: true do |form|
+  div.field
+    = form.label :search
+    = form.text_field :arguments
+
+  div.actions
+    = form.submit "Search"
