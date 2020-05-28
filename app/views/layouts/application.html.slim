@@ -27,6 +27,9 @@ html
         => link_to 'Input', pages_input_path
         |
         => link_to 'Guide', guide_path
+        |
+        => link_to 'Sign out', destroy_user_session_path, method: :delete
+
     - else
        = link_to 'Sign in', new_user_session_path
     = yield
