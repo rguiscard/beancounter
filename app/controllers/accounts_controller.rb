@@ -2,6 +2,7 @@ require 'csv'
 
 class AccountsController < ApplicationController
   before_action :set_account, only: [:show, :edit, :update, :destroy]
+  after_action :delete_beancount, only: [:update, :create, :destroy]
 
   def balances
     AccountBalanceJob.perform_now(current_user)
@@ -13,7 +14,7 @@ class AccountsController < ApplicationController
   # GET /accounts
   # GET /accounts.json
   def index
-    @accounts = current_user.accounts
+    @accounts = current_user.accounts.includes(:balances)
   end
 
   # GET /accounts/1
@@ -80,5 +81,10 @@ class AccountsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def account_params
       params.require(:account).permit(:name, :booking, :currency_list)
+    end
+
+    # remove beancount cache from user
+    def delete_beancount
+      current_user.delete_beancount
     end
 end

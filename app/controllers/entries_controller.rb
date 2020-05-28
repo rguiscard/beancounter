@@ -1,5 +1,6 @@
 class EntriesController < ApplicationController
   before_action :set_entry, only: [:show, :edit, :update, :destroy]
+  after_action :delete_beancount, only: [:update, :create, :destroy]
 
   # GET /entries
   # GET /entries.json
@@ -70,5 +71,10 @@ class EntriesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def entry_params
       params.require(:entry).permit(:date, :directive, :arguments)
+    end
+
+    # remove beancount cache from user
+    def delete_beancount
+      current_user.delete_beancount
     end
 end

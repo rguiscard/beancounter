@@ -9,22 +9,33 @@ class User < ApplicationRecord
   has_many :postings, through: :entries
   has_many :accounts
 
-  def save_beancount(path: nil)
-    content = self.entries.collect do |entry|
-      s = entry.to_bean+"\n"
-      s = s + entry.postings.collect do |posting|
-        "  "+posting.to_bean
-      end.join("\n")
-    end.join("\n")
+  def delete_beancount
+    update_attribute(:beancount, "")
+  end
 
+  def beancount
+    if super.blank?
+      content = self.entries.collect do |entry|
+        s = entry.to_bean + "\n"
+        s = s + entry.postings.collect do |posting|
+          "  "+posting.to_bean
+        end.join("\n")
+      end.join("\n")
+      update_attribute(:beancount, content)
+    end
+    super
+  end
+
+  def save_beancount(path: nil)
     if path.blank?
       file = Tempfile.new('beancounter')
+      file.binmode
     else
       file = File.open(path)
     end
 
     begin
-      file.write(content)
+      file.write(self.beancount)
     ensure
       file.close
     end
