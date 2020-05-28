@@ -1,0 +1,19 @@
+tr
+  td colspan='2' = link_to entry.to_bean, entry
+  td
+    => link_to 'Edit', edit_entry_path(entry)
+    => link_to 'Destroy', entry, method: :delete, data: { confirm: 'Are you sure?' }
+    - if entry.transaction?
+      = link_to 'New Posting', new_entry_posting_path(entry)
+- if entry.transaction?
+  tr
+    td
+      - entry.postings.each do |posting|
+        | &nbsp;&nbsp;&nbsp;&nbsp;
+        = posting.account.name
+        br
+    td.align-right
+      - entry.postings.each do |posting|
+        = posting.arguments
+        br
+    td

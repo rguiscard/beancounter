@@ -2,6 +2,7 @@ doctype html
 html
   head
     title Beancounter
+    meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
     = csrf_meta_tags
     = csp_meta_tag
 
@@ -13,9 +14,11 @@ html
     p#alert = alert
     - if user_signed_in?
       div
-        => link_to 'Entries', entries_path
+        => link_to 'Transactions', transactions_entries_path
         |
         => link_to 'Accounts', accounts_path
+        |
+        => link_to 'Entries', entries_path
         |
         => link_to 'Beancount', beancount_path
         |

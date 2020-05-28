@@ -2,10 +2,17 @@ class EntriesController < ApplicationController
   before_action :set_entry, only: [:show, :edit, :update, :destroy]
   after_action :delete_beancount, only: [:update, :create, :destroy]
 
+  # only show transactions
+  def transactions
+    @entries = current_user.entries.transactions.includes(postings: :account).order("date DESC")
+    @pagy, @entries = pagy(@entries, items: 30)
+  end
+
   # GET /entries
   # GET /entries.json
   def index
-    @entries = current_user.entries.order("date DESC")
+    @entries = current_user.entries.includes(postings: :account).order("date DESC")
+    @pagy, @entries = pagy(@entries, items: 30)
   end
 
   # GET /entries/1

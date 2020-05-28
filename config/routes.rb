@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   resources :entries do
     resources :postings, except: [:index]
+
+    get 'transactions', on: :collection
   end
 
   resources :accounts, except: [:new, :create] do

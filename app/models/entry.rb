@@ -4,6 +4,8 @@ class Entry < ApplicationRecord
   belongs_to :user
   has_many :postings
 
+  scope :transactions, -> { where(directive: [:txn, :asterisk, :exclamation]) }
+
   def transaction?
     self.txn? || self.asterisk? || self.exclamation?
   end
