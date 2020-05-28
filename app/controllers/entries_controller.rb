@@ -4,7 +4,7 @@ class EntriesController < ApplicationController
   # GET /entries
   # GET /entries.json
   def index
-    @entries = Entry.order("date DESC")
+    @entries = current_user.entries.order("date DESC")
   end
 
   # GET /entries/1
@@ -24,7 +24,7 @@ class EntriesController < ApplicationController
   # POST /entries
   # POST /entries.json
   def create
-    @entry = Entry.new(entry_params)
+    @entry = current_user.entries.new(entry_params)
 
     respond_to do |format|
       if @entry.save
@@ -64,7 +64,7 @@ class EntriesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_entry
-      @entry = Entry.find(params[:id])
+      @entry = current_user.entries.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

@@ -1,7 +1,11 @@
 require 'test_helper'
 
 class PagesControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+
   setup do
+    @user = users(:one)
+    sign_in @user
   end
 
   test "should create entry and postings without amount" do
@@ -11,25 +15,25 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
         Income:Cashback
     EOF
 
-    Account.create(name: "Liabilities:三商台新")
-    Account.create(name: "Income:Cashback")
+    @user.accounts.create(name: "Liabilities:台灣銀行")
+    @user.accounts.create(name: "Income:Cashback")
 
-    assert_difference -> { Entry.count } => 1, -> { Posting.count } => 2 do
+    assert_difference -> { @user.entries.count } => 1, -> { @user.postings.count } => 2 do
       post pages_import_url, params: { content: content }
     end
 
-    assert_equal Entry.last.postings.count, 2
-    assert_equal Entry.last.postings.last.account, Account.find_by(name: "Income:Cashback")
+    assert_equal @user.entries.last.postings.count, 2
+    assert_equal @user.entries.last.postings.last.account, @user.accounts.find_by(name: "Income:Cashback")
 
     assert_redirected_to entries_url
   end
 
   test "should create account" do
-    assert_difference ['Entry.count', 'Account.count']  do
+    assert_difference ['@user.entries.count', '@user.accounts.count']  do
       post pages_import_url, params: { content: "2015-01-01 open Assets:BoA USD" }
     end
 
-    assert_equal Account.last.name, "Assets:BoA"
+    assert_equal @user.accounts.last.name, "Assets:BoA"
 
     assert_redirected_to entries_url
   end
@@ -48,13 +52,24 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
 
     EOF
 
-    assert_difference -> { Entry.count } => 3, -> { Posting.count } => 4 do
+    assert_difference -> { @user.entries.count } => 3, -> { @user.postings.count } => 4 do
       post pages_import_url, params: { content: content }
     end
 
-    assert_equal Entry.last.postings.count, 2
-    assert_equal Entry.last.postings.last.account, Account.find_by(name: "Expenses:Financial:Fees")
+    assert_equal @user.entries.last.postings.count, 2
+    assert_equal @user.entries.last.postings.last.account, @user.accounts.find_by(name: "Expenses:Financial:Fees")
 
     assert_redirected_to entries_url
+  end
+
+  test "cannot access without sign in" do
+    sign_out @user
+    get beancount_url
+    assert_response :redirect
+  end
+
+  test "can access with sign in" do
+    get beancount_url
+    assert_response :success
   end
 end

@@ -1,8 +1,12 @@
 require 'test_helper'
 
 class EntriesControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+
   setup do
+    @user = users(:one)
     @entry = entries(:one)
+    sign_in @user
   end
 
   test "should get index" do
@@ -16,11 +20,11 @@ class EntriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create entry" do
-    assert_difference('Entry.count') do
+    assert_difference('@user.entries.count') do
       post entries_url, params: { entry: { arguments: @entry.arguments, date: @entry.date, directive: @entry.directive } }
     end
 
-    assert_redirected_to entry_url(Entry.last)
+    assert_redirected_to entry_url(@user.entries.last)
   end
 
   test "should show entry" do
@@ -39,7 +43,7 @@ class EntriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy entry" do
-    assert_difference('Entry.count', -1) do
+    assert_difference('@user.entries.count', -1) do
       delete entry_url(@entry)
     end
 

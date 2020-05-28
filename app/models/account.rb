@@ -1,6 +1,7 @@
 class Account < ApplicationRecord
   SPLIT_REGEX = /[ ]*,[ ]*/.freeze
 
+  belongs_to :user
   has_many :balances
 
   def currency_list

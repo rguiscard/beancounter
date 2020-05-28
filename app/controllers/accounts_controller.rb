@@ -1,8 +1,10 @@
+require 'csv'
+
 class AccountsController < ApplicationController
   before_action :set_account, only: [:show, :edit, :update, :destroy]
 
   def balances
-    AccountBalanceJob.perform_now
+    AccountBalanceJob.perform_now(current_user)
     respond_to do |format|
       format.html { redirect_to accounts_path, notice: 'Account balances refreshed.' }
     end
@@ -11,13 +13,13 @@ class AccountsController < ApplicationController
   # GET /accounts
   # GET /accounts.json
   def index
-    @accounts = Account.all
+    @accounts = current_user.accounts
   end
 
   # GET /accounts/1
   # GET /accounts/1.json
   def show
-    AccountDetailsJob.perform_now(@account)
+    AccountDetailsJob.perform_now(current_user, @account)
   end
 
   # GET /accounts/new
@@ -32,7 +34,7 @@ class AccountsController < ApplicationController
   # POST /accounts
   # POST /accounts.json
   def create
-    @account = Account.new(account_params)
+    @account = current_user.accounts.new(account_params)
 
     respond_to do |format|
       if @account.save
@@ -72,7 +74,7 @@ class AccountsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_account
-      @account = Account.find(params[:id])
+      @account = current_user.accounts.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

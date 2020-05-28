@@ -1,6 +1,8 @@
 class PagesController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:welcome, :guide]
+
   def beancount
-    @entries = Entry.order("date DESC")
+    @entries = current_user.entries.order("date DESC")
   end
 
   def input
@@ -16,9 +18,9 @@ class PagesController < ApplicationController
         ParseService.parse(@content) do |klass, data|
           case klass
           when :entry
-            entry = Entry.create(date: Date.parse(data[:date]), directive: data[:directive], arguments: data[:arguments])
+            entry = current_user.entries.create(date: Date.parse(data[:date]), directive: data[:directive], arguments: data[:arguments])
             if entry.open?
-              Account.create(name: data[:name])
+              current_user.accounts.create(name: data[:name])
             end
           when :posting
             if entry.present? && entry.transaction? && (account = Account.find_by(name: data[:account]))
@@ -38,5 +40,8 @@ class PagesController < ApplicationController
   end
 
   def guide
+  end
+
+  def welcome
   end
 end

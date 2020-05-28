@@ -1,11 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  user: one
   date: 2020-05-25 05:18:07
   directive: txn
   arguments: "Buy Grocery"
 
 two:
+  user: one
   date: 2020-05-25 05:18:07
   directive: txn
   arguments: "Gas"

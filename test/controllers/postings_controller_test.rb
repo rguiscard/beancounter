@@ -1,9 +1,13 @@
 require 'test_helper'
 
 class PostingsControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+
   setup do
+    @user = users(:one)
     @entry = entries(:one)
     @posting = postings(:one)
+    sign_in @user
   end
 
 #  test "should get index" do
@@ -21,7 +25,7 @@ class PostingsControllerTest < ActionDispatch::IntegrationTest
       post entry_postings_url(@entry), params: { posting: { account_id: @posting.account_id, arguments: @posting.arguments, comment: @posting.comment, entry_id: @posting.entry_id, flag: @posting.flag } }
     end
 
-    assert_redirected_to entry_posting_url(@entry, Posting.last)
+    assert_redirected_to entry_posting_url(@entry, @user.postings.last)
   end
 
   test "should show posting" do
@@ -40,7 +44,7 @@ class PostingsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy posting" do
-    assert_difference('Posting.count', -1) do
+    assert_difference('@user.postings.count', -1) do
       delete entry_posting_url(@entry, @posting)
     end
 

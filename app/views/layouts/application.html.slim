@@ -9,14 +9,19 @@ html
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
 
   body
-    div
-      => link_to 'Entries', entries_path
-      |
-      => link_to 'Accounts', accounts_path
-      |
-      => link_to 'Beancount', pages_beancount_path
-      |
-      => link_to 'Input', pages_input_path
-      |
-      => link_to 'Guide', pages_guide_path
+    p#notice = notice
+    p#alert = alert
+    - if user_signed_in?
+      div
+        => link_to 'Entries', entries_path
+        |
+        => link_to 'Accounts', accounts_path
+        |
+        => link_to 'Beancount', beancount_path
+        |
+        => link_to 'Input', pages_input_path
+        |
+        => link_to 'Guide', guide_path
+    - else
+       = link_to 'Sign in', new_user_session_path
     = yield
