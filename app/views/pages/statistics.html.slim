@@ -1,3 +1,10 @@
 p
   h4 Statistics
-
+p
+  h5 This month 
+table.mobile
+  tbody
+    - CSV.parse(@current_month, headers: :first_row) do |row|
+      tr
+        td = row['account']
+        td.text-right = MoneyService.split_amount(row['sum_position']) { |x, y| "#{number_to_currency(x)} #{y}" }

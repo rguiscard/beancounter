@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_many :entries
   has_many :postings, through: :entries
   has_many :accounts
+  has_many :expenses # to cache csv from bean-query
 
   def delete_beancount
     update_attribute(:beancount, "")
