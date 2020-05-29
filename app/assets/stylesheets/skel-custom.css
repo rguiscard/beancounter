@@ -4,3 +4,37 @@
   line-height: 24px;
 }
 
+@media screen and (max-width:601px) {
+	table.mobile {
+		word-wrap:break-word;
+	}
+	table.mobile thead {
+		display:none
+	}
+	table.mobile td {
+		display:block;
+		float:left;/* ie9 and under hack */
+		width:100%;
+		clear:both;
+		background:#fafafa;
+		padding:10px 5px;
+		-moz-box-sizing:border-box;
+		-webkit-box-sizing:border-box;
+		box-sizing:border-box;
+	}
+	table.mobile tbody, table tr {
+		display:block
+	}
+	.mobile td:before {
+		content:attr(data-th);
+		display:block;
+		font-weight:bold;
+		margin:0 0 2px;
+		color:#000;
+	}
+	.mobile tbody tr {
+		float:left;width:100%;
+    margin-bottom:10px;
+	}
+}
+

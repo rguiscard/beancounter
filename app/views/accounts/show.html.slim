@@ -2,7 +2,7 @@ h1 Account
 
 h4 = @account.name
 
-table
+table.mobile
   thead
     tr
       th date
@@ -14,9 +14,10 @@ table
       tr
         td = row['date']
         td = row['narration']
-        td.align-right = MoneyService.split_amount(row['position']) { |x, y| "#{number_to_currency(x)} #{y}" }
-        td.align-right = MoneyService.split_amount(row['balance']) { |x, y| "#{number_to_currency(x)} #{y}" }
+        td.text-right = MoneyService.split_amount(row['position']) { |x, y| "#{number_to_currency(x)} #{y}" }
+        td.text-right = MoneyService.split_amount(row['balance']) { |x, y| "#{number_to_currency(x)} #{y}" }
 
 => link_to 'Edit', edit_account_path(@account)
 '|
 =< link_to 'Back', accounts_path
+/ = link_to 'Destroy', account, data: { confirm: 'Are you sure?' }, method: :delete

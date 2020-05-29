@@ -5,14 +5,12 @@ div style="display: flex; align-items: center"
   div style="margin-left: auto;"
     = link_to 'Refresh', balances_accounts_path, class: 'button button-sm'
 
-table
+table.mobile
   tbody
     - @accounts.each do |account|
       tr
         td = link_to account.name, account
-        td.align-right = account.balances.collect { |x| number_to_currency(x.amount) }.join("\n")
-        td = account.balances.collect { |x| x.currency }.join("\n")
-        / = link_to 'Destroy', account, data: { confirm: 'Are you sure?' }, method: :delete
+        td.text-right = account.balances.collect { |x| "#{number_to_currency(x.amount)} #{x.currency}" }.join("\n")
 p
   | Create account using
   =< link_to 'entries', entries_path

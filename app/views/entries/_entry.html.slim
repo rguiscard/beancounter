@@ -1,19 +1,19 @@
 tr
-  td = link_to entry.to_bean, entry
-  td
+  td style="vertical-align: top;"
+    div.clear
+      = link_to entry.to_bean, entry
+    - if entry.transaction?
+      div.right.text-right
+        - entry.postings.each do |posting|
+          = posting.arguments
+          br
+      div
+        - entry.postings.each do |posting|
+          | &nbsp;&nbsp;&nbsp;&nbsp;
+          = posting.account.name
+          br
+  td style="vertical-align: top;"
     = link_to 'Edit', edit_entry_path(entry), class: 'button button-sm'
     - if entry.transaction?
       | &nbsp;
       = link_to 'New Posting', new_entry_posting_path(entry), class: 'button button-sm'
-- if entry.transaction?
-  tr
-    td
-      - entry.postings.each do |posting|
-        | &nbsp;&nbsp;&nbsp;&nbsp;
-        = posting.account.name
-        br
-    td.align-right
-      - entry.postings.each do |posting|
-        = posting.arguments
-        br
-    td
