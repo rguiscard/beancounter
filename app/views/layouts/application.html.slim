@@ -10,26 +10,46 @@ html
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
 
   body
-    p#notice = notice
-    p#alert = alert
-    - if user_signed_in?
-      div
-        => link_to 'Transactions', transactions_entries_path
-        |
-        => link_to 'Accounts', accounts_path
-        |
-        => link_to 'Entries', entries_path
-        |
-        => link_to 'Beancount', beancount_path
-        |
-        => link_to 'Search', search_entries_path
-        |
-        => link_to 'Input', pages_input_path
-        |
-        => link_to 'Guide', guide_path
-        |
-        => link_to 'Sign out', destroy_user_session_path, method: :delete
-
-    - else
-       = link_to 'Sign in', new_user_session_path
-    = yield
+    div.container
+      - if notice.present?
+        div.alert
+          button.right.close-button
+          = notice
+      - if alert.present?
+        div.alert.alert-error
+          button.right.close-button
+          = alert
+      div.navbar
+        div.container
+          - if user_signed_in?
+            ul.left.menu class='lg:visible md:visible sm:visible'
+              li.hover.dropdown
+                span.item
+                  | Beancounter
+                  i.caret
+                ul.menu
+                  li = link_to 'Transactions', transactions_entries_path, class: 'item'
+                  li = link_to 'Accounts', accounts_path, class: 'item'
+                  li = link_to 'Entries', entries_path, class: 'item'
+                  li = link_to 'Beancount', beancount_path, class: 'item'
+                  li = link_to 'Search', search_entries_path, class: 'item'
+                  li = link_to 'Input', pages_input_path, class: 'item'
+                  li = link_to 'Guide', guide_path, class: 'item'
+                  li = link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'item'
+            ul.left.menu class='lg:hidden md:hidden sm:hidden'
+              li = link_to 'Beancounter', root_path, class: 'item'
+            ul.right.menu class='lg:hidden md:hidden sm:hidden'
+              li = link_to 'Transactions', transactions_entries_path, class: 'item'
+              li = link_to 'Accounts', accounts_path, class: 'item'
+              li = link_to 'Entries', entries_path, class: 'item'
+              li = link_to 'Beancount', beancount_path, class: 'item'
+              li = link_to 'Search', search_entries_path, class: 'item'
+              li = link_to 'Input', pages_input_path, class: 'item'
+              li = link_to 'Guide', guide_path, class: 'item'
+              li = link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'item'
+          - else
+            ul.left.menu
+              li = link_to 'Sign in', new_user_session_path, class: 'item'
+              li = link_to 'Guide', guide_path, class: 'item'
+      div.container
+        = yield

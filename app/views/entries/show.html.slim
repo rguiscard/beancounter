@@ -1,4 +1,4 @@
-div
+p
   pre
     = @entry.to_bean
     br
@@ -11,6 +11,7 @@ div
     - if @entry.transaction?
       | &nbsp;&nbsp;
       = link_to 'Add Posting', new_entry_posting_path(@entry)
-= link_to 'Edit', edit_entry_path(@entry)
-|  |  
-= link_to 'Back', entries_path
+= link_to 'Edit', edit_entry_path(@entry), class: 'button button-sm'
+| &nbsp;
+= link_to 'Back', entries_path, class: 'button button-sm'
+= link_to 'Destroy', @entry, method: :delete, data: { confirm: 'Are you sure?' }, class: 'button danger button-sm right'

@@ -1,8 +1,9 @@
-h1 Entries
+p
+  h3 Search
 
 = form_with scope: :q, url: entries_url, method: :get, local: true do |form|
   div.field
-    = form.label :search
+    = form.label :search_entries
     = form.text_field :arguments
 
   div.actions

@@ -1,4 +1,9 @@
-h1 Listing accounts
+div style="display: flex; align-items: center"
+  div
+    p
+      h3 Accounts
+  div style="margin-left: auto;"
+    = link_to 'Refresh', balances_accounts_path, class: 'button button-sm'
 
 table
   tbody
@@ -8,9 +13,6 @@ table
         td.align-right = account.balances.collect { |x| number_to_currency(x.amount) }.join("\n")
         td = account.balances.collect { |x| x.currency }.join("\n")
         / = link_to 'Destroy', account, data: { confirm: 'Are you sure?' }, method: :delete
-
-br
-= link_to 'Refresh', balances_accounts_path
 p
   | Create account using
   =< link_to 'entries', entries_path

@@ -1,10 +1,10 @@
 tr
-  td colspan='2' = link_to entry.to_bean, entry
+  td = link_to entry.to_bean, entry
   td
-    => link_to 'Edit', edit_entry_path(entry)
-    => link_to 'Destroy', entry, method: :delete, data: { confirm: 'Are you sure?' }
+    = link_to 'Edit', edit_entry_path(entry), class: 'button button-sm'
     - if entry.transaction?
-      = link_to 'New Posting', new_entry_posting_path(entry)
+      | &nbsp;
+      = link_to 'New Posting', new_entry_posting_path(entry), class: 'button button-sm'
 - if entry.transaction?
   tr
     td

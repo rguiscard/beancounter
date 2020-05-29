@@ -1,5 +1,9 @@
-h1 Beancount
-= link_to 'plain text', beancount_path(format: :text)
+div style="display: flex; align-items: center"
+  div
+    p
+      h3 Beancount
+  div style="margin-left: auto;"
+    = link_to 'text', beancount_path(format: :text), class: 'button button-sm'
 pre
   - @entries.each do |entry|
     = entry.to_bean

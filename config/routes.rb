@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   get 'welcome', to: 'pages#welcome'
 
   authenticated :user do
-    root 'entries#index', as: :user_root
+    root 'entries#transactions', as: :user_root
   end
 
   root "pages#welcome"
