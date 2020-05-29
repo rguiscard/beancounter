@@ -4,8 +4,12 @@ Rails.application.routes.draw do
   resources :entries do
     resources :postings, except: [:index]
 
-    get 'transactions', on: :collection
-    get 'search', on: :collection
+    collection do
+      get 'transactions'
+      get 'search'
+      get 'input'
+      post 'import'
+    end
   end
 
   resources :accounts, except: [:new, :create] do
@@ -13,8 +17,7 @@ Rails.application.routes.draw do
   end
 
   get 'beancount', to: 'pages#beancount'
-  get 'pages/input'
-  post 'pages/import'
+  get 'statistics', to: 'pages#statistics'
   get 'guide', to: 'pages#guide'
   get 'welcome', to: 'pages#welcome'
 

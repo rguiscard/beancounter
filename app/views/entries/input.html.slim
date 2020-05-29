@@ -1,0 +1,21 @@
+p
+  h3 Input
+= form_with url: import_entries_path do |form|
+  = form.text_area :content
+  = form.submit
+
+p
+  h4 examples
+pre
+  | 2018-01-01 open Assets:US:BofA:Checking                   USD
+  br
+  br
+  | 2018-01-01 * "Opening Balance for checking account"
+  br
+  |   Assets:US:BofA:Checking                         3614.47 USD
+  br
+  |   Equity:Opening-Balances                        -3614.47 USD
+  br
+  br
+  | 2018-01-02 balance Assets:US:BofA:Checking        3614.47 USD
+  br

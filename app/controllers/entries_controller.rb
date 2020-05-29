@@ -5,6 +5,40 @@ class EntriesController < ApplicationController
   def search
   end
 
+  def input
+    @errors = nil
+  end
+
+  def import
+    @content = params[:content]
+    @errors = ParseService.validate(@content)
+    respond_to do |format|
+      if @errors.blank?
+        entry = nil
+        ParseService.parse(@content) do |klass, data|
+          case klass
+          when :entry
+            entry = current_user.entries.create(date: Date.parse(data[:date]), directive: data[:directive], arguments: data[:arguments])
+            if entry.open?
+              current_user.accounts.create(name: data[:name])
+            end
+          when :posting
+            if entry.present? && entry.transaction? && (account = Account.find_by(name: data[:account]))
+              posting = entry.postings.create(account: account, arguments: data[:arguments], comment: data[:comment])
+            else
+              puts "Cannot save posting: #{data}"
+            end
+          else
+            puts "Unknown type #{klass}: #{data}"
+          end
+        end
+        format.html { redirect_to entries_path }
+      else
+        format.html { redirect_to input_entries_path, notice: @errors.join("; ") }
+      end
+    end
+  end
+
   # only show transactions
   def transactions
     @entries = current_user.entries.transactions.includes(postings: :account).order("date DESC")
