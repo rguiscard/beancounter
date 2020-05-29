@@ -6,6 +6,7 @@ class AccountsController < ApplicationController
 
   def balances
     AccountBalanceJob.perform_now(current_user)
+
     respond_to do |format|
       format.html { redirect_to accounts_path, notice: 'Account balances refreshed.' }
     end
@@ -14,13 +15,16 @@ class AccountsController < ApplicationController
   # GET /accounts
   # GET /accounts.json
   def index
-    @accounts = current_user.accounts.includes(:balances)
+    @accounts = current_user.accounts.includes(:balances).order("name ASC")
   end
 
   # GET /accounts/1
   # GET /accounts/1.json
   def show
-    AccountDetailsJob.perform_now(current_user, @account)
+    if @account.journal_cached_at.blank? || @account.journal.blank? ||
+       (current_user.postings.maximum(:updated_at) >= @account.journal_cached_at)
+      AccountJournalJob.perform_now(current_user, @account)
+    end
   end
 
   # GET /accounts/new
