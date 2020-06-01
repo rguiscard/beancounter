@@ -3,6 +3,7 @@ class Account < ApplicationRecord
 
   belongs_to :user
   has_many :balances
+  has_many :postings
 
   def currency_list
     self.currencies.try(:join, ', ')

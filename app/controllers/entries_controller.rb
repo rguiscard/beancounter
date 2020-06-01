@@ -1,6 +1,6 @@
 class EntriesController < ApplicationController
   before_action :set_entry, only: [:show, :edit, :update, :destroy]
-  after_action :delete_beancount, only: [:update, :create, :destroy]
+  after_action :delete_beancount, only: [:update, :create, :destroy, :import]
 
   def search
   end
