@@ -20,4 +20,5 @@ class AccountBalanceJob < ApplicationJob
       end
     end
   end
+
 end

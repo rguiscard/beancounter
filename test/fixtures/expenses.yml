@@ -3,11 +3,11 @@
 one:
   year: 2020
   month: 4
-  expenses: MyText
+  details: MyText
   user: one
 
 two:
   year: 2020
   month: 5
-  expenses: MyText
+  details: MyText
   user: one

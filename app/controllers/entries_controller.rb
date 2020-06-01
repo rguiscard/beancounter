@@ -20,7 +20,7 @@ class EntriesController < ApplicationController
           when :entry
             entry = current_user.entries.create(date: Date.parse(data[:date]), directive: data[:directive], arguments: data[:arguments])
             if entry.open?
-              current_user.accounts.create(name: data[:name])
+              current_user.accounts.find_or_create_by(name: data[:name])
             end
           when :posting
             if entry.present? && entry.transaction? && (account = Account.find_by(name: data[:account]))

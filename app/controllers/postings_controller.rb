@@ -1,6 +1,7 @@
 class PostingsController < ApplicationController
   before_action :set_entry
   before_action :set_posting, only: [:show, :edit, :update, :destroy]
+  after_action :delete_beancount, only: [:update, :create, :destroy]
 
   # GET /postings
   # GET /postings.json
@@ -29,7 +30,7 @@ class PostingsController < ApplicationController
 
     respond_to do |format|
       if @posting.save
-        format.html { redirect_to [@entry, @posting], notice: 'Posting was successfully created.' }
+        format.html { redirect_to @entry, notice: 'Posting was successfully created.' }
         format.json { render :show, status: :created, location: @posting }
       else
         format.html { render :new }
@@ -43,7 +44,7 @@ class PostingsController < ApplicationController
   def update
     respond_to do |format|
       if @posting.update(posting_params)
-        format.html { redirect_to [@entry, @posting], notice: 'Posting was successfully updated.' }
+        format.html { redirect_to @entry, notice: 'Posting was successfully updated.' }
         format.json { render :show, status: :ok, location: @posting }
       else
         format.html { render :edit }
@@ -75,5 +76,10 @@ class PostingsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def posting_params
       params.require(:posting).permit(:flag, :account_id, :arguments, :comment, :entry_id)
+    end
+
+    # remove beancount cache from user
+    def delete_beancount
+      current_user.delete_beancount
     end
 end

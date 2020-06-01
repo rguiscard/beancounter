@@ -25,7 +25,7 @@ class PostingsControllerTest < ActionDispatch::IntegrationTest
       post entry_postings_url(@entry), params: { posting: { account_id: @posting.account_id, arguments: @posting.arguments, comment: @posting.comment, entry_id: @posting.entry_id, flag: @posting.flag } }
     end
 
-    assert_redirected_to entry_posting_url(@entry, @user.postings.last)
+    assert_redirected_to entry_url(@entry)
   end
 
   test "should show posting" do
@@ -40,7 +40,7 @@ class PostingsControllerTest < ActionDispatch::IntegrationTest
 
   test "should update posting" do
     patch entry_posting_url(@entry, @posting), params: { posting: { account: @posting.account, arguments: @posting.arguments, comment: @posting.comment, entry_id: @posting.entry_id, flag: @posting.flag } }
-    assert_redirected_to entry_posting_url(@entry, @posting)
+    assert_redirected_to entry_url(@entry)
   end
 
   test "should destroy posting" do
