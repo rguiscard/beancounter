@@ -12,8 +12,8 @@ class ExpensesJob < ApplicationJob
     end
     query = query + "WHERE account ~ \"Expenses:*|Income:*\" "
     content =  %x(bean-query -q -f csv #{path} '#{query}')
-    user.expenses.find_or_create_by(year: year, month: month) do |expense|
-      expense.details = content
+    if expense = user.expenses.find_or_create_by(year: year, month: month)
+      expense.update_attribute(:details, content)
     end
   end
 end

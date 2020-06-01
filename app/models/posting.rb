@@ -1,5 +1,5 @@
 class Posting < ApplicationRecord
-  belongs_to :entry
+  belongs_to :entry, touch: true
   belongs_to :account
 
   scope :account, -> (type) { joins(:account).where("accounts.name ilike ?", "#{type}%") }
