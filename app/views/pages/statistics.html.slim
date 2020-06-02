@@ -1,9 +1,12 @@
 p
   h4 Statistics
+div
+  = link_to "previous", statistics_path(date: @date.beginning_of_month-1.month), class: 'button button-sm'
+  | &nbsp;
+  = link_to "next", statistics_path(date: @date.beginning_of_month+1.month), class: 'button button-sm'
 p
   h5
-    | This month
-    =< "(#{DateTime.current.month})"
+    =@date.strftime("%Y-%m")
 table.mobile
   tbody
     - CSV.parse(@current_month, headers: :first_row) do |row|
@@ -12,8 +15,8 @@ table.mobile
         td.text-right = MoneyService.split_amount(row['sum_position']) { |x, y| "#{number_to_currency(x)} #{y}" }
 p
   h5
-    | This year
-    =< "(#{DateTime.current.year})"
+    | year
+    =< @date.strftime("%Y")
 table.mobile
   tbody
     - CSV.parse(@current_year, headers: :first_row) do |row|

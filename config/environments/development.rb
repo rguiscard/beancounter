@@ -1,6 +1,10 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  # whitelist development hostname
+  config.hosts << ENV['dev_host']
+  # config.web_console.permissions = ENV['dev_console'] || '192.168.0.0/16'
+
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
