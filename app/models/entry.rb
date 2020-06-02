@@ -4,7 +4,13 @@ class Entry < ApplicationRecord
   belongs_to :user
   has_many :postings
 
-  before_save { |entry| entry.bean_cache = entry.to_bean }
+  before_save do |entry|
+    postings = entry.postings.pluck(:bean_cache).collect do |posting|
+      "    #{posting}\n"
+    end.join
+
+    entry.bean_cache = entry.to_bean + "\n" + postings
+  end
 
   scope :transactions, -> { where(directive: [:txn, :asterisk, :exclamation]) }
 

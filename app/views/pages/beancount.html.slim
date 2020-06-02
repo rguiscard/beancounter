@@ -6,9 +6,4 @@ div style="display: flex; align-items: center"
     = link_to 'text', beancount_path(format: :text), class: 'button button-sm'
 pre
   - @entries.each do |entry|
-    = entry.to_bean
-    br
-    - entry.postings.each do |posting|
-      | &nbsp;&nbsp;
-      = posting.bean_cache
-      br
+    = entry.bean_cache

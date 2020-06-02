@@ -15,7 +15,7 @@ class AccountsController < ApplicationController
   # GET /accounts
   # GET /accounts.json
   def index
-    @accounts = current_user.accounts.includes(:balances).order("name ASC")
+    @accounts = current_user.accounts.assets.or(current_user.accounts.liabilities).includes(:balances).order("name ASC")
   end
 
   # GET /accounts/1

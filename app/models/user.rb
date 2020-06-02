@@ -16,12 +16,7 @@ class User < ApplicationRecord
 
   def beancount
     if super.blank?
-      content = self.entries.collect do |entry|
-        s = (entry.bean_cache || entry.to_bean) + "\n"
-        s = s + entry.postings.pluck(:bean_cache).collect do |posting|
-          "  "+posting
-        end.join("\n")
-      end.join("\n")
+      content = self.entries.pluck(:bean_cache).join
       update_attribute(:beancount, content)
     end
     super
