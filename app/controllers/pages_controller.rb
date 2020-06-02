@@ -4,7 +4,7 @@ class PagesController < ApplicationController
   skip_before_action :authenticate_user!, only: [:welcome, :guide]
 
   def beancount
-    @entries = current_user.entries.includes(postings: :account).order("date DESC")
+    @entries = current_user.entries.includes(:postings).order("date DESC")
   end
 
   def statistics
