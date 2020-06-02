@@ -2,6 +2,8 @@ class Posting < ApplicationRecord
   belongs_to :entry, touch: true
   belongs_to :account
 
+  before_save { |posting| posting.bean_cache = posting.to_bean }
+
   scope :account, -> (type) { joins(:account).where("accounts.name ilike ?", "#{type}%") }
   scope :assets, -> { account('assets') }
   scope :liabilities, -> { account('liabilities') }

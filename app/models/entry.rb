@@ -4,6 +4,8 @@ class Entry < ApplicationRecord
   belongs_to :user
   has_many :postings
 
+  before_save { |entry| entry.bean_cache = entry.to_bean }
+
   scope :transactions, -> { where(directive: [:txn, :asterisk, :exclamation]) }
 
   def transaction?
