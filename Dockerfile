@@ -22,7 +22,7 @@ COPY yarn.lock .
 RUN yarn install --frozen-lockfile
 
 # install beancounter
-RUN pip3 install --prefix=/python3-install beancount
+RUN pip3 install --install-option="--prefix=/python3-install" beancount
 
 # compile assets
 ENV RAILS_ENV docker_build
