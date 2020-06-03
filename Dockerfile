@@ -38,7 +38,7 @@ ENV RAILS_SERVE_STATIC_FILES 1
 
 WORKDIR /myapp
 
-RUN apk add --update --no-cache postgresql-client postgresql-dev tzdata libidn-dev python3-dev
+RUN apk add --update --no-cache postgresql-client postgresql-dev tzdata libidn-dev libxml2-dev libxslt-dev python3-dev
 
 # install at system level
 RUN gem install --no-document foreman
