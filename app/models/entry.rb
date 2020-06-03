@@ -4,13 +4,8 @@ class Entry < ApplicationRecord
   belongs_to :user
   has_many :postings
 
-  before_save do |entry|
-    postings = entry.postings.pluck(:bean_cache).collect do |posting|
-      "    #{posting}\n"
-    end.join
-
-    entry.bean_cache = entry.to_bean + "\n" + postings
-  end
+  before_save :assign_bean_cache
+  after_touch do |entry| entry.save end # this trigger the creation of bean_cache
 
   scope :transactions, -> { where(directive: [:txn, :asterisk, :exclamation]) }
 
@@ -18,6 +13,7 @@ class Entry < ApplicationRecord
     self.txn? || self.asterisk? || self.exclamation?
   end
 
+  # to_bean does not include postings. bean_cache does include postings, though.
   def to_bean
     words = [date.strftime('%Y-%m-%d')]
 
@@ -32,4 +28,15 @@ class Entry < ApplicationRecord
     words << self.arguments
     words.join(' ')
   end
+
+  private
+
+    def assign_bean_cache
+      postings = self.postings.pluck(:bean_cache).collect do |posting|
+        "    #{posting}\n"
+      end.join
+
+      self.bean_cache = self.to_bean + "\n" + postings
+    end
+
 end

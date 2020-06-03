@@ -3,13 +3,13 @@
 one:
   flag:
   account: one
-  arguments: MyText
+  arguments: MyTex1
   comment: MyText
   entry: one
 
 two:
   flag:
   account: one
-  arguments: MyText
+  arguments: MyTex2
   comment: MyText
   entry: one
