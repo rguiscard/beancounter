@@ -4,7 +4,7 @@ ENV RAILS_ENV production
 
 WORKDIR /myapp
 
-RUN apk add --update --no-cache nodejs yarn postgresql-client postgresql-dev tzdata build-base libidn-dev
+RUN apk add --update --no-cache nodejs yarn postgresql-client postgresql-dev tzdata build-base libidn-dev libxml2-dev libxslt-dev python3-dev
 
 # install essential gems
 COPY Gemfile.essential .
@@ -20,6 +20,9 @@ RUN bundle install --deployment --without development test
 COPY package.json .
 COPY yarn.lock .
 RUN yarn install --frozen-lockfile
+
+# install beancounter
+RUN pip3 install --install-options="--prefix=/python3-install" beancount
 
 # compile assets
 ENV RAILS_ENV docker_build
@@ -38,13 +41,13 @@ ENV RAILS_SERVE_STATIC_FILES 1
 
 WORKDIR /myapp
 
-RUN apk add --update --no-cache postgresql-client postgresql-dev tzdata libidn-dev build-base libxml2-dev libxslt-dev python3-dev
+RUN apk add --update --no-cache postgresql-client postgresql-dev tzdata libidn-dev libxml2-dev libxslt-dev python3-dev
 
 # install at system level
 RUN gem install --no-document foreman
 
-# install beancounter
-RUN pip3 install beancount
+# copy beancount
+COPY --from=gem /python3-install /usr/local
 
 COPY . /myapp
 COPY --from=gem /usr/local/bundle /usr/local/bundle
