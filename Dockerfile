@@ -49,6 +49,8 @@ RUN gem install --no-document foreman
 # copy beancount
 COPY --from=gem /python3-install /usr/local
 
+ENV PYTHONPATH=${PYTHONPATH}:/usr/local/lib/python3.7/site-packages
+
 COPY . /myapp
 COPY --from=gem /usr/local/bundle /usr/local/bundle
 COPY --from=gem /myapp/vendor/bundle /myapp/vendor/bundle
