@@ -79,8 +79,13 @@ test:
 #   production:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
+docker_build:
+  <<: *default
+  database: beancounter_docker_build
+
 production:
   <<: *default
+  host: srv-captain--postgresql-db
   database: beancounter_production
-  username: beancounter
-  password: <%= ENV['BEANCOUNTER_DATABASE_PASSWORD'] %>
+  username: <%= ENV['POSTGRES_USER'] %>
+  password: <%= ENV['POSTGRES_PASSWORD'] %>
