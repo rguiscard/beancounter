@@ -22,7 +22,7 @@ class AccountsController < ApplicationController
   # GET /accounts/1.json
   def show
     if @account.journal_cached_at.blank? || @account.journal.blank? ||
-       (current_user.postings.maximum(:updated_at) >= @account.journal_cached_at)
+       (current_user.entries.maximum(:updated_at) > @account.journal_cached_at)
       AccountJournalJob.perform_now(current_user, @account)
     end
   end

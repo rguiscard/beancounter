@@ -7,10 +7,10 @@ class UserTest < ActiveSupport::TestCase
 
   test "beancount is cached when entry is updated" do
     @user.beancount
-    old_updated_at = @user.beancount_updated_at
-    refute_nil old_updated_at
+    old_cached_at = @user.beancount_cached_at
+    refute_nil old_cached_at
     @user.entries.last.update_attribute(:arguments, "abc")
     @user.beancount
-    assert @user.beancount_updated_at > old_updated_at
+    assert @user.beancount_cached_at > old_cached_at
   end
 end
