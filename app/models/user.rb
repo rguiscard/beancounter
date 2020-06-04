@@ -15,9 +15,9 @@ class User < ApplicationRecord
   end
 
   def beancount
-    if super.blank?
+    if super.blank? || (self.beancount_updated_at.present? && (self.entries.empty? == false) && (self.beancount_updated_at < self.entries.maximum(:updated_at)))
       content = self.entries.pluck(:bean_cache).join
-      update_attribute(:beancount, content)
+      update(beancount: content, beancount_updated_at: DateTime.current)
     end
     super
   end
