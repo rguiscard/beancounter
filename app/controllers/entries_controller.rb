@@ -123,7 +123,7 @@ class EntriesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def entry_params
       pm = params.require(:entry).permit(:date, :directive, :arguments, postings_attributes: [:account_id, :arguments])
-      if pm[:arguments].start_with?('"') == false
+      if ((pm[:directive] == "txn") || (pm[:directive] == "asterisk") || (pm[:directive] == "exclamation")) && pm[:arguments].start_with?('"') == false
         pm[:arguments] = "\"#{pm[:arguments]}\""
       end
       pm

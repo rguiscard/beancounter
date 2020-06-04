@@ -105,6 +105,15 @@ class EntriesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to entry_url(@user.entries.last)
   end
 
+  test "should create entry with unmodified arguments" do
+    assert_difference('@user.entries.count') do
+      post entries_url, params: { entry: { arguments: "Assets:BoA 10000 USD", date: @entry.date, directive: "balance" } }
+    end
+
+    assert_equal @user.entries.last.arguments, "Assets:BoA 10000 USD"
+    assert_redirected_to entry_url(@user.entries.last)
+  end
+
   test "should show entry" do
     get entry_url(@entry)
     assert_response :success
