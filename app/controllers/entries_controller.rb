@@ -122,7 +122,11 @@ class EntriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def entry_params
-      params.require(:entry).permit(:date, :directive, :arguments, postings_attributes: [:account_id, :arguments])
+      pm = params.require(:entry).permit(:date, :directive, :arguments, postings_attributes: [:account_id, :arguments])
+      if pm[:arguments].start_with?('"') == false
+        pm[:arguments] = "\"#{pm[:arguments]}\""
+      end
+      pm
     end
 
     # remove beancount cache from user

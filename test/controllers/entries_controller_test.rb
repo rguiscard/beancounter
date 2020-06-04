@@ -95,6 +95,16 @@ class EntriesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to entry_url(@user.entries.last)
   end
 
+  test "should create entry with quotated arguments" do
+    assert_difference('@user.entries.count') do
+      post entries_url, params: { entry: { arguments: "abc", date: @entry.date, directive: @entry.directive } }
+    end
+
+    assert_equal @user.entries.last.arguments, "\"abc\""
+
+    assert_redirected_to entry_url(@user.entries.last)
+  end
+
   test "should show entry" do
     get entry_url(@entry)
     assert_response :success
@@ -106,7 +116,8 @@ class EntriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update entry" do
-    patch entry_url(@entry), params: { entry: { arguments: @entry.arguments, date: @entry.date, directive: @entry.directive } }
+    patch entry_url(@entry), params: { entry: { arguments: "abc", date: @entry.date, directive: @entry.directive } }
+    assert_equal "\"abc\"", Entry.find(@entry.id).arguments
     assert_redirected_to entry_url(@entry)
   end
 
