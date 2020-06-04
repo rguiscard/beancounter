@@ -19,3 +19,8 @@ pre
   br
   | 2018-01-02 balance Assets:US:BofA:Checking        3614.47 USD
   br
+p
+  h4 Accounts
+  - current_user.accounts.order("name ASC").each do |account|
+    = account.name
+    br
