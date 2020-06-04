@@ -12,7 +12,7 @@ tr
           | &nbsp;&nbsp;&nbsp;&nbsp;
           = posting.account.name
           br
-  td style="vertical-align: top;"
+  td style="vertical-align: top;" class='lg:hidden md:hidden sm:hidden'
     = link_to 'Edit', edit_entry_path(entry), class: 'button button-sm'
     - if entry.transaction?
       | &nbsp;

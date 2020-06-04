@@ -5,10 +5,10 @@ class User < ApplicationRecord
   #        :recoverable, :rememberable, :validatable
   devise :database_authenticatable, :rememberable, :validatable
 
-  has_many :entries
+  has_many :entries, inverse_of: :user
   has_many :postings, through: :entries
-  has_many :accounts
-  has_many :expenses # to cache csv from bean-query
+  has_many :accounts, inverse_of: :user
+  has_many :expenses, inverse_of: :user # to cache csv from bean-query
 
   def delete_beancount
     update_attribute(:beancount, "")

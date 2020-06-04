@@ -1,8 +1,9 @@
 class Entry < ApplicationRecord
   enum directive: [:txn, :open, :close, :commodity, :balance, :pad, :note, :document, :price, :event, :query, :custom, :asterisk, :exclamation]
 
-  belongs_to :user
-  has_many :postings
+  belongs_to :user, inverse_of: :entries
+  has_many :postings, inverse_of: :entry
+  accepts_nested_attributes_for :postings
 
   before_save :assign_bean_cache
   after_touch do |entry| entry.save end # this trigger the creation of bean_cache

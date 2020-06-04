@@ -67,6 +67,7 @@ class EntriesController < ApplicationController
   # GET /entries/new
   def new
     @entry = Entry.new
+    2.times { @entry.postings.build }
   end
 
   # GET /entries/1/edit
@@ -121,7 +122,7 @@ class EntriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def entry_params
-      params.require(:entry).permit(:date, :directive, :arguments)
+      params.require(:entry).permit(:date, :directive, :arguments, postings_attributes: [:account_id, :arguments])
     end
 
     # remove beancount cache from user

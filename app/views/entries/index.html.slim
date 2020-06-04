@@ -1,5 +1,10 @@
-p
-  h3 Entries
+div style="display: flex; align-items: center"
+  div
+    p
+      h3 Entries
+  div style="margin-left: auto;"
+    = link_to 'New Entry', new_entry_path, class: 'button button-sm'
+
 - if @search_params.present?
   p
     | search on
@@ -11,5 +16,3 @@ table.mobile
 
 == pagy_nav(@pagy)
 br
-
-= link_to 'New Entry', new_entry_path, class: 'button'

@@ -1,6 +1,6 @@
 class Posting < ApplicationRecord
-  belongs_to :entry, touch: true
-  belongs_to :account
+  belongs_to :entry, inverse_of: :postings, touch: true
+  belongs_to :account, inverse_of: :postings
 
   before_save { |posting| posting.bean_cache = posting.to_bean }
 
