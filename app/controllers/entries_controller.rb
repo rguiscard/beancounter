@@ -30,7 +30,13 @@ class EntriesController < ApplicationController
               current_user.accounts.find_or_create_by(name: data[:name])
             end
           when :posting
-            if entry.present? && entry.transaction? && (account = Account.find_by(name: data[:account]))
+            account = current_user.accounts.find_by(name: data[:account])
+            if account.blank? && ActiveModel::Type::Boolean.new.cast(params[:create_account])
+              account = current_user.accounts.create(name: data[:account])
+              earliest = current_user.entries.minimum(:date)
+              current_user.entries.create(date: earliest-1.day, directive: :open, arguments: data[:account]) 
+            end
+            if entry.present? && entry.transaction? && account.present?
               posting = entry.postings.create(account: account, arguments: data[:arguments], comment: data[:comment])
             else
               puts "Cannot save posting: #{data}"

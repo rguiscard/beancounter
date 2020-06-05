@@ -2,6 +2,9 @@ p
   h3 Input
 = form_with url: import_entries_path do |form|
   = form.text_area :content, value: @content, style: "height: 10em;"
+  label
+    = form.check_box :create_account, {checked: true, value: true}
+    span.label-body Create account automatically when necessary
   = form.submit
 
 p
