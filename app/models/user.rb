@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_many :entries, inverse_of: :user
   has_many :postings, through: :entries
   has_many :accounts, inverse_of: :user
+  has_many :balances, through: :accounts
   has_many :expenses, inverse_of: :user # to cache csv from bean-query
 
   def delete_beancount
@@ -15,7 +16,7 @@ class User < ApplicationRecord
   end
 
   def beancount
-    if super.blank? || (self.beancount_cached_at.present? && (self.entries.empty? == false) && (self.beancount_cached_at < self.entries.maximum(:updated_at)))
+    if super.blank? || self.beancount_cached_at.blank? || (self.beancount_cached_at.present? && (self.entries.empty? == false) && (self.beancount_cached_at < self.entries.maximum(:updated_at)))
       content = self.entries.pluck(:bean_cache).join
       update(beancount: content, beancount_cached_at: DateTime.current)
     end

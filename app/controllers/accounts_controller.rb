@@ -4,17 +4,12 @@ class AccountsController < ApplicationController
   before_action :set_account, only: [:show, :edit, :update, :destroy]
   after_action :delete_beancount, only: [:update, :create, :destroy]
 
-  def balances
-    AccountBalanceJob.perform_now(current_user)
-
-    respond_to do |format|
-      format.html { redirect_to accounts_path, notice: 'Account balances refreshed.' }
-    end
-  end
-
   # GET /accounts
   # GET /accounts.json
   def index
+    if current_user.beancount_cached_at.blank? || ((current_user.entries.empty? == false) && (current_user.balances.empty? == false) && (current_user.balances.maximum(:updated_at) < current_user.entries.maximum(:updated_at)))
+      AccountBalanceJob.perform_now(current_user)
+    end
     @accounts = current_user.accounts.assets.or(current_user.accounts.liabilities).includes(:balances).order("name ASC")
   end
 
@@ -22,7 +17,7 @@ class AccountsController < ApplicationController
   # GET /accounts/1.json
   def show
     if @account.journal_cached_at.blank? || @account.journal.blank? ||
-       (current_user.entries.maximum(:updated_at) > @account.journal_cached_at)
+       (@account.journal_cached_at.present? && (current_user.entries.empty? == false) && (current_user.entries.maximum(:updated_at) > @account.journal_cached_at))
       AccountJournalJob.perform_now(current_user, @account)
     end
   end

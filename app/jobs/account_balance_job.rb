@@ -11,7 +11,7 @@ class AccountBalanceJob < ApplicationJob
         next if row["sum_position"].blank?
         MoneyService.split_amount(row["sum_position"]) do |x, y|
           if balance = account.balances.find_or_create_by(currency: y)
-            balance.update_attribute(:amount, x)
+            balance.update(amount: x, updated_at: DateTime.current)
           end
         end
       else

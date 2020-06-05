@@ -16,9 +16,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :accounts, except: [:new, :create] do
-    get 'balances', on: :collection
-  end
+  resources :accounts, except: [:new, :create]
 
   get 'beancount', to: 'pages#beancount'
   get 'statistics', to: 'pages#statistics'
