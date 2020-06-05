@@ -9,6 +9,47 @@ class EntriesControllerTest < ActionDispatch::IntegrationTest
     sign_in @user
   end
 
+  test "cannot create accounts with new postings" do
+    content = <<~EOF
+      2020-05-16 * "信用卡轉帳"
+        Liabilities:NewBank               100 USD
+        Income:Cashback
+    EOF
+
+    assert_difference -> { @user.entries.count } => 1, -> { @user.postings.count } => 0, -> { @user.accounts.count } => 0 do
+      post import_entries_url, params: { content: content, create_account: 0 }
+    end
+
+    refute @user.accounts.find_by(name: "Liabilities:NewBank").present?
+    refute @user.accounts.find_by(name: "Income:Cashback").present?
+
+    entry = @user.entries.find_by(arguments: "\"信用卡轉帳\"")
+    assert_equal entry.postings.count, 0
+
+    assert_redirected_to entries_url
+  end
+
+  test "should automatically create accounts with new postings" do
+    content = <<~EOF
+      2020-05-16 * "信用卡轉帳"
+        Liabilities:NewBank               100 USD
+        Income:Cashback
+    EOF
+
+    assert_difference -> { @user.entries.count } => 3, -> { @user.postings.count } => 2, -> { @user.accounts.count } => 2 do
+      post import_entries_url, params: { content: content, create_account: 1 }
+    end
+
+    assert @user.accounts.find_by(name: "Liabilities:NewBank").present?
+    assert @user.accounts.find_by(name: "Income:Cashback").present?
+
+    entry = @user.entries.find_by(arguments: "\"信用卡轉帳\"")
+    assert_equal entry.postings.count, 2
+    assert_equal entry.postings.last.account, @user.accounts.find_by(name: "Income:Cashback")
+
+    assert_redirected_to entries_url
+  end
+
   test "should create entry and postings without amount" do
     content = <<~EOF
       2020-05-15 * "信用卡轉帳"
