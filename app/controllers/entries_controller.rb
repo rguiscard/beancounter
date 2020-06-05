@@ -1,12 +1,19 @@
 class EntriesController < ApplicationController
-  before_action :set_entry, only: [:show, :edit, :update, :destroy]
+  before_action :set_entry, only: [:show, :edit, :update, :destroy, :duplicate]
   after_action :delete_beancount, only: [:update, :create, :destroy, :import]
+
+  def duplicate
+    @content = @entry.bean_cache
+
+    render :input
+  end
 
   def search
   end
 
   def input
     @errors = nil
+    @content = nil
   end
 
   def import

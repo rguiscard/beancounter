@@ -1,7 +1,7 @@
 p
   h3 Input
 = form_with url: import_entries_path do |form|
-  = form.text_area :content
+  = form.text_area :content, value: @content, style: "height: 10em;"
   = form.submit
 
 p

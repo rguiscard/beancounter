@@ -14,6 +14,5 @@ tr
           br
   td style="vertical-align: top;" class='lg:hidden md:hidden sm:hidden'
     = link_to 'Edit', edit_entry_path(entry), class: 'button button-sm'
-    - if entry.transaction?
-      | &nbsp;
-      = link_to 'New Posting', new_entry_posting_path(entry), class: 'button button-sm'
+    | &nbsp;
+    = link_to 'Duplicate', duplicate_entry_path(entry), class: 'button button-sm'

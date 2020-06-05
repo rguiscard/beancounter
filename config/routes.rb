@@ -10,6 +10,10 @@ Rails.application.routes.draw do
       get 'input'
       post 'import'
     end
+
+    member do
+      get 'duplicate'
+    end
   end
 
   resources :accounts, except: [:new, :create] do
