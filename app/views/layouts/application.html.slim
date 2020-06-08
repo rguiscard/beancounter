@@ -37,9 +37,14 @@ html
                   li = link_to 'Input', input_entries_path, class: 'item'
                   li = link_to 'Guide', guide_path, class: 'item'
                   li = link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'item'
+            ul.right.menu class='lg:visible md:visible sm:visible'
+              li.item
+                = link_to 'New Entry', new_entry_path, class: 'button button-sm'
 
             ul.left.menu class='lg:hidden md:hidden sm:hidden'
               li = link_to 'Beancounter', root_path, class: 'item'
+              li.item
+                = link_to 'New Entry', new_entry_path, class: 'button button-sm'
             ul.right.menu class='lg:hidden md:hidden sm:hidden'
               li = link_to 'Transactions', transactions_entries_path, class: 'item'
               li = link_to 'Accounts', accounts_path, class: 'item'

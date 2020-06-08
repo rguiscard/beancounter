@@ -15,7 +15,7 @@ p
   fieldset
     div
       = form.label :date
-      = form.date_field :date
+      = form.date_field :date, value: DateTime.current.strftime("%Y-%m-%d")
 
     div
       = form.label :directive
