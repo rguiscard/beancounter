@@ -10,7 +10,7 @@ class AccountsController < ApplicationController
     if current_user.beancount_cached_at.blank? || ((current_user.entries.empty? == false) && (current_user.balances.empty? == false) && (current_user.balances.maximum(:updated_at) < current_user.entries.maximum(:updated_at)))
       AccountBalanceJob.perform_now(current_user)
     end
-    @accounts = current_user.accounts.assets.or(current_user.accounts.liabilities).includes(:balances).order("name ASC")
+    @accounts = current_user.accounts.includes(:balances).order("name ASC")
   end
 
   # GET /accounts/1

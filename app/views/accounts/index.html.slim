@@ -5,10 +5,23 @@ div style="display: flex; align-items: center"
 
 table.mobile
   tbody
-    - @accounts.each do |account|
+    - @accounts.assets.each do |account|
       tr
         td = link_to account.name, account
         td.text-right = account.balances.collect { |x| "#{number_to_currency(x.amount)} #{x.currency}" }.join("\n")
+    - @accounts.liabilities.each do |account|
+      tr
+        td = link_to account.name, account
+        td.text-right = account.balances.collect { |x| "#{number_to_currency(x.amount)} #{x.currency}" }.join("\n")
+    - @accounts.income.each do |account|
+      tr
+        td = link_to account.name, account
+    - @accounts.expenses.each do |account|
+      tr
+        td = link_to account.name, account
+    - @accounts.equity.each do |account|
+      tr
+        td = link_to account.name, account
 p
   | Create account using
   =< link_to 'entries', entries_path
