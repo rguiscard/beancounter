@@ -2,6 +2,7 @@ class Entry < ApplicationRecord
   enum directive: [:txn, :open, :close, :commodity, :balance, :pad, :note, :document, :price, :event, :query, :custom, :asterisk, :exclamation]
 
   belongs_to :user, inverse_of: :entries
+  belongs_to :account, inverse_of: :entries, optional: true
   has_many :postings, inverse_of: :entry
   accepts_nested_attributes_for :postings
 

@@ -10,7 +10,7 @@ tr
       div
         - entry.postings.each do |posting|
           | &nbsp;&nbsp;&nbsp;&nbsp;
-          = posting.account.display_name
+          = link_to posting.account.display_name, posting.account
           br
   td style="vertical-align: top;" class='lg:hidden md:hidden sm:hidden'
     = link_to 'Edit', edit_entry_path(entry), class: 'button button-sm'

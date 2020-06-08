@@ -1,0 +1,12 @@
+h3 Account Settings
+
+h4 title=@account.name = @account.display_name
+
+table.mobile
+  tbody
+    - @entries.each do |entry|
+      tr
+        td = entry.date.strftime("%Y-%m-%d")
+        td = entry.directive
+        td = link_to entry.arguments, entry
+        td = link_to 'Edit', edit_entry_path(entry), class: 'button button-sm'

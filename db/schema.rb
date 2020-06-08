@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_08_061815) do
+ActiveRecord::Schema.define(version: 2020_06_08_064221) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 2020_06_08_061815) do
     t.bigint "user_id", null: false
     t.datetime "journal_cached_at"
     t.string "nickname"
+    t.boolean "closed", default: false
     t.index ["currencies"], name: "index_accounts_on_currencies", using: :gin
     t.index ["user_id"], name: "index_accounts_on_user_id"
   end
@@ -45,6 +46,8 @@ ActiveRecord::Schema.define(version: 2020_06_08_061815) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id", null: false
     t.text "bean_cache"
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_entries_on_account_id"
     t.index ["user_id"], name: "index_entries_on_user_id"
   end
 
@@ -87,6 +90,7 @@ ActiveRecord::Schema.define(version: 2020_06_08_061815) do
 
   add_foreign_key "accounts", "users", on_delete: :cascade
   add_foreign_key "balances", "accounts", on_delete: :cascade
+  add_foreign_key "entries", "accounts", on_delete: :cascade
   add_foreign_key "entries", "users", on_delete: :cascade
   add_foreign_key "expenses", "users", on_delete: :cascade
   add_foreign_key "postings", "accounts", on_delete: :cascade

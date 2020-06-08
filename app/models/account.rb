@@ -3,6 +3,7 @@ class Account < ApplicationRecord
 
   belongs_to :user, inverse_of: :accounts
   has_many :balances, inverse_of: :account
+  has_many :entries, inverse_of: :account
   has_many :postings, inverse_of: :account
 
   scope :account, -> (type) { where("accounts.name ilike ?", "#{type}%") }

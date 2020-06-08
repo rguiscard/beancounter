@@ -16,7 +16,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :accounts, except: [:new, :create]
+  resources :accounts, except: [:new, :create] do
+    member do
+      get 'settings'
+    end
+  end
 
   get 'beancount', to: 'pages#beancount'
   get 'statistics', to: 'pages#statistics'

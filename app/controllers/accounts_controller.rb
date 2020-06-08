@@ -1,8 +1,16 @@
 require 'csv'
 
 class AccountsController < ApplicationController
-  before_action :set_account, only: [:show, :edit, :update, :destroy]
+  before_action :set_account, only: [:show, :edit, :update, :destroy, :settings]
   after_action :delete_beancount, only: [:update, :create, :destroy]
+
+  # GET /accounts/1/settings
+  def settings
+    # try to find all entries related to this account.
+    @entries = current_user.entries.where(directive: ['open', 'balance', 'pad', 'close'])
+    @entries = @entries.where("arguments ilike ?", "#{@account.name} %").or(@entries.where(arguments: @account.name))
+    @entries.where(account: nil).update_all(account_id: @account.id)
+  end
 
   # GET /accounts
   # GET /accounts.json

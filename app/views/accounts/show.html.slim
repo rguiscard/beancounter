@@ -1,4 +1,9 @@
-h1 Account
+div style="display: flex; align-items: center"
+  div
+    p
+      h3 Account
+  div style="margin-left: auto;"
+    = link_to 'settings', settings_account_path(@account), class: 'button button-sm'
 
 h4 title=@account.name = @account.display_name
 
