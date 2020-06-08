@@ -8,6 +8,10 @@
   line-height: 24px;
 }
 
+table a {
+  text-decoration: none;
+}
+
 @media screen and (max-width:601px) {
 	table.mobile {
 		word-wrap:break-word;
