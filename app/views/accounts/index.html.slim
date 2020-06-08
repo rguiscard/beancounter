@@ -7,23 +7,23 @@ table.mobile
   tbody
     - @accounts.assets.each do |account|
       tr
-        td = link_to account.name, account
+        td = link_to account.display_name, account
         td.text-right = account.balances.collect { |x| "#{number_to_currency(x.amount)} #{x.currency}" }.join("\n")
     - @accounts.liabilities.each do |account|
       tr
-        td = link_to account.name, account
+        td = link_to account.display_name, account
         td.text-right = account.balances.collect { |x| "#{number_to_currency(x.amount)} #{x.currency}" }.join("\n")
     - @accounts.income.each do |account|
       tr
-        td = link_to account.name, account
+        td = link_to account.display_name, account
         td
     - @accounts.expenses.each do |account|
       tr
-        td = link_to account.name, account
+        td = link_to account.display_name, account
         td
     - @accounts.equity.each do |account|
       tr
-        td = link_to account.name, account
+        td = link_to account.display_name, account
         td
 p
   | Create account using

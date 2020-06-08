@@ -11,7 +11,8 @@ table.mobile
   tbody
     - CSV.parse(@current_month, headers: :first_row) do |row|
       tr
-        td = row['account']
+        - account = current_user.accounts.find_by(name: row['account'].strip)
+        td = link_to account.display_name, account
         td.text-right = MoneyService.split_amount(row['sum_position']) { |x, y| "#{number_to_currency(x)} #{y}" }
 p
   h5
@@ -21,5 +22,6 @@ table.mobile
   tbody
     - CSV.parse(@current_year, headers: :first_row) do |row|
       tr
-        td = row['account']
+        - account = current_user.accounts.find_by(name: row['account'].strip)
+        td = link_to account.display_name, account
         td.text-right = MoneyService.split_amount(row['sum_position']) { |x, y| "#{number_to_currency(x)} #{y}" }

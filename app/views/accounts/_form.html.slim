@@ -8,7 +8,10 @@
 
   .field
     = f.label :name
-    = f.text_field :name
+    = f.text_field :name, placeholder: "full beancount account name"
+  .field
+    = f.label :nickname
+    = f.text_field :nickname, placeholder: "short name for display"
   .field
     = f.label :currencies
     = f.text_field :currency_list

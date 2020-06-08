@@ -12,6 +12,10 @@ class Account < ApplicationRecord
   scope :income, -> { account('income') }
   scope :equity, -> { account('equity') }
 
+  def display_name
+    self.nickname || self.name
+  end
+
   def currency_list
     self.currencies.try(:join, ', ')
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_04_142206) do
+ActiveRecord::Schema.define(version: 2020_06_08_061815) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 2020_06_04_142206) do
     t.text "journal"
     t.bigint "user_id", null: false
     t.datetime "journal_cached_at"
+    t.string "nickname"
     t.index ["currencies"], name: "index_accounts_on_currencies", using: :gin
     t.index ["user_id"], name: "index_accounts_on_user_id"
   end
