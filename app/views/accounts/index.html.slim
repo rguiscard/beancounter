@@ -16,12 +16,15 @@ table.mobile
     - @accounts.income.each do |account|
       tr
         td = link_to account.name, account
+        td
     - @accounts.expenses.each do |account|
       tr
         td = link_to account.name, account
+        td
     - @accounts.equity.each do |account|
       tr
         td = link_to account.name, account
+        td
 p
   | Create account using
   =< link_to 'entries', entries_path
