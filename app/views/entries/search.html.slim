@@ -1,5 +1,7 @@
-p
-  h3 Search
+div style="display: flex; align-items: center"
+  div
+    p
+      h3 = t('nav.search').capitalize
 
 = form_with scope: :q, url: entries_url, method: :get, local: true do |form|
   div.field

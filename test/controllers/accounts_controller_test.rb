@@ -42,11 +42,21 @@ class AccountsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to account_url(@account)
   end
 
-  test "should destroy account" do
+  test "should destroy empty account" do
+    @account = @user.accounts.create(name: "New Bank")
     assert_difference('Account.count', -1) do
       delete account_url(@account)
     end
 
     assert_redirected_to accounts_url
+  end
+
+  # Account with postings will be redirect to confirm_destroy_account_path
+  test "should destroy account" do
+    assert_difference('Account.count', 0) do
+      delete account_url(@account)
+    end
+
+    assert_redirected_to confirm_destroy_account_url(@account)
   end
 end

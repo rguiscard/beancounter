@@ -1,7 +1,7 @@
 div style="display: flex; align-items: center"
   div
     p
-      h3 Beancount
+      h3 = t('nav.beancount').capitalize
   div style="margin-left: auto;"
     = link_to 'text', beancount_path(format: :text), class: 'button button-sm'
 pre

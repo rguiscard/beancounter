@@ -1,5 +1,7 @@
-p
-  h4 Statistics
+div style="display: flex; align-items: center"
+  div
+    p
+      h3 = t('nav.statistics').capitalize
 div
   = link_to "previous", statistics_path(date: @date.beginning_of_month-1.month), class: 'button button-sm'
   | &nbsp;

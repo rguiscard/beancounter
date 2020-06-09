@@ -28,36 +28,36 @@ html
                   | Beancounter
                   i.caret
                 ul.menu
-                  li = link_to 'Transactions', transactions_entries_path, class: 'item'
-                  li = link_to 'Accounts', accounts_path, class: 'item'
-                  li = link_to 'Entries', entries_path, class: 'item'
-                  li = link_to 'Statistics', statistics_path, class: 'item'
-                  li = link_to 'Beancount', beancount_path, class: 'item'
-                  li = link_to 'Search', search_entries_path, class: 'item'
-                  li = link_to 'Input', input_entries_path, class: 'item'
-                  li = link_to 'Guide', guide_path, class: 'item'
-                  li = link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'item'
+                  li = link_to t('nav.transactions'), transactions_entries_path, class: 'item'
+                  li = link_to t('nav.accounts'), accounts_path, class: 'item'
+                  li = link_to t('nav.entries'), entries_path, class: 'item'
+                  li = link_to t('nav.statistics'), statistics_path, class: 'item'
+                  li = link_to t('nav.beancount'), beancount_path, class: 'item'
+                  li = link_to t('nav.search'), search_entries_path, class: 'item'
+                  li = link_to t('nav.input'), input_entries_path, class: 'item'
+                  li = link_to t('nav.guide'), guide_path, class: 'item'
+                  li = link_to t('nav.sign_out'), destroy_user_session_path, method: :delete, class: 'item'
             ul.right.menu class='lg:visible md:visible sm:visible'
               li.item
-                = link_to 'New Entry', new_entry_path, class: 'button button-sm'
+                = link_to t('new_entry'), new_entry_path, class: 'button button-sm'
 
             ul.left.menu class='lg:hidden md:hidden sm:hidden'
               li = link_to 'Beancounter', root_path, class: 'item'
               li.item
-                = link_to 'New Entry', new_entry_path, class: 'button button-sm'
+                = link_to t('nav.new_entry'), new_entry_path, class: 'button button-sm'
             ul.right.menu class='lg:hidden md:hidden sm:hidden'
-              li = link_to 'Transactions', transactions_entries_path, class: 'item'
-              li = link_to 'Accounts', accounts_path, class: 'item'
-              li = link_to 'Entries', entries_path, class: 'item'
-              li = link_to 'Statistics', statistics_path, class: 'item'
-              li = link_to 'Beancount', beancount_path, class: 'item'
-              li = link_to 'Search', search_entries_path, class: 'item'
-              li = link_to 'Input', input_entries_path, class: 'item'
-              li = link_to 'Guide', guide_path, class: 'item'
-              li = link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'item'
+              li = link_to t('nav.transactions'), transactions_entries_path, class: 'item'
+              li = link_to t('nav.accounts'), accounts_path, class: 'item'
+              li = link_to t('nav.entries'), entries_path, class: 'item'
+              li = link_to t('nav.statistics'), statistics_path, class: 'item'
+              li = link_to t('nav.beancount'), beancount_path, class: 'item'
+              li = link_to t('nav.search'), search_entries_path, class: 'item'
+              li = link_to t('nav.input'), input_entries_path, class: 'item'
+              li = link_to t('nav.guide'), guide_path, class: 'item'
+              li = link_to t('nav.sign_out'), destroy_user_session_path, method: :delete, class: 'item'
           - else
             ul.left.menu
-              li = link_to 'Sign in', new_user_session_path, class: 'item'
-              li = link_to 'Guide', guide_path, class: 'item'
+              li = link_to t('sign_in'), new_user_session_path, class: 'item'
+              li = link_to t('guide'), guide_path, class: 'item'
       div.container
         = yield

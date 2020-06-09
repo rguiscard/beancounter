@@ -1,0 +1,13 @@
+zh-TW:
+  nav:
+    transactions: 交易記錄
+    accounts: 帳戶
+    entries: 全部記錄
+    statistics: 統計
+    beancount: 文字記錄
+    search: 搜尋
+    input: 輸入
+    guide: 說明
+    sign_out: 登出
+    sign_in: 登入
+    new_entry: 新增記錄

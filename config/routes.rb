@@ -24,6 +24,9 @@ Rails.application.routes.draw do
     end
   end
 
+  resource :user, only: [:edit, :update]
+  resolve("User") { [:user] } # to make form_for works properly on singular resource
+
   get 'beancount', to: 'pages#beancount'
   get 'statistics', to: 'pages#statistics'
   get 'guide', to: 'pages#guide'
