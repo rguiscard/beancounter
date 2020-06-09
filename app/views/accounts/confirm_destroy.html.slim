@@ -1,0 +1,19 @@
+div style="display: flex; align-items: center"
+  div
+    p
+      h3 Destroy Account
+
+h4 title=@account.name = @account.display_name
+
+div.alert.alert-error
+  | There are entries associated to this account. Delete this account without removing these entries will cause erros in beancount. Do you want to remove all these entries along with this account ?
+
+table.mobile
+  tbody
+    - @entries.each do |entry|
+      tr
+        td
+          pre = entry.bean_cache
+
+= link_to 'Back', account_path(@account), class: 'button button-sm'
+= link_to 'Destroy entries and account', complete_destroy_account_path(@account), data: { confirm: 'Are you sure?' }, method: :delete, class: 'button danger button-sm right'

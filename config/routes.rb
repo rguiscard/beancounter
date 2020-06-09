@@ -19,6 +19,8 @@ Rails.application.routes.draw do
   resources :accounts, except: [:new, :create] do
     member do
       get 'settings'
+      get 'confirm_destroy'
+      delete 'complete_destroy'
     end
   end
 

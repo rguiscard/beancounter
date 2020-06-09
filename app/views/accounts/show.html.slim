@@ -22,7 +22,8 @@ table.mobile
         td.text-right = MoneyService.split_amount(row['position']) { |x, y| "#{number_to_currency(x)} #{y}" }
         td.text-right = MoneyService.split_amount(row['balance']) { |x, y| "#{number_to_currency(x)} #{y}" }
 
-=> link_to 'Edit', edit_account_path(@account)
-'|
-=< link_to 'Back', accounts_path
-/ = link_to 'Destroy', account, data: { confirm: 'Are you sure?' }, method: :delete
+= link_to 'Edit', edit_account_path(@account), class: 'button button-sm'
+| &nbsp;
+= link_to 'Back', accounts_path, class: 'button button-sm'
+| &nbsp;
+= link_to 'Destroy', @account, data: { confirm: 'Are you sure?' }, method: :delete, class: 'button danger button-sm right'

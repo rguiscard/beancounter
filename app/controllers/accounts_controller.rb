@@ -1,8 +1,24 @@
 require 'csv'
 
 class AccountsController < ApplicationController
-  before_action :set_account, only: [:show, :edit, :update, :destroy, :settings]
-  after_action :delete_beancount, only: [:update, :create, :destroy]
+  before_action :set_account, only: [:show, :edit, :update, :destroy, :settings, :confirm_destroy, :complete_destroy]
+  after_action :delete_beancount, only: [:update, :create, :destroy, :complete_destroy]
+
+  # If there are postings associated with account, redirect to here
+  def confirm_destroy
+    @entries = associated_entries
+  end
+
+  # remove both associated entries and account
+  def complete_destroy
+    @entries = associated_entries # associated through postings
+    @entries.destroy_all
+    @account.destroy
+    respond_to do |format|
+      format.html { redirect_to accounts_url, notice: 'Account was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
 
   # GET /accounts/1/settings
   def settings
@@ -72,10 +88,14 @@ class AccountsController < ApplicationController
   # DELETE /accounts/1
   # DELETE /accounts/1.json
   def destroy
-    @account.destroy
-    respond_to do |format|
-      format.html { redirect_to accounts_url, notice: 'Account was successfully destroyed.' }
-      format.json { head :no_content }
+    if @account.postings.empty?
+      @account.destroy
+      respond_to do |format|
+        format.html { redirect_to accounts_url, notice: 'Account was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    else
+      redirect_to confirm_destroy_account_path(@account)
     end
   end
 
@@ -93,5 +113,11 @@ class AccountsController < ApplicationController
     # remove beancount cache from user
     def delete_beancount
       current_user.delete_beancount
+    end
+
+    # Entries having postings associated with account.
+    # Do not confuse with entries which directly associate with account, such as open, pad and balance directive
+    def associated_entries
+      @current_user.entries.joins(postings: :account).where(:"postings.account" => @account)
     end
 end
