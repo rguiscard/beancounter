@@ -1,7 +1,7 @@
 class ParseService
   ENTRY_REGEX = /^\s*(?<date>\d{4}-\d{2}-\d{2})\s+(?<directive>\S+)\s+(?<arguments>.*)$/
   POSTING_REGEX = /^\s*(?<flag>!?\s*)(?<account>\S+)\s*(?<arguments>[^;]*)(?<comment>;.*)?/
-  OPEN_REGEX = /(?<name>\S+)\s*(?<currency>.*)/
+  ACCOUNT_REGEX = /(?<name>\S+)\s*(?<options>.*)/
 
   def self.validate(content)
     self.parse(content, pretend: true)
@@ -24,7 +24,7 @@ class ParseService
         case m[:directive].downcase
         when 'open'
           booking = nil
-          x = m[:arguments].chomp
+          x = m[:arguments].strip
           if x.include?("STRICT")
             booking = "STRICT"
             x.delete!("STRICT")
@@ -32,15 +32,15 @@ class ParseService
             booking = "NONE"
             x.delete!("NONE")
           end
-          if mm = x.match(OPEN_REGEX)
+          if mm = x.match(ACCOUNT_REGEX)
             data[:name] = mm[:name]
-            data[:currency_list] = mm[:currency]
+            data[:currency_list] = mm[:options]
             yield :entry, data if block_given?
           else
             errors << "Cannot get account name: #{line}"
           end
         when 'close'
-          data[:name] = m[:arguments]
+          data[:name] = m[:arguments].strip
           yield :entry, data if block_given?
         when 'txn'
           txn_entry = line
@@ -54,7 +54,13 @@ class ParseService
           data[:directive] = 'exclamation'
           yield :entry, data if block_given?
         when 'balance', 'pad'
-          yield :entry, data if block_given?
+          x = m[:arguments].strip
+          if mm = x.match(ACCOUNT_REGEX)
+            data[:name] = mm[:name]
+            yield :entry, data if block_given?
+          else
+            errors << "Cannot get account name: #{line}"
+          end
         else
           p "Unknown directive #{m[2]}" unless pretend
         end

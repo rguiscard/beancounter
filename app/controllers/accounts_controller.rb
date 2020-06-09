@@ -11,6 +11,7 @@ class AccountsController < ApplicationController
 
   # remove both associated entries and account
   def complete_destroy
+    associate_entries_to_account(@account)
     @entries = associated_entries # associated through postings
     @entries.destroy_all
     @account.destroy
@@ -22,10 +23,7 @@ class AccountsController < ApplicationController
 
   # GET /accounts/1/settings
   def settings
-    # try to find all entries related to this account.
-    @entries = current_user.entries.where(directive: ['open', 'balance', 'pad', 'close'])
-    @entries = @entries.where("arguments ilike ?", "#{@account.name} %").or(@entries.where(arguments: @account.name))
-    @entries.where(account: nil).update_all(account_id: @account.id)
+    associate_entries_to_account(@account)
   end
 
   # GET /accounts
@@ -88,6 +86,7 @@ class AccountsController < ApplicationController
   # DELETE /accounts/1
   # DELETE /accounts/1.json
   def destroy
+    associate_entries_to_account(@account)
     if @account.postings.empty?
       @account.destroy
       respond_to do |format|
@@ -119,5 +118,12 @@ class AccountsController < ApplicationController
     # Do not confuse with entries which directly associate with account, such as open, pad and balance directive
     def associated_entries
       @current_user.entries.joins(postings: :account).where(:"postings.account" => @account)
+    end
+
+    def associate_entries_to_account(account)
+      # try to find all entries related to this account.
+      @entries = current_user.entries.where(directive: ['open', 'balance', 'pad', 'close'])
+      @entries = @entries.where("arguments ilike ?", "#{account.name} %").or(@entries.where(arguments: account.name))
+      @entries.where(account: nil).update_all(account_id: account.id)
     end
 end
