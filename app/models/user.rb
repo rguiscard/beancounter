@@ -12,7 +12,7 @@ class User < ApplicationRecord
   has_many :expenses, inverse_of: :user # to cache csv from bean-query
 
   def delete_beancount
-    update_attribute(:beancount, "")
+    update(beancount: "", beancount_cached_at: nil)
   end
 
   def beancount

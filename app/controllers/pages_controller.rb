@@ -3,6 +3,14 @@ require 'csv'
 class PagesController < ApplicationController
   skip_before_action :authenticate_user!, only: [:welcome, :guide]
 
+  def beancheck
+    path = Pathname.new(current_user.save_beancount)
+
+    @errors = Rails.cache.fetch(["validation", current_user.cache_key, current_user.beancount_cached_at]) do
+      %x(bean-check #{path} 2>&1)
+    end
+  end
+
   def beancount
     @entries = current_user.entries.order("date DESC")
   end
