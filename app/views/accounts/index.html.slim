@@ -8,11 +8,17 @@ table.mobile
     - @accounts.assets.each do |account|
       tr
         td = link_to account.display_name, account
-        td.text-right = account.balances.collect { |x| "#{number_to_currency(x.amount)} #{x.currency}" }.join("\n")
+        td.text-right
+          - account.balances.each do |balance|
+            = Amount.new("#{balance.amount} #{balance.currency}").to_s(:long)
+            br
     - @accounts.liabilities.each do |account|
       tr
         td = link_to account.display_name, account
-        td.text-right = account.balances.collect { |x| "#{number_to_currency(x.amount)} #{x.currency}" }.join("\n")
+        td.text-right
+          - account.balances.each do |balance|
+            = Amount.new("#{balance.amount} #{balance.currency}").to_s(:long)
+            br
     - @accounts.income.each do |account|
       tr
         td = link_to account.display_name, account

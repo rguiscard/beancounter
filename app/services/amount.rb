@@ -1,13 +1,15 @@
 class Amount
   AMOUNT_REGEX=%r{
     ^
-    (?<number>[0-9\.]+)\s+
+    (?<number>[0-9\.\-]+)\s+
     (?<currency>\S+)\s*
     (?<cost>\{.*\})?\s*
     ((?<price>@@[^;]*)|(?<unit_price>@[^;]*))?\s*
     (?<comment>;.*)?
     $
   }x
+
+  KNOWN_CURRENCY = ['USD', 'TWD']
 
   attr_reader :number, :currency, :cost, :unit_price, :price, :comment
 
@@ -22,8 +24,24 @@ class Amount
     end
   end
 
-  def to_s
-    [@number, @currency, @cost, @price, @unit_price, @comment].compact.join(" ")
+  def to_s(format = nil)
+    return nil if self.blank?
+
+    case format
+    when :long
+      result = []
+      if KNOWN_CURRENCY.include?(self.currency.upcase)
+        result << ActiveSupport::NumberHelper::NumberToCurrencyConverter.convert(self.number, {})
+      else
+        result << self.number
+      end
+      result << self.currency
+      result << self.cost
+      result << (self.unit_price || self.price)
+      result.compact.join(" ")
+    else
+      [@number, @currency, @cost, @price, @unit_price, @comment].compact.join(" ")
+    end
   end
 
   def blank?

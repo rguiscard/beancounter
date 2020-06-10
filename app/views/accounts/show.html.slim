@@ -19,8 +19,11 @@ table.mobile
       tr
         td = row['date']
         td = row['narration']
-        td.text-right = Amount.new(row['position']).tap { |x| "#{number_to_currency(x.number)} #{x.currency}" }
-        td.text-right = Amount.new(row['balance']).tap { |x| "#{number_to_currency(x.number)} #{x.currency}" }
+        td.text-right data-label='position' = Amount.new(row['position']).to_s(:long)
+        td.text-right data-label='balance'
+          - row['balance'].split(',').each do |b|
+            = Amount.new(b).to_s(:long)
+            br
 
 = link_to 'Edit', edit_account_path(@account), class: 'button button-sm'
 | &nbsp;

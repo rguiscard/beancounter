@@ -34,8 +34,9 @@ table a {
 		display:block
 	}
 	.mobile td:before {
-		content:attr(data-th);
+		content:attr(data-label);
 		display:block;
+                float:left;
 		font-weight:bold;
 		margin:0 0 2px;
 		color:#000;
