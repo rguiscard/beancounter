@@ -57,6 +57,7 @@ html
               li = link_to t('guide'), guide_path, class: 'item'
       div.container
         = yield
+      p
       div.navbar
         div.container
           - if user_signed_in?
