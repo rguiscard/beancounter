@@ -15,7 +15,11 @@ table.mobile
       tr
         - account = current_user.accounts.find_by(name: row['account'].strip)
         td = link_to account.display_name, account
-        td.text-right = MoneyService.split_amount(row['sum_position']) { |x, y| "#{number_to_currency(x)} #{y}" }
+        td.text-right
+          - row['sum_position'].split(',') do |sum|
+            = Amount.new(sum).to_s(:long)
+            br
+
 p
   h5
     | year
@@ -26,4 +30,7 @@ table.mobile
       tr
         - account = current_user.accounts.find_by(name: row['account'].strip)
         td = link_to account.display_name, account
-        td.text-right = MoneyService.split_amount(row['sum_position']) { |x, y| "#{number_to_currency(x)} #{y}" }
+        td.text-right
+          - row['sum_position'].split(',') do |sum|
+            = Amount.new(sum).to_s(:long)
+            br

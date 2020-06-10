@@ -5,7 +5,7 @@ tr
     - if entry.transaction?
       div.right.text-right
         - entry.postings.each do |posting|
-          = posting.arguments
+          = Amount.new(posting.arguments).to_s(:long)
           br
       div
         - entry.postings.each do |posting|

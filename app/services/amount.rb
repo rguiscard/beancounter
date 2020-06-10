@@ -14,7 +14,7 @@ class Amount
   attr_reader :number, :currency, :cost, :unit_price, :price, :comment
 
   def initialize(s)
-    if m = s.strip.match(AMOUNT_REGEX)
+    if s.present? && m = s.strip.match(AMOUNT_REGEX)
       @number = m[:number]
       @currency = m[:currency]
       @cost = m[:cost]
