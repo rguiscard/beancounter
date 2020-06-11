@@ -16,7 +16,7 @@
 
     div
       = form.label :directive
-      = form.select :directive, Entry.directives.keys.to_a, {}
+      = form.select :directive, [:txn, :asterisk, :exclamation].to_a, {}
 
     div
       = form.label :arguments
