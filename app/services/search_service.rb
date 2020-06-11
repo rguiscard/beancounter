@@ -100,6 +100,10 @@ module SearchService
       super
       @predicates[:arguments] = :contains
     end
+
+    def search_date(target, value)
+      target.where(date: Date.parse(value).all_day)
+    end
   end
 
   class Posting < Base

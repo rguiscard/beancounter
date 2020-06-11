@@ -8,5 +8,9 @@ div style="display: flex; align-items: center"
     = form.label :search_entries
     = form.text_field :arguments
 
+  div.field
+    = form.label :search_date
+    = form.date_field :date
+
   div.actions
     = form.submit "Search"
