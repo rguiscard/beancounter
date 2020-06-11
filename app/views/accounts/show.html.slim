@@ -17,7 +17,7 @@ table.mobile
   tbody
     - CSV.parse(@account.journal, headers: :first_row) do |row|
       tr
-        td = row['date']
+        td = link_to row['date'], entries_path(q: {date: row['date']})
         td = row['narration']
         td.text-right data-label='position' = Amount.new(row['position']).to_s(:long)
         td.text-right data-label='balance'
