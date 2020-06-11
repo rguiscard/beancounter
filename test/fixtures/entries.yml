@@ -11,3 +11,9 @@ two:
   date: 2020-05-25 05:18:07
   directive: txn
   arguments: "Gas"
+
+three:
+  user: one
+  date: 2010-01-01 05:18:07
+  directive: open
+  arguments: "Assets:US:BofA:Checking USD"

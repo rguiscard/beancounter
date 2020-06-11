@@ -7,12 +7,10 @@ one:
 
 two:
   user: one
-  name: Assets:US:BofA:Checking
   name: Equity:Opening-Balances
   currencies: ['USD', 'JPN']
 
 three:
   user: one
-  name: Assets:US:BofA:Checking
   name: Expenses:Financial:Fees
   currencies: []
