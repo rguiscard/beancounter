@@ -1,4 +1,6 @@
 class Account < ApplicationRecord
+  validates :name, uniqueness: true
+
   SPLIT_REGEX = /[ ]*,[ ]*/.freeze
 
   before_destroy :associate_entries
