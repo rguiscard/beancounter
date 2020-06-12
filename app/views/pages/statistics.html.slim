@@ -6,31 +6,15 @@ div
   = link_to "previous", statistics_path(date: @date.beginning_of_month-1.month), class: 'button button-sm'
   | &nbsp;
   = link_to "next", statistics_path(date: @date.beginning_of_month+1.month), class: 'button button-sm'
+
 p
   h5
     =@date.strftime("%Y-%m")
-table.mobile
-  tbody
-    - CSV.parse(@current_month, headers: :first_row) do |row|
-      tr
-        - account = current_user.accounts.find_by(name: row['account'].strip)
-        td = link_to account.display_name, account
-        td.text-right
-          - row['sum_position'].split(',') do |sum|
-            = Amount.new(sum).to_s(:long)
-            br
+= render partial: 'pages/statistics', locals: {data: @current_month}
 
 p
   h5
     | year
     =< @date.strftime("%Y")
-table.mobile
-  tbody
-    - CSV.parse(@current_year, headers: :first_row) do |row|
-      tr
-        - account = current_user.accounts.find_by(name: row['account'].strip)
-        td = link_to account.display_name, account
-        td.text-right
-          - row['sum_position'].split(',') do |sum|
-            = Amount.new(sum).to_s(:long)
-            br
+
+= render partial: 'pages/statistics', locals: {data: @current_year}

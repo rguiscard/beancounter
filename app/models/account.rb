@@ -42,8 +42,12 @@ class Account < ApplicationRecord
     entries
   end
 
-  def display_name
-    self.nickname.presence || self.name.presence
+  def display_name(both: false)
+    if both
+      self.nickname.present? ? "#{self.nickname} (#{self.name})" : self.name
+    else
+      self.nickname.presence || self.name.presence
+    end
   end
 
   def currency_list

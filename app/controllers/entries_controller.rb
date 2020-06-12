@@ -80,6 +80,7 @@ class EntriesController < ApplicationController
   # GET /entries/new
   def new
     @entry = Entry.new
+    @entry.date = DateTime.current
     2.times { @entry.postings.build }
   end
 

@@ -5,32 +5,20 @@ div style="display: flex; align-items: center"
 
 table.mobile
   tbody
-    - @accounts.assets.each do |account|
-      tr
-        td = link_to account.display_name, account
-        td.text-right
-          - account.balances.each do |balance|
-            = Amount.new("#{balance.amount} #{balance.currency}").to_s(:long)
-            br
-    - @accounts.liabilities.each do |account|
-      tr
-        td = link_to account.display_name, account
-        td.text-right
-          - account.balances.each do |balance|
-            = Amount.new("#{balance.amount} #{balance.currency}").to_s(:long)
-            br
-    - @accounts.income.each do |account|
-      tr
-        td = link_to account.display_name, account
-        td
-    - @accounts.expenses.each do |account|
-      tr
-        td = link_to account.display_name, account
-        td
-    - @accounts.equity.each do |account|
-      tr
-        td = link_to account.display_name, account
-        td
+    - [@accounts.assets, @accounts.liabilities].each do |accounts|
+      - accounts.each do |account|
+        tr
+          td = link_to account.display_name, account, title: account.name
+          td.text-right
+            - account.balances.each do |balance|
+              = Amount.new("#{balance.amount} #{balance.currency}").to_s(:long)
+              br
+
+    - [@accounts.income, @accounts.expenses, @accounts.equity].each do |accounts|
+      - accounts.each do |account|
+        tr
+          td = link_to account.display_name, account, title: account.name
+          td
 p
   | Create account using
   =< link_to 'entries', entries_path

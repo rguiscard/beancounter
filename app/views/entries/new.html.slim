@@ -1,29 +1,7 @@
 p
   h3 New Entry
 
-= form_with model: @entry, local: true do |form|
-  - if @entry.errors.any?
-    div#error_explanation
-      h2
-        = pluralize(@entry.errors.count, "error")
-        | prohibited this entry from being saved:
-
-      ul
-        - @entry.errors.full_messages.each do |message|
-          li = message
-
-  fieldset
-    div
-      = form.label :date
-      = form.date_field :date, value: DateTime.current.strftime("%Y-%m-%d")
-
-    div
-      = form.label :directive
-      = form.select :directive, Entry.directives.keys.to_a, {}
-
-    div
-      = form.label :arguments
-      = form.text_area :arguments
+= render 'form', entry: @entry do |form|
 
   fieldset
     legend Transaction (optional)
@@ -31,14 +9,11 @@ p
     = form.fields_for :postings do |posting_form|
       div
         = posting_form.label :account
-        = posting_form.select :account_id, current_user.accounts.order("name ASC").collect { |a| [a.display_name, a.id] }
+        = posting_form.select :account_id, current_user.accounts.order("name ASC").collect { |a| [a.display_name(both: true), a.id] }
       - if posting_form.options[:child_index] == 0
         div
           = posting_form.label :arguments
           = posting_form.text_field :arguments
-
-  div
-    = form.submit nil
 
 = link_to 'Back', entries_path
 br
