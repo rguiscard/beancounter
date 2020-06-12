@@ -25,8 +25,8 @@ table.mobile
             = Amount.new(b).to_s(:long)
             br
 
-= link_to 'Edit', edit_account_path(@account), class: 'button button-sm'
+= link_to t('action.edit'), edit_account_path(@account), class: 'button button-sm'
 | &nbsp;
-= link_to 'Back', accounts_path, class: 'button button-sm'
+= link_to t('action.back'), accounts_path, class: 'button button-sm'
 | &nbsp;
-= link_to 'Destroy', @account, data: { confirm: 'Are you sure?' }, method: :delete, class: 'button danger button-sm right'
+= link_to t('action.destroy'), @account, data: { confirm: t('action.are_you_sure') }, method: :delete, class: 'button danger button-sm right'

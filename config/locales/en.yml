@@ -1,14 +1,37 @@
 en:
   nav:
-    transactions: transactions
-    accounts: accounts
-    entries: entries
-    statistics: statistics
-    beancount: beancount
-    search: search
-    input: input
-    guide: guide
-    sign_out: sign out
-    sign_in: sign in
-    new_entry: new entry
-    settings: settings
+    transactions: Transactions
+    accounts: Accounts
+    entries: Entries
+    statistics: Statistics
+    beancount: Beancount
+    search: Search
+    input: Input
+    guide: Guide
+    sign_out: Sign out
+    sign_in: Sign in
+    new_entry: New Entry
+    settings: Settings
+  action:
+    edit: Edit
+    duplicate: Duplicate
+    new_entry: New Entry
+    back: Back
+    destroy: Destroy
+    are_you_sure: Are you sure?
+  activerecord:
+    models:
+      entry: entry
+      account: account
+      posting: posting
+    attributes:
+      entry:
+        date: date
+        directive: directive
+        arguments: arguments
+      account:
+        name: name
+        nickname: nickname
+      posting:
+        arguments: arguments
+        account: account

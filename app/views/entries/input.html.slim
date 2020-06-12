@@ -1,7 +1,7 @@
 div style="display: flex; align-items: center"
   div
     p
-      h3 = t('nav.input').capitalize
+      h3 = t('nav.input')
 
 = form_with url: import_entries_path do |form|
   = form.text_area :content, value: @content, style: "height: 10em;"

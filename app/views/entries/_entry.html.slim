@@ -13,6 +13,6 @@ tr
           = link_to posting.account.display_name, posting.account, title: posting.account.name
           br
   td style="vertical-align: top;" class='md:hidden sm:hidden'
-    = link_to 'Edit', edit_entry_path(entry), class: 'button button-sm'
+    = link_to t('action.edit'), edit_entry_path(entry), class: 'button button-sm'
     | &nbsp;
-    = link_to 'Duplicate', duplicate_entry_path(entry), class: 'button button-sm'
+    = link_to t('action.duplicate'), duplicate_entry_path(entry), class: 'button button-sm'

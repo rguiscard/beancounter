@@ -6,9 +6,9 @@ p
       | &nbsp;&nbsp;
       => posting.to_bean
       br
-= link_to 'New Entry', new_entry_path, class: 'button button-sm'
+= link_to t('action.new_entry'), new_entry_path, class: 'button button-sm'
 | &nbsp;
-= link_to 'Edit', edit_entry_path(@entry), class: 'button button-sm'
+= link_to t('action.edit'), edit_entry_path(@entry), class: 'button button-sm'
 | &nbsp;
-= link_to 'Back', entries_path, class: 'button button-sm'
-= link_to 'Destroy', @entry, method: :delete, data: { confirm: 'Are you sure?' }, class: 'button danger button-sm right'
+= link_to t('action.back'), entries_path, class: 'button button-sm'
+= link_to t('action.destroy'), @entry, method: :delete, data: { confirm: t('action.are_you_sure') }, class: 'button danger button-sm right'
