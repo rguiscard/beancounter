@@ -59,6 +59,19 @@ class AccountsController < ApplicationController
 
     respond_to do |format|
       if @account.save
+
+        # Create corresponding entries
+        date = (params[:date].blank? ? DateTime.current : DateTime.parse(params[:date]))
+        current_user.entries.create(date: date-1.day, directive: :open, arguments: "#{@account.name} #{@account.currency_list}")
+        if (amount = Amount.new(params[:balance])) && (amount.blank? == false) && (amount.number != 0)
+          equity_setup = 'Equity:Setup'
+          equity = current_user.accounts.find_or_create_by(name: equity_setup) do |account|
+            equity = current_user.entries.create(date: date-1.day, directive: :open, arguments: account.name)
+          end
+          current_user.entries.new(date: date-1.day, directive: :pad, arguments: "#{@account.name} #{equity.name}")
+          current_user.entries.new(date: date, directive: :balance, arguments: "#{@account.name} #{params[:balance]}")
+        end
+
         format.html { redirect_to @account, notice: 'Account was successfully created.' }
         format.json { render :show, status: :created, location: @account }
       else

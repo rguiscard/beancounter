@@ -1,5 +1,14 @@
 h1 New account
 
-== render 'form'
+== render 'form' do |f|
 
-= link_to 'Back', accounts_path
+  fieldset
+    legend Optional: It creates necessary entries for this account. To modify, find those entries in account settings after creation.
+
+    = f.label :date
+    = date_field_tag :date, DateTime.current.strftime("%Y-%m-%d")
+
+    = f.label "Initial balance with currency"
+    = text_field_tag :balance, 0
+
+= link_to t('action.back'), accounts_path

@@ -15,4 +15,7 @@
   .field
     = f.label :currencies
     = f.text_field :currency_list
+
+  = yield f
+
   .actions = f.submit

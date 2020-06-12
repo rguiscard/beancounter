@@ -2,6 +2,8 @@ div style="display: flex; align-items: center"
   div
     p
       h3 = t('nav.accounts')
+  div style="margin-left: auto;"
+    = link_to t('action.new_account'), new_account_path, class: 'button button-sm'
 
 table.mobile
   tbody

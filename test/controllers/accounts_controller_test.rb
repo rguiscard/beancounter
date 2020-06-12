@@ -14,18 +14,32 @@ class AccountsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-#  test "should get new" do
-#    get new_account_url
-#    assert_response :success
-#  end
+  test "should get new" do
+    get new_account_url
+    assert_response :success
+  end
 
-#  test "should create account" do
-#    assert_difference('Account.count') do
-#      post accounts_url, params: { account: { currencies: @account.currencies, name: @account.name } }
-#    end
-#
-#    assert_redirected_to account_url(Account.last)
-#  end
+  test "should create account" do
+    bank = "Assets::BankOne"
+    assert_difference -> { Account.count } => 1, -> { Entry.count } => 1 do
+      post accounts_url, params: { account: { currencies: @account.currencies, name: bank } }
+    end
+
+    assert_redirected_to account_url(Account.find_by(name: bank))
+  end
+
+  test "should create account with balance" do
+    bank = "Assets::BankOne"
+    balance = "1000 USD"
+    assert_difference -> { Account.count } => 2, -> { Entry.count } => 4 do
+      post accounts_url, params: { account: { currencies: @account.currencies, name: bank }, balance: balance }
+    end
+
+    assert Entry.pad.find_by(arguments: "#{bank} Equity:Setup").present?
+    assert Entry.balance.find_by(arguments: "#{bank} #{balance}").present?
+
+    assert_redirected_to account_url(Account.find_by(name: bank))
+  end
 
   test "should show account" do
     get account_url(@account)

@@ -15,7 +15,8 @@ zh-TW:
   action:
     edit: 修改
     duplicate: 複製
-    new_entry: 新增
+    new_entry: 新增記錄
+    new_account: 新增帳戶
     back: 返回
     destroy: 刪除
     are_you_sure: 你確定？
