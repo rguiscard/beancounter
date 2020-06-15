@@ -21,8 +21,8 @@ table.mobile
         td = row['narration']
         td.text-right data-label='position' = Amount.new(row['position']).to_s(:long)
         td.text-right data-label='balance'
-          - row['balance'].split(',').each do |b|
-            = Amount.new(b).to_s(:long)
+          - Amount.combine_positions(row['balance']).each do |amount|
+            = amount.to_s(:long)
             br
 
 = link_to t('action.edit'), edit_account_path(@account), class: 'button button-sm'

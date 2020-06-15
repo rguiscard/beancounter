@@ -12,15 +12,28 @@ class AccountBalanceJob < ApplicationJob
           account.balances.destroy_all
         else
           currencies = account.balances.pluck(:currency) # existing currencies
-          row["sum_position"].split(',').each do |sum|
-            if (amount = Amount.new(sum)) && (amount.blank? == false)
-              currency = [amount.currency, amount.cost].compact.join(" ")
-              currencies.delete(currency)
-              if balance = account.balances.find_or_create_by(currency: currency)
-                balance.update(amount: amount.number, updated_at: DateTime.current)
-              end
+
+          # There is a possibility that beancount will round up cost.
+          # Therefore, it will output several sum_position with seemly identical cost
+          # but they are actually different in small value
+          # sum_positions = Hash.new(0)
+          # row["sum_position"].split(',').inject(sum_positions) do |hash, sum|
+          #   if (amount = Amount.new(sum)) && (amount.blank? == false)
+          #     currency = [amount.currency, amount.cost].compact.join(" ")
+          #     hash[currency] += amount.number.to_f
+          #   end
+          #   hash
+          # end
+          sum_positions = Amount.combine_positions(row["sum_position"])
+
+          sum_positions.each do |amount|
+            currency = "#{amount.currency} #{amount.cost}"
+            currencies.delete(currency)
+            if balance = account.balances.find_or_create_by(currency: currency)
+              balance.update(amount: amount.number, updated_at: DateTime.current)
             end
           end
+
           # Remove non-existing currency
           account.balances.where(currency: currencies).destroy_all
         end
