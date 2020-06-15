@@ -1,7 +1,25 @@
 class ParseService
-  ENTRY_REGEX = /^\s*(?<date>\d{4}-\d{2}-\d{2})\s+(?<directive>\S+)\s+(?<arguments>.*)$/
-  POSTING_REGEX = /^\s*(?<flag>!?\s*)(?<account>\S+)\s*(?<arguments>[^;]*)(?<comment>;.*)?/
-  ACCOUNT_REGEX = /(?<name>\S+)\s*(?<options>.*)/
+  ENTRY_REGEX = %r{
+    ^\s*(?<date>\d{4}-\d{2}-\d{2})\s+(?<directive>\S+)\s+(?<arguments>.*)$
+  }x
+
+  POSTING_REGEX = %r{
+    ^\s*(?<flag>!?\s*)
+    (?<account>(Assets|Liabilities|Income|Expenses|Equity):\S+)
+    \s*
+    (?<arguments>[^;]*)(?<comment>;.*)?
+  }x
+
+  META_REGEX = %r{
+    ^\s*
+    (?<key>[a-z][^:]*):\s*(?<value>\S*)
+  }x
+
+  ACCOUNT_REGEX = %r{
+    (?<name>(Assets|Liabilities|Income|Expenses|Equity):\S+)
+    \s*
+    (?<options>.*)
+  }x
 
   def self.validate(content)
     self.parse(content, pretend: true)
@@ -71,6 +89,12 @@ class ParseService
           comment: m[:comment]
         }
         yield :posting, data if block_given?
+      elsif m = line.match(META_REGEX)
+        data = {
+          key: m[:key],
+          value: m[:value]
+        }
+        yield :meta, data if block_given?
       else
         txn_entry = nil
         errors << "Unknown entry: #{line}"

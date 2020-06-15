@@ -1,6 +1,30 @@
 require 'test_helper'
 
 class ParseServiceTest < ActiveSupport::TestCase
+  test "can parse meta from entry" do
+    content = <<~EOF
+      2020-05-15 * "信用卡轉帳"
+        meta: "information"
+        Liabilities:台灣銀行               225 TWD ; comment
+        Income:Cashback
+    EOF
+
+    ParseService.parse(content) do |klass, entry|
+      case klass
+      when :entry
+        assert_equal entry[:directive], "asterisk"
+        assert_equal entry[:date], "2020-05-15"
+      when :posting
+        assert_includes ["Liabilities:台灣銀行", "Income:Cashback"], entry[:account]
+      when :meta
+        assert_equal entry[:key], "meta"
+        assert_equal entry[:value], "\"information\""
+      else
+        puts "#{klass} #{entry}"
+      end
+    end
+  end
+
   test "can parse posting without amount" do
     content = <<~EOF
       2020-05-15 * "信用卡轉帳"
@@ -9,6 +33,15 @@ class ParseServiceTest < ActiveSupport::TestCase
     EOF
 
     ParseService.parse(content) do |klass, entry|
+      case klass
+      when :entry
+        assert_equal entry[:directive], "asterisk"
+        assert_equal entry[:date], "2020-05-15"
+      when :posting
+        assert_includes ["Liabilities:台灣銀行", "Income:Cashback"], entry[:account]
+      else
+        puts "#{klass} #{entry}"
+      end
     end
   end
 
