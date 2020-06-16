@@ -5,14 +5,14 @@ p
 
 - @entry.postings.each do |posting|
   => posting.to_bean
-  => link_to 'edit', edit_entry_posting_path(@entry, posting)
-  => link_to 'destroy', entry_posting_path(@entry, posting), method: :delete, data: { confirm: 'Are you sure?' }
+  => link_to t('action.edit'), edit_entry_posting_path(@entry, posting)
+  => link_to t('action.destroy'), entry_posting_path(@entry, posting), method: :delete, data: { confirm: 'Are you sure?' }
   br
 - if @entry.transaction?
   = link_to 'Add Posting', new_entry_posting_path(@entry)
 br
 br
-= link_to 'Show', @entry, class: 'button button-sm'
+= link_to t('action.show'), @entry, class: 'button button-sm'
 | &nbsp;
-= link_to 'Back', entries_path, class: 'button button-sm'
-br
+= link_to t('action.back'), entries_path, class: 'button button-sm'
+= link_to t('action.destroy'), @entry, method: :delete, data: { confirm: t('action.are_you_sure') }, class: 'button danger button-sm right'

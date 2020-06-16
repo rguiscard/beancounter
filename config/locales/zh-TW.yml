@@ -13,6 +13,7 @@ zh-TW:
     new_entry: 新增記錄
     settings: 設定
   action:
+    show: 顯示
     edit: 修改
     duplicate: 複製
     new_entry: 新增記錄

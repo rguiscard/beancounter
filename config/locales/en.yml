@@ -13,6 +13,7 @@ en:
     new_entry: New Entry
     settings: Settings
   action:
+    show: Show
     edit: Edit
     duplicate: Duplicate
     new_entry: New Entry

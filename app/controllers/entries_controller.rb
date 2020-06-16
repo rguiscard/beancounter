@@ -45,7 +45,7 @@ class EntriesController < ApplicationController
             puts "Unknown type #{klass}: #{data}"
           end
         end
-        format.html { redirect_to entries_path }
+        format.html { redirect_to root_path }
       else
         format.html { redirect_to input_entries_path, notice: @errors.join("; ") }
       end
@@ -128,7 +128,7 @@ class EntriesController < ApplicationController
   def destroy
     @entry.destroy
     respond_to do |format|
-      format.html { redirect_to entries_url, notice: 'Entry was successfully destroyed.' }
+      format.html { redirect_to root_url, notice: 'Entry was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
