@@ -13,6 +13,12 @@ class PagesController < ApplicationController
 
   def beancount
     @entries = current_user.entries.order("date DESC")
+    if params[:q].present? && @search_params = params.require(:q)
+      if @search_params.kind_of?(String)
+        @search_params = SearchService::Base.parse_keyword_search(@search_params)
+      end
+      @entries = SearchService::Entry.new(@entries).search(query: @search_params)
+    end
   end
 
   def statistics
