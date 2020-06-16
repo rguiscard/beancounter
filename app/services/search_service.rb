@@ -35,6 +35,8 @@ module SearchService
             result = result.where("#{query_field} ILIKE ALL (array[?])", tokens)
           when :is_true
             result = result.where("#{query_field} = ?", !!ActiveRecord::Type::Boolean.new.type_cast_from_database(value))
+          when :equal
+            result = result.where("#{query_field} = ?", value)
           else
           end
         end
@@ -103,6 +105,10 @@ module SearchService
 
     def search_date(target, value)
       target.where(date: Date.parse(value).all_day)
+    end
+
+    def search_directive(target, value)
+      target.where(directive: @target.klass.directives[value])
     end
   end
 

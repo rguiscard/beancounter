@@ -12,5 +12,9 @@ div style="display: flex; align-items: center"
     = form.label :search_date
     = form.date_field :date
 
+  div.field
+    = form.label :search_directive
+    = form.select :directive, Entry.directives.keys.to_a, {prompt: true}
+
   div.actions
     = form.submit "Search"
