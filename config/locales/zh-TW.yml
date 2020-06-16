@@ -1,6 +1,7 @@
 zh-TW:
   nav:
     transactions: 交易記錄
+    all_accounts: 所有帳戶
     accounts: 帳戶
     entries: 全部記錄
     statistics: 統計

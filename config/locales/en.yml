@@ -1,6 +1,7 @@
 en:
   nav:
     transactions: Transactions
+    all_accounts: All Accounts
     accounts: Accounts
     entries: Entries
     statistics: Statistics
