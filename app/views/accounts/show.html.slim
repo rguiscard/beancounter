@@ -17,10 +17,10 @@ table.mobile
   tbody
     - CSV.parse(@account.journal, headers: :first_row) do |row|
       tr
-        td class="sm:hidden" = link_to row['date'], entries_path(q: {date: row['date']})
+        td class="sm:hidden" = link_to row['date'], entries_path(q: {date: row['date']}, redirect: true)
         td
-          span.right class='sm:visible' = link_to row['date'], entries_path(q: {date: row['date']})
-          = row['narration']
+          span.right class='sm:visible' = link_to row['date'], entries_path(q: {date: row['date']}, redirect: true)
+          = link_to row['narration'], entries_path(q: {arguments: row['narration']}, redirect: true)
         td.text-right data-label='position' = Amount.new(row['position']).to_s(:long)
         td.text-right data-label='balance'
           - Amount.combine_positions(row['balance']).each do |amount|

@@ -68,6 +68,11 @@ class EntriesController < ApplicationController
       end
       @entries = SearchService::Entry.new(@entries).search(query: @search_params)
     end
+
+    if params[:redirect].present? && @entries.count == 1
+      redirect_to @entries.first, notice: 'There is only one entry matching request'
+    end
+
     @entries = @entries.order("date DESC")
     @pagy, @entries = pagy(@entries, items: 30)
   end
