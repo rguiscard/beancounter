@@ -4,7 +4,7 @@ div style="display: flex; align-items: center"
       h3 = t('nav.input')
 
 = form_with url: import_entries_path do |form|
-  = form.text_area :content, value: @content, style: "height: 10em;"
+  = form.text_area :content, value: @content, style: "height: 50vh;"
   label
     = form.check_box :create_account, {checked: true, value: true}
     span.label-body Create account automatically when necessary
