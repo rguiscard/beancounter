@@ -4,7 +4,7 @@ p
     br
     - @entry.postings.each do |posting|
       | &nbsp;&nbsp;
-      => posting.to_bean
+      => link_to posting.to_bean, posting.account
       br
 = link_to t('action.new_entry'), new_entry_path, class: 'button button-sm'
 | &nbsp;

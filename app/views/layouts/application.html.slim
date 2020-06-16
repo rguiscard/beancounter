@@ -45,7 +45,16 @@ html
                 = link_to t('nav.new_entry'), new_entry_path, class: 'button button-sm'
             ul.right.menu class='md:hidden sm:hidden'
               li = link_to t('nav.transactions'), transactions_entries_path, class: 'item'
-              li = link_to t('nav.accounts'), accounts_path, class: 'item'
+              li.hover.dropdown
+                span.item
+                  = t('nav.accounts')
+                  i.caret
+                ul.menu
+                  li = link_to t('nav.all_accounts'), accounts_path, class: 'item'
+                  - current_user.accounts.assets.each do |account|
+                    li = link_to account.display_name, account_path(account), class: 'item'
+                  - current_user.accounts.liabilities.each do |account|
+                    li = link_to account.display_name, account_path(account), class: 'item'
               li = link_to t('nav.entries'), entries_path, class: 'item'
               li = link_to t('nav.statistics'), statistics_path, class: 'item'
               li = link_to t('nav.search'), search_entries_path, class: 'item'

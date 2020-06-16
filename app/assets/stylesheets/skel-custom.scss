@@ -12,6 +12,10 @@ table a {
   text-decoration: none;
 }
 
+pre a {
+  text-decoration: none;
+}
+
 @media screen and (max-width:601px) {
 	table.mobile {
 		word-wrap:break-word;
