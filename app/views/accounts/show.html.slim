@@ -12,8 +12,8 @@ table.mobile
     tr
       th date
       th narration
-      th position
-      th balance
+      th.text-right position
+      th.text-right balance
   tbody
     - CSV.parse(@account.journal, headers: :first_row) do |row|
       tr
