@@ -12,10 +12,6 @@
   fieldset
     div
       = form.label :locale
-      = form.text_field :locale
-
-    div
-      = form.label :locale
       = form.select :locale, @locales, include_blank: false
 
     div
