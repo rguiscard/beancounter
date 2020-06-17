@@ -26,7 +26,7 @@ class EntriesControllerTest < ActionDispatch::IntegrationTest
     entry = @user.entries.find_by(arguments: "\"信用卡轉帳\"")
     assert_equal entry.postings.count, 0
 
-    assert_redirected_to entries_url
+    assert_redirected_to root_url
   end
 
   test "should automatically create accounts with new postings" do
@@ -47,7 +47,7 @@ class EntriesControllerTest < ActionDispatch::IntegrationTest
     assert_equal entry.postings.count, 2
     assert_equal entry.postings.last.account, @user.accounts.find_by(name: "Income:Cashback")
 
-    assert_redirected_to entries_url
+    assert_redirected_to root_url
   end
 
   test "should create entry and postings without amount" do
@@ -67,7 +67,7 @@ class EntriesControllerTest < ActionDispatch::IntegrationTest
     assert_equal @user.entries.last.postings.count, 2
     assert_equal @user.entries.last.postings.last.account, @user.accounts.find_by(name: "Income:Cashback")
 
-    assert_redirected_to entries_url
+    assert_redirected_to root_url
   end
 
   test "should create account" do
@@ -77,7 +77,7 @@ class EntriesControllerTest < ActionDispatch::IntegrationTest
 
     assert_equal @user.accounts.last.name, "Assets:BoA"
 
-    assert_redirected_to entries_url
+    assert_redirected_to root_url
   end
 
   test "should not create duplicated account" do
@@ -91,7 +91,7 @@ class EntriesControllerTest < ActionDispatch::IntegrationTest
       post import_entries_url, params: { content: "2015-01-01 open Assets:BoA USD" }
     end
 
-    assert_redirected_to entries_url
+    assert_redirected_to root_url
   end
 
   test "should create entry and postings" do
@@ -115,7 +115,7 @@ class EntriesControllerTest < ActionDispatch::IntegrationTest
     assert_equal @user.entries.last.postings.count, 2
     assert_equal @user.entries.last.postings.last.account, @user.accounts.find_by(name: "Expenses:Financial:Fees")
 
-    assert_redirected_to entries_url
+    assert_redirected_to root_url
   end
 
   test "should get index" do
@@ -176,6 +176,6 @@ class EntriesControllerTest < ActionDispatch::IntegrationTest
       delete entry_url(@entry)
     end
 
-    assert_redirected_to entries_url
+    assert_redirected_to root_url
   end
 end

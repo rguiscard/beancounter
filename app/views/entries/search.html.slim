@@ -16,5 +16,9 @@ div style="display: flex; align-items: center"
     = form.label :search_directive
     = form.select :directive, Entry.directives.keys.to_a, {prompt: true}
 
+  div.field
+    = form.label :search_account
+    = form.select :account, current_user.accounts.order("name ASC").collect { |a| [a.display_name(both: true), a.name] }, prompt: true
+
   div.actions
     = form.submit "Search"

@@ -110,6 +110,10 @@ module SearchService
     def search_directive(target, value)
       target.where(directive: @target.klass.directives[value])
     end
+
+    def search_account(target, value)
+      target.with_account(Account.find_by(name: value))
+    end
   end
 
   class Posting < Base

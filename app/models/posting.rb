@@ -1,8 +1,8 @@
 class Posting < ApplicationRecord
+  before_save :assign_bean_cache
+
   belongs_to :entry, inverse_of: :postings, touch: true
   belongs_to :account, inverse_of: :postings
-
-  before_save :assign_bean_cache
 
   scope :account, -> (type) { joins(:account).where("accounts.name ilike ?", "#{type}%") }
   scope :assets, -> { account('assets') }

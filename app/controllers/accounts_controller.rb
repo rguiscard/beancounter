@@ -6,12 +6,12 @@ class AccountsController < ApplicationController
 
   # If there are postings associated with account, redirect to here
   def confirm_destroy
-    @entries = associated_entries
+    @entries = current_user.entries.with_account(@account)
   end
 
   # remove both associated entries and account
   def complete_destroy
-    @entries = associated_entries # associated through postings
+    @entries = current_user.entries.with_account(@account)
     @entries.destroy_all
     @account.destroy
     respond_to do |format|
@@ -123,11 +123,5 @@ class AccountsController < ApplicationController
     # remove beancount cache from user
     def delete_beancount
       current_user.delete_beancount
-    end
-
-    # Entries having postings associated with account.
-    # Do not confuse with entries which directly associate with account, such as open, pad and balance directive
-    def associated_entries
-      @current_user.entries.joins(postings: :account).where(:"postings.account" => @account)
     end
 end
