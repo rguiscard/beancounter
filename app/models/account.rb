@@ -1,5 +1,6 @@
 class Account < ApplicationRecord
   validates :name, uniqueness: true
+  validates :name, presence: true
 
   SPLIT_REGEX = /[ ]*,[ ]*/.freeze
 

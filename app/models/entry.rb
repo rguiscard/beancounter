@@ -1,6 +1,8 @@
 class Entry < ApplicationRecord
   enum directive: [:txn, :open, :close, :commodity, :balance, :pad, :note, :document, :price, :event, :query, :custom, :asterisk, :exclamation]
 
+  validates :arguments, presence: true
+
   before_save :assign_bean_cache
   after_destroy :delete_account_journal
   after_touch do |entry| entry.save end # this trigger the creation of bean_cache

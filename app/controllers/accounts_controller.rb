@@ -41,6 +41,7 @@ class AccountsController < ApplicationController
        (@account.journal_cached_at.present? && (current_user.entries.empty? == false) && (current_user.entries.maximum(:updated_at) > @account.journal_cached_at))
       AccountJournalJob.perform_now(current_user, @account)
     end
+    @show_balance = @account.name.start_with?(/assets/i, /liabilities/i)
   end
 
   # GET /accounts/new

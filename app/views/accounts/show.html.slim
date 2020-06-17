@@ -13,7 +13,8 @@ table.mobile
       th date
       th narration
       th.text-right position
-      th.text-right balance
+      - if @show_balance
+        th.text-right balance
   tbody
     - CSV.parse(@account.journal, headers: :first_row) do |row|
       tr
@@ -21,11 +22,14 @@ table.mobile
         td
           span.right class='sm:visible' = link_to row['date'], entries_path(q: {date: row['date']}, redirect: true)
           = link_to row['narration'], entries_path(q: {arguments: row['narration']}, redirect: true)
-        td.text-right data-label='position' = Amount.new(row['position']).to_s(:long)
-        td.text-right data-label='balance'
-          - Amount.combine_positions(row['balance']).each do |amount|
-            = amount.to_s(:long)
-            br
+        - if @show_balance
+          td.text-right data-label='position' = Amount.new(row['position']).to_s(:long)
+          td.text-right data-label='balance'
+            - Amount.combine_positions(row['balance']).each do |amount|
+              = amount.to_s(:long)
+              br
+        - else
+          td.text-right = Amount.new(row['position']).to_s(:long)
 
 = link_to t('action.edit'), edit_account_path(@account), class: 'button button-sm'
 | &nbsp;
