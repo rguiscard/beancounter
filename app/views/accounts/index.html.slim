@@ -10,7 +10,7 @@ table.tight.mobile
     - [@accounts.assets, @accounts.liabilities].each do |accounts|
       - accounts.each do |account|
         tr
-          td = link_to account.display_name, account, title: account.name
+          td.loose = link_to account.display_name, account, title: account.name
           td class="sm:hidden" style='width: 20px;'
           - if account.balances.empty?
             td class="sm:hidden"

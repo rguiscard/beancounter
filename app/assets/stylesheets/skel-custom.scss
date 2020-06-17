@@ -21,7 +21,7 @@ table.tight td {
   text-overflow: ellipsis;
 }
 
-table.tight td:first-child {
+table.tight td.loose:first-child {
   min-width: 50%;
 }
 
