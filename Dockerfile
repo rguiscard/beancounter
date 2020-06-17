@@ -6,6 +6,9 @@ WORKDIR /myapp
 
 RUN apk add --update --no-cache nodejs yarn postgresql-client postgresql-dev tzdata build-base libidn-dev libxml2-dev libxslt-dev python3-dev
 
+# install beancounter
+RUN pip3 install --install-option="--prefix=/python3-install" beancount
+
 # install essential gems
 COPY Gemfile.essential .
 COPY Gemfile.essential.lock .
@@ -20,9 +23,6 @@ RUN bundle install --deployment --without development test
 COPY package.json .
 COPY yarn.lock .
 RUN yarn install --frozen-lockfile
-
-# install beancounter
-RUN pip3 install --install-option="--prefix=/python3-install" beancount
 
 # compile assets
 ENV RAILS_ENV docker_build
