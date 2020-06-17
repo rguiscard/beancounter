@@ -12,6 +12,19 @@ input:invalid {
   line-height: 24px;
 }
 
+table.tight {
+  width: 100%;
+}
+
+table.tight td {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+table.tight td:last-child {
+  width: 100%;
+}
+
 table a {
   text-decoration: none;
 }

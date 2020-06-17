@@ -5,22 +5,29 @@ div style="display: flex; align-items: center"
   div style="margin-left: auto;"
     = link_to t('action.new_account'), new_account_path, class: 'button button-sm'
 
-table.mobile
+table.tight.mobile
   tbody
     - [@accounts.assets, @accounts.liabilities].each do |accounts|
       - accounts.each do |account|
         tr
           td = link_to account.display_name, account, title: account.name
-          td.text-right
-            - account.balances.each do |balance|
-              = Amount.new("#{balance.amount} #{balance.currency}").to_s(:long)
-              br
+          td class="sm:hidden" style='width: 20px;'
+          - if account.balances.empty?
+            td class="sm:hidden"
+          - else
+            td.text-right
+              - account.balances.each do |balance|
+                = Amount.new("#{balance.amount} #{balance.currency}").to_s(:long)
+                br
+          td class="sm:hidden"
 
     - [@accounts.income, @accounts.expenses, @accounts.equity].each do |accounts|
       - accounts.each do |account|
         tr
           td = link_to account.display_name, account, title: account.name
-          td
+          td class="sm:hidden"
+          td class="sm:hidden"
+          td class="sm:hidden"
 p
   | Create account using
   =< link_to 'entries', entries_path

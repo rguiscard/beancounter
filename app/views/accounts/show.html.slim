@@ -7,7 +7,7 @@ div style="display: flex; align-items: center"
 
 h4 title=@account.name = @account.display_name
 
-table.mobile
+table.tight.mobile
   thead
     tr
       th = Entry.human_attribute_name(:date)
@@ -15,13 +15,15 @@ table.mobile
       th.text-right = Entry.human_attribute_name(:position)
       - if @show_balance
         th.text-right = Entry.human_attribute_name(:balance)
+      th
   tbody
     - CSV.parse(@account.journal, headers: :first_row) do |row|
       tr
         td class="sm:hidden" = link_to row['date'], entries_path(q: {date: row['date']}, redirect: true)
         td
           span.right class='sm:visible' = link_to row['date'], entries_path(q: {date: row['date']}, redirect: true)
-          = link_to row['narration'], entries_path(q: {arguments: row['narration']}, redirect: true)
+          = link_to truncate(row['narration'].strip), entries_path(q: {arguments: row['narration']}, redirect: true), title: row['narration']
+
         - if @show_balance
           td.text-right data-label=Entry.human_attribute_name(:position) = Amount.new(row['position']).to_s(:long)
           td.text-right data-label=Entry.human_attribute_name(:balance)
@@ -30,6 +32,7 @@ table.mobile
               br
         - else
           td.text-right = Amount.new(row['position']).to_s(:long)
+        td class="sm:hidden"
 
 = link_to t('action.edit'), edit_account_path(@account), class: 'button button-sm'
 | &nbsp;

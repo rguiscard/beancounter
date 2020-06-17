@@ -1,10 +1,12 @@
-table.mobile
+table.tight.mobile
   tbody
     - CSV.parse(data, headers: :first_row) do |row|
       tr
         - account = current_user.accounts.find_by(name: row['account'].strip)
         td = link_to account.display_name, account, title: account.name
+        td class="sm:hidden" style='width: 20px;'
         td.text-right
           - row['sum_position'].split(',') do |sum|
             = Amount.new(sum).to_s(:long)
             br
+        td class="sm:hidden"
