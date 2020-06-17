@@ -13,6 +13,7 @@ zh-TW:
     sign_in: 登入
     new_entry: 新增記錄
     settings: 設定
+    text: 文字記錄
   action:
     show: 顯示
     edit: 修改
@@ -20,6 +21,7 @@ zh-TW:
     new_entry: 新增記錄
     new_account: 新增帳戶
     back: 返回
+    validate: 檢查
     destroy: 刪除
     are_you_sure: 你確定？
   activerecord:
@@ -32,6 +34,9 @@ zh-TW:
         date: 日期
         directive: 類別
         arguments: 資料
+        narration: 描述
+        position: 金額
+        balance: 累計
       account:
         name: 帳戶全名
         nickname: 帳戶簡稱

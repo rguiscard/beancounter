@@ -3,9 +3,9 @@ div style="display: flex; align-items: center"
     p
       h3 = t('nav.beancount').capitalize
   div style="margin-left: auto;"
-    = link_to 'validate', beancheck_path, class: 'button button-sm'
+    = link_to t('action.validate'), beancheck_path, class: 'button button-sm'
     | &nbsp;
-    = link_to 'text', beancount_path(format: :text), class: 'button button-sm'
+    = link_to t('nav.text'), beancount_path(format: :text), class: 'button button-sm'
 pre
   - @entries.each do |entry|
     = entry.bean_cache

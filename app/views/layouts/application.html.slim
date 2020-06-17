@@ -37,7 +37,7 @@ html
                   li = link_to t('nav.sign_out'), destroy_user_session_path, method: :delete, class: 'item'
             ul.right.menu class='md:visible sm:visible'
               li.item
-                = link_to t('new_entry'), new_entry_path, class: 'button button-sm'
+                = link_to t('nav.new_entry'), new_entry_path, class: 'button button-sm'
 
             ul.left.menu class='md:hidden sm:hidden'
               li = link_to 'Beancounter', root_path, class: 'item'

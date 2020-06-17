@@ -13,6 +13,7 @@ en:
     sign_in: Sign in
     new_entry: New Entry
     settings: Settings
+    text: Text
   action:
     show: Show
     edit: Edit
@@ -20,6 +21,7 @@ en:
     new_entry: New Entry
     new_account: New Account
     back: Back
+    validate: Validate
     destroy: Destroy
     are_you_sure: Are you sure?
   activerecord:
@@ -32,6 +34,9 @@ en:
         date: date
         directive: directive
         arguments: arguments
+        narration: narration
+        position: position
+        balance: balance
       account:
         name: name
         nickname: nickname

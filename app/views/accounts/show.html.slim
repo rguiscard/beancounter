@@ -1,20 +1,20 @@
 div style="display: flex; align-items: center"
   div
     p
-      h3 Account
+      h3 = Account.model_name.human
   div style="margin-left: auto;"
-    = link_to 'settings', settings_account_path(@account), class: 'button button-sm'
+    = link_to t('nav.settings'), settings_account_path(@account), class: 'button button-sm'
 
 h4 title=@account.name = @account.display_name
 
 table.mobile
   thead
     tr
-      th date
-      th narration
-      th.text-right position
+      th = Entry.human_attribute_name(:date)
+      th = Entry.human_attribute_name(:narration)
+      th.text-right = Entry.human_attribute_name(:position)
       - if @show_balance
-        th.text-right balance
+        th.text-right = Entry.human_attribute_name(:balance)
   tbody
     - CSV.parse(@account.journal, headers: :first_row) do |row|
       tr
@@ -23,8 +23,8 @@ table.mobile
           span.right class='sm:visible' = link_to row['date'], entries_path(q: {date: row['date']}, redirect: true)
           = link_to row['narration'], entries_path(q: {arguments: row['narration']}, redirect: true)
         - if @show_balance
-          td.text-right data-label='position' = Amount.new(row['position']).to_s(:long)
-          td.text-right data-label='balance'
+          td.text-right data-label=Entry.human_attribute_name(:position) = Amount.new(row['position']).to_s(:long)
+          td.text-right data-label=Entry.human_attribute_name(:balance)
             - Amount.combine_positions(row['balance']).each do |amount|
               = amount.to_s(:long)
               br
