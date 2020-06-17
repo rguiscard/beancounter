@@ -21,8 +21,12 @@ table.tight td {
   text-overflow: ellipsis;
 }
 
+table.tight td:first-child {
+  min-width: 50%;
+}
+
 table.tight td:last-child {
-  width: 100%;
+  width: 50%;
 }
 
 table a {
