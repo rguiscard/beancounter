@@ -15,9 +15,9 @@ class ParseService
     (?<key>[a-z][^:]*):\s*(?<value>\S*)
   }x
 
-  TAG_REGEX = %r{ (\#(?<tag>[a-z0-9\-\_]+)) }x
+  TAG_REGEX = %r{ (\#(?<tag>[^\s\;\"]+)) }x
 
-  LINK_REGEX = %r{ (\^(?<link>[a-z0-9\-\_]+)) }x
+  LINK_REGEX = %r{ (\^(?<link>[^\s\;\"]+)) }x
 
   ACCOUNT_REGEX = %r{
     (?<name>(Assets|Liabilities|Income|Expenses|Equity):\S+)
