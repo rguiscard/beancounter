@@ -1,14 +1,15 @@
 p
   pre
-    = @entry.to_bean
+    = linkable_entry(@entry)
     br
     - @entry.postings.each do |posting|
       | &nbsp;&nbsp;
       => link_to posting.to_bean, posting.account
       br
-= link_to t('action.new_entry'), new_entry_path, class: 'button button-sm'
 | &nbsp;
 = link_to t('action.edit'), edit_entry_path(@entry), class: 'button button-sm'
 | &nbsp;
 = link_to t('action.back'), entries_path, class: 'button button-sm'
+| &nbsp;
+= link_to t('action.duplicate'), duplicate_entry_path(@entry), class: 'button button-sm'
 = link_to t('action.destroy'), @entry, method: :delete, data: { confirm: t('action.are_you_sure') }, class: 'button danger button-sm right'

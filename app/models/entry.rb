@@ -4,6 +4,7 @@ class Entry < ApplicationRecord
   validates :arguments, presence: true
 
   before_save :assign_bean_cache
+  before_save :extract_tags
   after_destroy :delete_account_journal
   after_touch do |entry| entry.save end # this trigger the creation of bean_cache
 
@@ -13,6 +14,12 @@ class Entry < ApplicationRecord
   accepts_nested_attributes_for :postings
 
   scope :transactions, -> { where(directive: [:txn, :asterisk, :exclamation]) }
+  ["tags", "links"].each do |names|
+    name = names.singularize
+    scope :"with_any_{name}", ->(tags){ where("#{names} && ARRAY[?]", TagService.parse(tags)) }
+    scope :"with_all_#{names}", ->(tags){ where("#{names} @> ARRAY[?]", TagService.parse(tags)) }
+    scope :"all_#{names}", -> { pluck(Arel.sql("distinct unnest(#{names})")) }
+  end
 
   # Entries having postings associated with account.
   # Do not confuse with entries which directly associate with account, such as open, pad and balance directive
@@ -39,6 +46,18 @@ class Entry < ApplicationRecord
   end
 
   private
+
+    def extract_tags
+      ParseService.parse(self.to_bean) do |klass, data|
+        if @errors.blank?
+          case klass
+          when :entry
+            self.tags = data[:tags]
+            self.links = data[:links]
+          end
+        end
+      end
+    end
 
     def assign_bean_cache
       postings = self.postings.pluck(:bean_cache).collect do |posting|

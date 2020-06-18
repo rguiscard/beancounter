@@ -9,6 +9,24 @@ class EntriesControllerTest < ActionDispatch::IntegrationTest
     sign_in @user
   end
 
+  test "create tagas" do
+    content = <<~EOF
+      2020-05-16 * "Bank transfer" #2020_winter #2021-spring ^my-business; comment
+        Liabilities:NewBank               100 USD
+        Income:Cashback
+    EOF
+
+    assert_difference -> { @user.entries.count } => 1 do
+      post import_entries_url, params: { content: content, create_account: 0 }
+    end
+
+    entry = @user.entries.last
+    assert_includes entry.tags, "2020_winter"
+    assert_includes entry.tags, "2021-spring"
+    refute_includes entry.tags, "2022-spring"
+    assert_includes entry.links, "my-business"
+  end
+
   test "cannot create accounts with new postings" do
     content = <<~EOF
       2020-05-16 * "信用卡轉帳"

@@ -25,7 +25,7 @@ class EntriesController < ApplicationController
         ParseService.parse(@content) do |klass, data|
           case klass
           when :entry
-            entry = current_user.entries.create(date: Date.parse(data[:date]), directive: data[:directive], arguments: data[:arguments])
+            entry = current_user.entries.create(date: Date.parse(data[:date]), directive: data[:directive], arguments: data[:arguments], tags: data[:tags], links: data[:links])
             if entry.open?
               current_user.accounts.find_or_create_by(name: data[:name])
             end

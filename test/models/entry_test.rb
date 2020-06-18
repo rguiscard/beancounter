@@ -1,6 +1,13 @@
 require 'test_helper'
 
 class EntryTest < ActiveSupport::TestCase
+  test "create tags and links" do
+    user = users(:one)
+    entry = user.entries.create(date: DateTime.current, directive: :txn, arguments: "\"narration\" #2020 ^winter")
+    assert_includes entry.tags, "2020"
+    assert_includes entry.links, "winter"
+  end
+
   test "update entry cache while posting is created" do
     entry = entries(:one)
     assert entry.bean_cache.blank?

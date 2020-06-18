@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_09_030936) do
+ActiveRecord::Schema.define(version: 2020_06_18_073118) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,7 +47,11 @@ ActiveRecord::Schema.define(version: 2020_06_09_030936) do
     t.bigint "user_id", null: false
     t.text "bean_cache"
     t.bigint "account_id"
+    t.text "tags", default: [], array: true
+    t.text "links", default: [], array: true
     t.index ["account_id"], name: "index_entries_on_account_id"
+    t.index ["links"], name: "index_entries_on_links", using: :gin
+    t.index ["tags"], name: "index_entries_on_tags", using: :gin
     t.index ["user_id"], name: "index_entries_on_user_id"
   end
 

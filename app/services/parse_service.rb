@@ -15,6 +15,10 @@ class ParseService
     (?<key>[a-z][^:]*):\s*(?<value>\S*)
   }x
 
+  TAG_REGEX = %r{ (\#(?<tag>[a-z0-9\-\_]+)) }x
+
+  LINK_REGEX = %r{ (\^(?<link>[a-z0-9\-\_]+)) }x
+
   ACCOUNT_REGEX = %r{
     (?<name>(Assets|Liabilities|Income|Expenses|Equity):\S+)
     \s*
@@ -36,6 +40,8 @@ class ParseService
           date: m[:date],
           directive: m[:directive],
           arguments: m[:arguments],
+          tags: m[:arguments].scan(TAG_REGEX).flatten,
+          links: m[:arguments].scan(LINK_REGEX).flatten
         }
         txn_entry = nil
 

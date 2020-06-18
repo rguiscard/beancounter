@@ -55,14 +55,6 @@ module SearchService
       target.where(query, *([tokens]*fields.count))
     end
 
-    def search_tags(target, tags)
-      target.try(:with_all_tags, tags)
-    end
-
-    def search_tag(target, tag)
-      search_tags(target, tag)
-    end
-
     def query_value_to_array(value)
       tokens = []
       if value.kind_of?(String)
@@ -113,6 +105,22 @@ module SearchService
 
     def search_account(target, value)
       target.with_account(Account.find_by(name: value))
+    end
+
+    def search_tags(target, tags)
+      target.try(:with_all_tags, tags)
+    end
+
+    def search_tag(target, tag)
+      search_tags(target, tag)
+    end
+
+    def search_links(target, tags)
+      target.try(:with_all_links, tags)
+    end
+
+    def search_link(target, tag)
+      search_links(target, tag)
     end
   end
 
