@@ -2,19 +2,32 @@ div style="display: flex; align-items: center"
   div
     p
       h3 = t('nav.statistics')
-div
+p
   = link_to "previous", statistics_path(date: @date.beginning_of_month-1.month), class: 'button button-sm'
   | &nbsp;
   = link_to "next", statistics_path(date: @date.beginning_of_month+1.month), class: 'button button-sm'
-
-p
-  h5
-    =@date.strftime("%Y-%m")
-= render partial: 'pages/statistics', locals: {data: @current_month}
-
-p
-  h5
-    | year
-    =< @date.strftime("%Y")
-
-= render partial: 'pages/statistics', locals: {data: @current_year}
+table.tight.mobile
+  thead
+    tr
+      th = Account.model_name.human
+      th
+      th.text-right = @date.strftime("%Y-%m")
+      th
+      th.text-right = @date.strftime("Year %Y")
+  tbody
+    - @current_year_data.each do |k, v|
+      tr
+        - account = current_user.accounts.find_by(name: k.strip)
+        td = link_to account.display_name, account, title: account.name
+        td class="sm:hidden" style='width: 20px;'
+        td.text-right data-label=@date.strftime("%Y-%m")
+          - if @current_month_data[k].present?
+            - @current_month_data[k].split(',') do |sum|
+              = Amount.new(sum).to_s(:long)
+              br
+        td class="sm:hidden" style='width: 20px;'
+        td.text-right data-label=@date.strftime("Year %Y")
+          - v.split(',') do |sum|
+            = Amount.new(sum).to_s(:long)
+            br
+        td class="sm:hidden md:hidden"

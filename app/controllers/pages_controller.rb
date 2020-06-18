@@ -47,6 +47,9 @@ class PagesController < ApplicationController
       @current_month = current_user.expenses.find_by(year: year, month: month).try(:details)
       @current_year = current_user.expenses.find_by(year: year, month: nil).try(:details)
     end
+
+    @current_month_data = CSV.parse(@current_month, headers: :first_row).to_a[1..-1].to_h
+    @current_year_data = CSV.parse(@current_year, headers: :first_row).to_a[1..-1].to_h
   end
 
   def guide

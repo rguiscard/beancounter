@@ -51,7 +51,7 @@ class Amount
     when :long
       result = []
       if KNOWN_CURRENCY.include?(self.currency.upcase)
-        result << ActiveSupport::NumberHelper::NumberToCurrencyConverter.convert(self.number, {})
+        result << ActiveSupport::NumberHelper::NumberToCurrencyConverter.convert(self.number, {unit: '$'})
       else
         result << self.number
       end

@@ -3,30 +3,33 @@ div style="display: flex; align-items: center"
     p
       h3 = t('nav.input')
 
-= form_with url: import_entries_path do |form|
-  = form.text_area :content, value: @content, style: "height: 50vh;"
-  label
-    = form.check_box :create_account, {checked: true, value: true}
-    span.label-body Create account automatically when necessary
-  = form.submit
-
-p
-  h4 examples
-pre
-  | 2018-01-01 open Assets:US:BofA:Checking                   USD
-  br
-  br
-  | 2018-01-01 * "Opening Balance for checking account"
-  br
-  |   Assets:US:BofA:Checking                         3614.47 USD
-  br
-  |   Equity:Opening-Balances                        -3614.47 USD
-  br
-  br
-  | 2018-01-02 balance Assets:US:BofA:Checking        3614.47 USD
-  br
-p
-  h4 Accounts
-  - current_user.accounts.order("name ASC").each do |account|
-    = account.name
-    br
+div.container
+  div.grid
+    div.width-two-thirds
+      = form_with url: import_entries_path do |form|
+        = form.text_area :content, value: @content, style: "height: 50vh;"
+        label
+          = form.check_box :create_account, {checked: true, value: true}
+          span.label-body Create account automatically when necessary
+        = form.submit
+      div class="sm:hidden"
+        p
+          h4 examples
+        pre
+          | 2018-01-01 open Assets:US:BofA:Checking                   USD
+          br
+          br
+          | 2018-01-01 * "Opening Balance for checking account"
+          br
+          |   Assets:US:BofA:Checking                         3614.47 USD
+          br
+          |   Equity:Opening-Balances                        -3614.47 USD
+          br
+          br
+          | 2018-01-02 balance Assets:US:BofA:Checking        3614.47 USD
+          br
+    div.width-one-third
+      h4 Accounts
+      - current_user.accounts.order("name ASC").each do |account|
+        = account.name
+        br
