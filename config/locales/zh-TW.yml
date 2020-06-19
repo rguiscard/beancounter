@@ -24,6 +24,8 @@ zh-TW:
     validate: 檢查
     destroy: 刪除
     are_you_sure: 你確定？
+    import: 匯入
+    read_csv: 讀取 CSV
   activerecord:
     models:
       entry: 記錄

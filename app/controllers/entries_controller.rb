@@ -1,3 +1,5 @@
+require 'net/http'
+
 class EntriesController < ApplicationController
   before_action :set_entry, only: [:show, :edit, :update, :destroy, :duplicate]
   after_action :delete_beancount, only: [:update, :create, :destroy, :import]
@@ -12,8 +14,41 @@ class EntriesController < ApplicationController
   end
 
   def input
+    @csv_uri = nil
     @errors = nil
     @content = nil
+    x = []
+    if params[:csv_uri].present?
+      uri = params[:csv_uri]
+      begin
+        body = Net::HTTP.get(URI(uri)).force_encoding('UTF-8')
+        if body.present?
+          CSV.parse(body, headers: :first_row).each do |row|
+            keys = row.to_h.keys
+            date = DateTime.parse(row['date'])
+            narration = row['narration'].try(:strip)
+            x << "#{date.strftime('%Y-%m-%d')} txn \"#{narration}\""
+            (0..9).each do |num|
+              account = "account #{num}"
+              amount = "amount #{num}"
+              if keys.include?(account)
+                posting = "    #{row[account].try(:chomp)}"
+                if keys.include?(amount)
+                  posting = posting + "      #{row[amount].try(:strip)}"
+                end
+                x << posting
+              end
+            end
+            x << " "
+          end
+        end
+      rescue CSV::MalformedCSVError
+        redirect_to input_entries_url, notice: "CSV is malformed"
+      rescue StandardError => e
+        redirect_to input_entries_url, notice: "Unknown error #{e.message}"
+      end
+      @content = x.join("\n")
+    end
   end
 
   def import

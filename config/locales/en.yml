@@ -24,6 +24,8 @@ en:
     validate: Validate
     destroy: Destroy
     are_you_sure: Are you sure?
+    import: Import
+    read_csv: Read CSV
   activerecord:
     models:
       entry: entry

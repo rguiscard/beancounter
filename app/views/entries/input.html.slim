@@ -11,23 +11,37 @@ div.container
         label
           = form.check_box :create_account, {checked: true, value: true}
           span.label-body Create account automatically when necessary
-        = form.submit
+        = form.submit t('action.import')
       div class="sm:hidden"
         p
           h4 examples
         pre
-          | 2018-01-01 open Assets:US:BofA:Checking                   USD
+          = "#{DateTime.current.strftime('%Y-%m-%d')} open Assets:US:BofA:Checking                   USD"
           br
           br
-          | 2018-01-01 * "Opening Balance for checking account"
+          = "#{DateTime.current.strftime('%Y-%m-%d')} * \"Grocery\""
           br
-          |   Assets:US:BofA:Checking                         3614.47 USD
+          |   Assets:US:BofA:Checking                          114.47 USD
           br
-          |   Equity:Opening-Balances                        -3614.47 USD
+          |   Equity:Food                                     -114.47 USD
           br
           br
-          | 2018-01-02 balance Assets:US:BofA:Checking        3614.47 USD
+          = "#{DateTime.current.strftime('%Y-%m-%d')} balance Assets:US:BofA:Checking         114.47 USD"
           br
+      p
+        h4 Import from CSV
+      p
+        |  This is still experimental.
+        |  Create a google sheet with header in the first row: date, narration, account 1, amount 1, account 2, amount 2, ...
+        |  Amount needs to contain both number and currency. It can be omitted as rules of Beancount postings.
+        |  Publish that google sheet (sheet only, not whole workbook) in csv and paste link here.
+        |  Parsed result will be shown in the input form above for reviewing before importing.
+        strong< Remember to stop publishing once the data is imported to protect your privacy.
+      = form_with url: input_entries_path, method: :get, local: true do |form|
+        = form.label "Location of CSV file"
+        = form.text_field :csv_uri, value: @csv_uri
+
+        = form.submit t('action.read_csv')
     div.width-one-third
       h4 Accounts
       - current_user.accounts.order("name ASC").each do |account|
