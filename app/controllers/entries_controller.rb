@@ -62,15 +62,16 @@ class EntriesController < ApplicationController
   # GET /entries.json
   def index
     @entries = current_user.entries.includes(postings: :account)
+
     if params[:q].present? && @search_params = params.require(:q)
       if @search_params.kind_of?(String)
         @search_params = SearchService::Base.parse_keyword_search(@search_params)
       end
       @entries = SearchService::Entry.new(@entries).search(query: @search_params)
-    end
 
-    if params[:redirect].present? && @entries.count == 1
-      redirect_to @entries.first, notice: 'There is only one entry matching request'
+      if params[:redirect].present? && @entries.count == 1
+        redirect_to @entries.first, notice: "There is only one entry matching request: #{@search_params.to_unsafe_h}"
+      end
     end
 
     @entries = @entries.order("date DESC")

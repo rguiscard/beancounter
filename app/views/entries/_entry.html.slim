@@ -1,7 +1,7 @@
 tr
   td style="vertical-align: top;"
     div.clear
-      = link_to entry.to_bean, entry
+      = linkable_entry(entry, {only: [:tag, :link], clickable_title: true})
     - if entry.transaction?
       div.right.text-right
         - entry.postings.each do |posting|
