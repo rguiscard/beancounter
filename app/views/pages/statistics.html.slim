@@ -2,6 +2,8 @@ div style="display: flex; align-items: center"
   div
     p
       h3 = t('nav.statistics')
+  div style="margin-left: auto;"
+    = link_to t('nav.trend'), trend_path, class: 'button button-sm'
 p
   = link_to "previous", statistics_path(date: @date.beginning_of_month-1.month), class: 'button button-sm'
   | &nbsp;
