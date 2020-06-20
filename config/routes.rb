@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   get 'beancount', to: 'pages#beancount'
   get 'beancheck', to: 'pages#beancheck'
   get 'statistics', to: 'pages#statistics'
+  get 'trend', to: 'pages#trend'
   get 'guide', to: 'pages#guide'
   get 'welcome', to: 'pages#welcome'
 

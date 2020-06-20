@@ -1,0 +1,32 @@
+div style="display: flex; align-items: center"
+  div
+    p
+      h3 = t('nav.trend')
+= form_with url: trend_url, method: :get, local: true do |form|
+  = form.select :asset, options_for_select(@arr.select { |x| x.include?(":") == false}.collect { |account| sub_accounts(account, @arr) }.flatten, @asset)
+
+  = form.submit t('action.submit')
+
+table.tight.mobile
+  thead
+    tr
+      th Year - Month
+      th.text-right Sum
+      th.text-right Balance
+  tbody
+    - @records.each do |record|
+      tr
+        td = record[:date].strftime("%Y-%m")
+        td.text-right data-label="Sum"
+          - Amount.combine_positions(record[:sum]).each do |amount|
+            = amount.to_s(:long)
+            br
+        td.text-right data-label="Balance"
+          - Amount.combine_positions(record[:balance]).each do |amount|
+            = amount.to_s(:long)
+            br
+        td class="sm:hidden"
+
+p
+  | Updated at
+  =< @trend.updated_at.to_s(:long)

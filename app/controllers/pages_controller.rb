@@ -21,6 +21,52 @@ class PagesController < ApplicationController
     end
   end
 
+  def trend
+    @asset = params[:asset] || "Assets"
+
+    if (@trend = current_user.trends.find_by(name: @asset)) && (@trend.updated_at > DateTime.current-23.hours)
+    else
+      AssetTrendJob.perform_now(current_user, @asset)
+      @trend = current_user.trends.find_by(name: @asset)
+    end
+
+    @content = @trend.data
+
+    @records = []
+
+    CSV.parse(@content, {headers: :first_row}).each do |row|
+      @records << {date: DateTime.new(row['year'].to_i, row['month'].to_i, 1), sum: row['sum'], balance: row['balance']}
+    end
+
+    # Fill up each month
+    # rows = CSV.parse(@content, {headers: :first_row})
+    # first = rows.first
+    # current = DateTime.new(first['year'].to_i, first['month'].to_i, 1)
+    #
+    # @records << {date: current, sum: first['sum'], balance: first['balance']}
+    # rows.each do |row|
+    #   date = DateTime.new(row['year'].to_i, row['month'].to_i, 1)
+    #   while (current < date) do
+    #     current = current+1.month
+    #     @records << {date: current, sum: row['sum'], balance: row['balance']}
+    #   end
+    # end
+
+    # list of account and sub-accounts
+    @accounts = current_user.accounts
+    @arr = []
+    @accounts.collect do |account|
+      x = account.name.split(':')
+      parent = nil
+      (0..x.size-1).each do |n|
+        y = x[0..n].join(':')
+        @arr << y
+      end
+    end
+    @arr.uniq!
+    @arr
+  end
+
   def statistics
     if params[:date].present? && (@date = DateTime.parse(params[:date]))
     else

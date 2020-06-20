@@ -10,6 +10,7 @@ class User < ApplicationRecord
   has_many :accounts, inverse_of: :user
   has_many :balances, through: :accounts
   has_many :expenses, inverse_of: :user # to cache csv from bean-query
+  has_many :trends, inverse_of: :user   # to cache csv from bean-query
 
   def delete_beancount
     update(beancount: "", beancount_cached_at: nil)

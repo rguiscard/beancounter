@@ -26,6 +26,7 @@ zh-TW:
     are_you_sure: 你確定？
     import: 匯入
     read_csv: 讀取 CSV
+    submit: 送出
   activerecord:
     models:
       entry: 記錄

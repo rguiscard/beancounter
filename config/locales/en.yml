@@ -26,6 +26,7 @@ en:
     are_you_sure: Are you sure?
     import: Import
     read_csv: Read CSV
+    submit: Submit
   activerecord:
     models:
       entry: entry

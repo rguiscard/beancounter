@@ -44,7 +44,7 @@ class EntriesController < ApplicationController
         end
       rescue CSV::MalformedCSVError
         redirect_to input_entries_url, notice: "CSV is malformed"
-      rescue StandardError => e
+      rescue => e
         redirect_to input_entries_url, notice: "Unknown error #{e.message}"
       end
       @content = x.join("\n")
