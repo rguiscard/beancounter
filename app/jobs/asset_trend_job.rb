@@ -5,7 +5,7 @@ class AssetTrendJob < ApplicationJob
 
   def perform(user, asset)
     path = Pathname.new(user.save_beancount)
-    query = "SELECT year(date) as year, month(date) as month, sum(cost(position)) as sum, last(cost(balance)) as balance WHERE account ~ \'#{asset}\' GROUP BY year, month ORDER BY year, month"
+    query = "SELECT year(date) as year, month(date) as month, sum(cost(position)) as sum, last(cost(balance)) as balance WHERE account ~ \'#{asset}\' GROUP BY year, month ORDER BY year, month DESC"
     content =  %x(bean-query -q -f csv #{path} \"#{query}\")
 
     trend = user.trends.find_or_create_by(name: asset)
