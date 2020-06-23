@@ -1,24 +1,28 @@
-# README
+# Beancounter
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a Rails application to view and input finantial data in [Beancount](http://furius.ca/beancount/).
 
-Things you may want to cover:
+# Installation
 
-* Ruby version
+### Manual
 
-* System dependencies
+1. Install beancount via package manager such as `pip3 install beancount`
+2. Install Rails and gems by `bundle install`
+3. Edit database configuration and and create database
+4. Create a user through Rails console like this `User.create(username: 'your@email.com', password: '1234', password_confirmation: '1234')
+5. Start Rails application and log in with above username and password
 
-* Configuration
+### Docker
 
-* Database creation
+A Dockefile is included, which is used to deploy this application to DigitalOcean droplet via [Caprover](https://caprover.com/)
 
-* Database initialization
+# Usage
 
-* How to run the test suite
+For experienced beancount user, data can be input as regular plain-text beancount entries. Accounts should be opened by Beancount directive first before any other entries. For convenience, it can automatically create missing account by 'open' directive if entires contain accounts which are not existed yet.
 
-* Services (job queues, cache servers, search engines, etc.)
+For regular user, create the accounts and entries by web interface. Just remember to include currency whenever amount is inputed.
 
-* Deployment instructions
+# License
 
-* ...
+MIT
+

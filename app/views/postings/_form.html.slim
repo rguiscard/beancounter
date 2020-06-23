@@ -11,7 +11,7 @@
     = f.text_field :flag
   .field
     = f.label :account
-    = f.select :account_id, current_user.accounts.order("name ASC").collect { |a| [a.name, a.id] }
+    = f.select :account_id, current_user.accounts.order("name ASC").collect { |a| [a.display_name(both: true), a.id] }
   .field
     = f.label :arguments
     = f.text_area :arguments

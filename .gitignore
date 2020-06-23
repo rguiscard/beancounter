@@ -32,3 +32,6 @@ yarn-debug.log*
 
 # Ignore vim related
 *.swp
+
+.ruby-gemset
+.ruby-version

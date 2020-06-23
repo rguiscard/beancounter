@@ -7,6 +7,7 @@ class Entry < ApplicationRecord
   before_save :extract_tags
   after_destroy :delete_account_journal
   after_touch do |entry| entry.save end # this trigger the creation of bean_cache
+  after_touch :delete_account_journal # trigger account journal updated
 
   belongs_to :user, inverse_of: :entries
   belongs_to :account, inverse_of: :entries, optional: true
