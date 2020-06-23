@@ -34,6 +34,19 @@ If accounts do not exist yet, check the box to create ones automatically. It wil
 
 For regular user, create the accounts and entries by web interface. Just remember to include currency whenever amount is inputed.
 
+Find **NEW ACCOUNT** under **ACCOUNTS** menu.
+![New Account](https://user-images.githubusercontent.com/48430375/85370517-6b027600-b561-11ea-93ac-d465dbd7a9fa.png)
+
+Name account according to Beancount rule. If nickname is available, it will be display in most of places. For account with existing balance, entries with `pad` and `balance` directive will be created along with `open`.
+![Create Account](https://user-images.githubusercontent.com/48430375/85370571-7bb2ec00-b561-11ea-993d-e355c229d8ab.png)
+
+Create entry via **NEW ENTRY** button on top-left corner. It is mainly for common transaction from one account to another. Remember the currency for ammount.
+![Create Entry](https://user-images.githubusercontent.com/48430375/85370616-8cfbf880-b561-11ea-9e15-e867219a584d.png)
+
+Created entry will look like a beancount transaction.
+![Entry](https://user-images.githubusercontent.com/48430375/85370643-984f2400-b561-11ea-8254-21724dbefc93.png)
+
+
 # License
 
 MIT
