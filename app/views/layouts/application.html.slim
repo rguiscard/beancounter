@@ -51,9 +51,9 @@ html
                   i.caret
                 ul.menu
                   li = link_to t('nav.all_accounts'), accounts_path, class: 'item'
-                  - current_user.accounts.assets.order("name").each do |account|
+                  - current_user.accounts.assets.visible.order("name").each do |account|
                     li = link_to account.display_name, account_path(account), class: 'item'
-                  - current_user.accounts.liabilities.order("name").each do |account|
+                  - current_user.accounts.liabilities.visible.order("name").each do |account|
                     li = link_to account.display_name, account_path(account), class: 'item'
                   li = link_to t('action.new_account'), new_account_path, class: 'item'
               li = link_to t('nav.statistics'), statistics_path, class: 'item'

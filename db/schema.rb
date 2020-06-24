@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_20_052031) do
+ActiveRecord::Schema.define(version: 2020_06_24_043511) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 2020_06_20_052031) do
     t.datetime "journal_cached_at"
     t.string "nickname"
     t.boolean "closed", default: false
+    t.jsonb "preferences", default: {"invisible"=>false}, null: false
     t.index ["currencies"], name: "index_accounts_on_currencies", using: :gin
     t.index ["user_id"], name: "index_accounts_on_user_id"
   end
@@ -98,6 +99,7 @@ ActiveRecord::Schema.define(version: 2020_06_20_052031) do
     t.text "beancount"
     t.datetime "beancount_cached_at"
     t.string "locale", default: "en"
+    t.jsonb "preferences", default: {}, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

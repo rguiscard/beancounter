@@ -1,4 +1,6 @@
 class Account < ApplicationRecord
+  store_accessor :preferences, :invisible # invisible from navigation menu
+
   validates :name, uniqueness: true
   validates :name, presence: true
 
@@ -19,6 +21,8 @@ class Account < ApplicationRecord
   scope :expenses, -> { account('expenses') }
   scope :income, -> { account('income') }
   scope :equity, -> { account('equity') }
+
+  scope :visible, -> { where("(preferences ->> 'invisible')::boolean = ?", false) }
 
   # If account name is change, also change associated entries
   def change_account_name

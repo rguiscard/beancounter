@@ -6,7 +6,7 @@ This is a Rails application to view and input financial data in [Beancount](http
 
 ### Manual
 
-1. Install beancount via package manager such as `pip3 install beancount`
+1. Install beancount via package manager such as `pip3 install beancount`. Be sure that beancount and python libraries are in the environmental variables such as $PATH and $PYTHONPATH.
 2. Install Rails and gems by `bundle install`
 3. Edit database configuration in `config/database.yml` and create database by `rake db:setup`
 4. Create a user through Rails console by `User.create(username: 'your@email.com', password: '1234', password_confirmation: '1234')
@@ -37,7 +37,7 @@ For regular user, create the accounts and entries by web interface. Just remembe
 Find **NEW ACCOUNT** under **ACCOUNTS** menu.
 ![New Account](https://user-images.githubusercontent.com/48430375/85370517-6b027600-b561-11ea-93ac-d465dbd7a9fa.png)
 
-Name account according to Beancount rule. If nickname is available, it will be display in most of places. For account with existing balance, entries with `pad` and `balance` directive will be created along with `open`.
+Name account according to Beancount rule. If nickname is available, it will be displayed in most of places. For account with existing balance, entries with `pad` and `balance` directive will be created along with `open`.
 ![Create Account](https://user-images.githubusercontent.com/48430375/85370571-7bb2ec00-b561-11ea-993d-e355c229d8ab.png)
 
 Create entry via **NEW ENTRY** button on top-left corner. It is mainly for common transaction from one account to another. Remember the currency for amount.
