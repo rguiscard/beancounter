@@ -1,6 +1,12 @@
 class Amount
   # FIXME?: need to normalize cost so that space does not affect
 
+  NUMBER_REGEX=%r{
+    ^
+    [+-]?\d+(\.[\d]+)?
+    $
+  }x
+
   AMOUNT_REGEX=%r{
     ^
     (?<number>[0-9\.\-]+)\s+

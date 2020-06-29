@@ -9,7 +9,7 @@ class EntriesControllerTest < ActionDispatch::IntegrationTest
     sign_in @user
   end
 
-  test "create tagas" do
+  test "create tags" do
     content = <<~EOF
       2020-05-16 * "Bank transfer" #2020_winter #2021-spring ^my-business; comment
         Liabilities:NewBank               100 USD
@@ -144,6 +144,17 @@ class EntriesControllerTest < ActionDispatch::IntegrationTest
   test "should get new" do
     get new_entry_url
     assert_response :success
+  end
+
+  test "should create entry with currency appended" do
+    assert_difference('@user.entries.count') do
+      post entries_url, params: { entry: { arguments: "Buy fruit 1543", date: @entry.date, directive: "txn", postings_attributes: {"0" => {account_id: accounts(:one).id, arguments: "123"}, "1" => {account_id: accounts(:one).id}} } }
+    end
+
+    entry = Entry.find_by(arguments: "\"Buy fruit 1543\"")
+    assert_includes entry.postings.pluck(:arguments), "123 USD"
+
+    assert_redirected_to entry_url(@user.entries.last)
   end
 
   test "should create entry" do

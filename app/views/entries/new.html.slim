@@ -13,7 +13,7 @@ p
       - if posting_form.options[:child_index] == 0
         div
           = posting_form.label :arguments
-          = posting_form.text_field :arguments, pattern: "[\-]?[0-9\.]+\s*[A-Z]+.*", title: "Input require number and currency"
+          = posting_form.text_field :arguments, pattern: "[\-]?[0-9\.]+.*", title: "Input require number and currency", placeholder: "#{current_user.currency} will be used if currency is omitted."
 
 = link_to 'Back', entries_path
 br

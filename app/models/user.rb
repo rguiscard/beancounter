@@ -5,6 +5,8 @@ class User < ApplicationRecord
   #        :recoverable, :rememberable, :validatable
   devise :database_authenticatable, :rememberable, :validatable
 
+  store_accessor :preferences, :currency # default currency for new entry
+
   has_many :entries, inverse_of: :user
   has_many :postings, through: :entries
   has_many :accounts, inverse_of: :user

@@ -15,4 +15,8 @@
       = form.select :locale, @locales, include_blank: false
 
     div
+      = form.label :currency
+      = form.text_field :currency
+
+    div
       = form.submit
