@@ -3,11 +3,12 @@ div style="display: flex; align-items: center"
     p
       h3 = t('nav.input')
 
-div.container
+div.container data-controller="codemirror"
   div.grid
     div.width-two-thirds
       = form_with url: import_entries_path do |form|
-        = form.text_area :content, value: @content, style: "height: 50vh;"
+        div
+          = form.text_area :content, value: @content, style: "height: 50vh;", data: {target: 'codemirror.input'}
         label
           = form.check_box :create_account, {checked: true, value: true}
           span.label-body Create account automatically when necessary
@@ -45,5 +46,6 @@ div.container
     div.width-one-third
       h4 Accounts
       - current_user.accounts.order("name ASC").each do |account|
-        = account.name
+        span data-target='codemirror.account'
+          = account.name
         br

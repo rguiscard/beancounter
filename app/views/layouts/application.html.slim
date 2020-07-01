@@ -6,7 +6,12 @@ html
     = csrf_meta_tags
     = csp_meta_tag
 
+    = stylesheet_link_tag '//cdnjs.cloudflare.com/ajax/libs/codemirror/5.55.0/codemirror.min.css', media: 'all'
+    = stylesheet_link_tag '//cdnjs.cloudflare.com/ajax/libs/codemirror/5.55.0/addon/hint/show-hint.min.css', media: 'all'
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag '//cdnjs.cloudflare.com/ajax/libs/codemirror/5.55.0/codemirror.min.js'
+    = javascript_include_tag '//cdnjs.cloudflare.com/ajax/libs/codemirror/5.55.0/addon/hint/show-hint.min.js'
+    = javascript_include_tag '//cdnjs.cloudflare.com/ajax/libs/codemirror/5.55.0/addon/selection/active-line.min.js'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
 
   body
