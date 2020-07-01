@@ -46,6 +46,8 @@ div.container data-controller="codemirror"
     div.width-one-third
       h4 Accounts
       - current_user.accounts.order("name ASC").each do |account|
-        span data-target='codemirror.account'
+        span data-target='codemirror.account' data-display-text=account.display_name(both: true) data-account-name=account.name
           = account.name
+          - if account.nickname.present?
+            = " (#{account.nickname})"
         br

@@ -91,7 +91,7 @@ export default class extends Controller {
         cm.replaceRange(charTomatch, curretCursorPosition);
         //
         let accounts = this_.accountTargets.map(function(x) {
-          return { text: x.innerText, displayText: x.innerText }
+          return { text: x.dataset.accountName, displayText: x.dataset.displayText }
         })
         if (backwardCharacter === charTomatch || forwardCharacter === charTomatch) {
           this_.snippet(cm, accounts, "##")
