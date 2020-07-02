@@ -3,7 +3,7 @@ div style="display: flex; align-items: center"
     p
       h3 = t('nav.entries')
   div style="margin-left: auto;"
-    = link_to t('nav.text'), beancount_path(params.permit(q: [:date, :arguments, :directive, :account])), class: 'button button-sm'
+    = link_to t('nav.text'), beancount_path(params.permit(q: [:date, :arguments, :directive, :account, :tag])), class: 'button button-sm'
 
 - if @search_params.present?
   p
