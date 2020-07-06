@@ -23,10 +23,10 @@ class EntriesController < ApplicationController
       begin
         body = Net::HTTP.get(URI(uri)).force_encoding('UTF-8')
         if body.present?
-          CSV.parse(body, headers: :first_row).each do |row|
+          CSV.parse(body, headers: :first_row, converters: ->(f) { f.strip }).each do |row|
             keys = row.to_h.keys
             date = DateTime.parse(row['date'])
-            narration = row['narration'].try(:strip)
+            narration = row['narration']
             x << "#{date.strftime('%Y-%m-%d')} txn \"#{narration}\""
             (0..9).each do |num|
               account = "account #{num}"
@@ -34,7 +34,7 @@ class EntriesController < ApplicationController
               if keys.include?(account)
                 posting = "    #{row[account].try(:chomp)}"
                 if keys.include?(amount)
-                  posting = posting + "      #{row[amount].try(:strip)}"
+                  posting = posting + "      #{row[amount]}"
                 end
                 x << posting
               end

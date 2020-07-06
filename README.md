@@ -1,6 +1,6 @@
 # Beancounter
 
-This is a Rails application to view and input financial data in [Beancount](http://furius.ca/beancount/).
+This is a Rails application to view and input financial data in [Beancount](http://furius.ca/beancount/). The main purpose is to facilitate writing and querying Beancount entries instead of replacing it.
 
 # Installation
 
@@ -13,7 +13,7 @@ This is a Rails application to view and input financial data in [Beancount](http
 5. Start Rails application and log in with above username and password
 
 ````
-    RAILS_ENV=production bundle exec rails start
+    RAILS_ENV=production bundle exec rails server
 ````
 
 ### Docker

@@ -6,8 +6,8 @@ class AccountBalanceJob < ApplicationJob
   def perform(user)
     path = Pathname.new(user.save_beancount)
     content =  %x(bean-query -q -f csv #{path} 'balances where account ~ "Assets|Liabilities"')
-    CSV.parse(content, {headers: :first_row}) do |row|
-      if account = user.accounts.find_by(name: row["account"].strip)
+    CSV.parse(content, headers: :first_row, converters: ->(f) { f.strip }) do |row|
+      if account = user.accounts.find_by(name: row["account"])
         if row["sum_position"].blank?
           account.balances.destroy_all
         else
@@ -38,7 +38,7 @@ class AccountBalanceJob < ApplicationJob
           account.balances.where(currency: currencies).destroy_all
         end
       else
-        puts "Cannot find account: #{row["account"].strip}"
+        puts "Cannot find account: #{row["account"]}"
         puts row
       end
     end

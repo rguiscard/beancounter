@@ -34,12 +34,12 @@ class PagesController < ApplicationController
 
     @records = []
 
-    CSV.parse(@content, {headers: :first_row}).each do |row|
+    CSV.parse(@content, headers: :first_row, converters: ->(f) { f.strip }).each do |row|
       @records << {date: DateTime.new(row['year'].to_i, row['month'].to_i, 1), sum: row['sum'], balance: row['balance']}
     end
 
     # Fill up each month
-    # rows = CSV.parse(@content, {headers: :first_row})
+    # rows = CSV.parse(@content, {headers: :first_row, converters: ->(f) { f.strip}})
     # first = rows.first
     # current = DateTime.new(first['year'].to_i, first['month'].to_i, 1)
     #
@@ -94,8 +94,8 @@ class PagesController < ApplicationController
       @current_year = current_user.expenses.find_by(year: year, month: nil).try(:details)
     end
 
-    @current_month_data = CSV.parse(@current_month, headers: :first_row).to_a[1..-1].to_h
-    @current_year_data = CSV.parse(@current_year, headers: :first_row).to_a[1..-1].to_h
+    @current_month_data = CSV.parse(@current_month, headers: :first_row, converters: ->(f) { f.strip }).to_a[1..-1].to_h
+    @current_year_data = CSV.parse(@current_year, headers: :first_row, converters: ->(f) { f.strip }).to_a[1..-1].to_h
   end
 
   def guide

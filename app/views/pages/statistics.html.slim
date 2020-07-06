@@ -19,7 +19,7 @@ table.tight.mobile
   tbody
     - @current_year_data.each do |k, v|
       tr
-        - account = current_user.accounts.find_by(name: k.strip)
+        - account = current_user.accounts.find_by(name: k)
         td = link_to account.display_name, account, title: account.name
         td class="sm:hidden" style='width: 20px;'
         td.text-right data-label=@date.strftime("%Y-%m")

@@ -17,12 +17,12 @@ table.tight.mobile
         th.text-right = Entry.human_attribute_name(:balance)
       th
   tbody
-    - CSV.parse(@account.journal, headers: :first_row) do |row|
+    - CSV.parse(@account.journal, headers: :first_row, converters: ->(f) { f.strip }) do |row|
       tr
         td class="sm:hidden" = link_to row['date'], entries_path(q: {date: row['date']}, redirect: true)
         td
           span.right class='sm:visible' = link_to row['date'], entries_path(q: {date: row['date']}, redirect: true)
-          = link_to truncate(row['narration'].strip), entries_path(q: {arguments: row['narration'].strip}, redirect: true), title: row['narration'].strip
+          = link_to truncate(row['narration']), entries_path(q: {arguments: row['narration']}, redirect: true), title: row['narration']
 
         - if @show_balance
           td.text-right data-label=Entry.human_attribute_name(:position) = Amount.new(row['position']).to_s(:long)
