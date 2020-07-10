@@ -1,6 +1,6 @@
 # Beancounter
 
-This is a Rails application to view and input financial data in [Beancount](http://furius.ca/beancount/). The main purpose is to facilitate writing and querying Beancount entries instead of replacing it.
+This is a Rails application to view and input financial data in [Beancount](http://furius.ca/beancount/). The main purpose is to facilitate writing and querying Beancount entries instead of replacing it. Therefore, it will not automatically fix any error when adding entries. Check syntax validation if it does not output proper results.
 
 # Installation
 
@@ -9,12 +9,23 @@ This is a Rails application to view and input financial data in [Beancount](http
 1. Install beancount via package manager such as `pip3 install beancount`. Be sure that beancount and python libraries are in the environmental variables such as $PATH and $PYTHONPATH.
 2. Install Rails and gems by `bundle install`
 3. Edit database configuration in `config/database.yml` and create database by `rake db:setup`
-4. Create a user through Rails console by `User.create(username: 'your@email.com', password: '1234', password_confirmation: '1234')
-5. Start Rails application and log in with above username and password
+4. Create a user through Rails console by `User.create(email: 'your@email.com', password: '1234', password_confirmation: '1234')`
+5. Start Rails application and log in with above email and password
 
 ````
     RAILS_ENV=production bundle exec rails server
 ````
+
+### Heroku
+
+1. Create app
+2. Add `RAILS_MASTER_KEY` variable
+3. Add PostgreSQL and Redis as add-ons
+4. `heroku git:remote -a app_name`
+5. `git push heroku master`
+6. Add python buildpack by `heroku buildpacks:add heroku/python`
+7. Migrade database by `heroku run rake db:migrate`
+8. Create user through Rails console (`heroku run rails c`) by `User.create(email: 'your@email.com', password: '1234', password_confirmation: '1234')`
 
 ### Docker
 
@@ -47,6 +58,8 @@ Created entry will look like a beancount transaction.
 ![Entry](https://user-images.githubusercontent.com/48430375/85370643-984f2400-b561-11ea-8254-21724dbefc93.png)
 
 For more complicated transaction and entry, use **INPUT** for text input.
+
+Syntax validation can be found in **validation** action of **BEANCOUNT** page at the bottom right page. 
 
 # License
 
