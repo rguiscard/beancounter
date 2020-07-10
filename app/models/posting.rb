@@ -1,6 +1,8 @@
 class Posting < ApplicationRecord
+  validates :arguments, format: { with: Amount::AMOUNT_REGEX }, if: -> { arguments.present? }
+
   before_save :assign_bean_cache
-  before_save :append_currency
+  before_validation :append_currency
 
   belongs_to :entry, inverse_of: :postings, touch: true
   belongs_to :account, inverse_of: :postings

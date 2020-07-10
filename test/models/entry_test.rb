@@ -13,7 +13,7 @@ class EntryTest < ActiveSupport::TestCase
     assert entry.bean_cache.blank?
 
     # create posting cache
-    entry.postings.create(account: accounts(:one), arguments: "new posting")
+    entry.postings.create(account: accounts(:one), arguments: "111 USD")
     refute entry.bean_cache.blank?
   end
 

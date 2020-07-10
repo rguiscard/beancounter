@@ -2,6 +2,7 @@ class Entry < ApplicationRecord
   enum directive: [:txn, :open, :close, :commodity, :balance, :pad, :note, :document, :price, :event, :query, :custom, :asterisk, :exclamation]
 
   validates :arguments, presence: true
+  validates_associated :postings
 
   before_save :assign_bean_cache
   before_save :extract_tags

@@ -3,13 +3,13 @@
 one:
   flag:
   account: one
-  arguments: MyTex1
+  arguments: "123 USD"
   comment: MyText
   entry: one
 
 two:
   flag:
   account: one
-  arguments: MyTex2
+  arguments: "456 USD"
   comment: MyText
   entry: one

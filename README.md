@@ -26,6 +26,7 @@ This is a Rails application to view and input financial data in [Beancount](http
 6. Add python buildpack by `heroku buildpacks:add heroku/python`
 7. Migrade database by `heroku run rake db:migrate`
 8. Create user through Rails console (`heroku run rails c`) by `User.create(email: 'your@email.com', password: '1234', password_confirmation: '1234')`
+9. You may need to `git push heroku master` again to trigger building.
 
 ### Docker
 
