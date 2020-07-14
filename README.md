@@ -4,6 +4,15 @@ This is a Rails application to view and input financial data in [Beancount](http
 
 # Installation
 
+### Change secret
+
+Please change [Rails credentials](https://edgeguides.rubyonrails.org/security.html#custom-credentials) when deploying your own instance. The current plain credentials are:
+
+````
+# Used as the base secret for all MessageVerifiers in Rails, including the one protecting cookies.
+secret_key_base: # paste results from 'bin/rails secret' here.
+````
+
 ### Manual
 
 1. Install beancount via package manager such as `pip3 install beancount`. Be sure that beancount and python libraries are in the environmental variables such as $PATH and $PYTHONPATH.

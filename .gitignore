@@ -35,3 +35,6 @@ yarn-debug.log*
 
 .ruby-gemset
 .ruby-version
+
+/config/credentials/*
+/config/credentials/production.key
