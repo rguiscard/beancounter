@@ -1,0 +1,16 @@
+tr
+  td class="sm:hidden" = link_to account.name, account
+  td class="sm:hidden" style='width: 10%;'
+  td class="sm:hidden"
+    - if account.nickname.present?
+      = link_to account.nickname, account
+  td class="sm:visible" = link_to account.display_name, account
+  td class="sm:hidden" style='width: 10%;'
+  - if account.balances.empty?
+    td class="sm:hidden"
+  - else
+    td.text-right
+      - account.balances.each do |balance|
+        = Amount.new("#{balance.amount} #{balance.currency}").to_s(:long)
+        br
+  td class="sm:hidden"
