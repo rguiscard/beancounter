@@ -73,29 +73,11 @@ class PagesController < ApplicationController
       @date = DateTime.current
     end
 
-    month = @date.month
-    year = @date.year
+    @previous_month = @date.beginning_of_month-1.month
 
-    if current_user.entries.empty?
-      @current_month = ""
-      @current_year = ""
-    else
-      month_expense = current_user.expenses.find_by(year: year, month: month)
-      if month_expense.blank? || (month_expense.updated_at < current_user.entries.maximum(:updated_at))
-        ExpensesJob.perform_now(current_user, year, month)
-      end
-
-      year_expense = current_user.expenses.find_by(year: year, month: nil)
-      if year_expense.blank? || (year_expense.updated_at < current_user.entries.maximum(:updated_at))
-        ExpensesJob.perform_now(current_user, year, nil)
-      end
-
-      @current_month = current_user.expenses.find_by(year: year, month: month).try(:details)
-      @current_year = current_user.expenses.find_by(year: year, month: nil).try(:details)
-    end
-
-    @current_month_data = CSV.parse(@current_month, headers: :first_row, converters: ->(f) { f.strip }).to_a[1..-1].to_h
-    @current_year_data = CSV.parse(@current_year, headers: :first_row, converters: ->(f) { f.strip }).to_a[1..-1].to_h
+    @current_month_data = periodic_data(year: @date.year, month: @date.month)
+    @previous_month_data = periodic_data(year: @previous_month.year, month: @previous_month.month)
+    @current_year_data = periodic_data(year: @date.year, month: nil)
   end
 
   def guide
@@ -103,4 +85,21 @@ class PagesController < ApplicationController
 
   def welcome
   end
+
+  private
+
+    def periodic_data(year:, month: nil)
+      data = []
+      if current_user.entries.empty?
+      else
+        expense = current_user.expenses.find_by(year: year, month: month)
+        if expense.blank? || (expense.updated_at < current_user.entries.maximum(:updated_at))
+          ExpensesJob.perform_now(current_user, year, month)
+        end
+        if (expense = current_user.expenses.find_by(year: year, month: month).try(:details)) && expense.present?
+          data = CSV.parse(expense, headers: :first_row, converters: ->(f) { f.strip }).to_a[1..-1].to_h
+        end
+      end
+      data
+    end
 end

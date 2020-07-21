@@ -11,16 +11,36 @@ p
 table.tight.mobile
   thead
     tr
-      th = Account.model_name.human
+      th class="sm:hidden" = Account.model_name.human
+      th class="sm:hidden"
+      th class="sm:hidden"
+      th class="sm:visible"
+      th class="sm:hidden"
+      th.text-right class="sm:hidden" = @previous_month.strftime("%Y-%m")
+      th class="sm:hidden"
+      th.text-right
+        strong = @date.strftime("%Y-%m")
       th
-      th.text-right = @date.strftime("%Y-%m")
-      th
-      th.text-right = @date.strftime("Year %Y")
+      th.text-right
+        strong = @date.strftime("Year %Y")
   tbody
     - @current_year_data.each do |k, v|
       tr
         - account = current_user.accounts.find_by(name: k)
-        td = link_to account.display_name, account, title: account.name
+
+
+        td class="sm:hidden" = link_to account.name, account
+        td class="sm:hidden" style='width: 10%;'
+        td class="sm:hidden"
+          - if account.nickname.present?
+            = link_to account.nickname, account
+        td class="sm:visible" = link_to account.display_name, account
+        td class="sm:hidden" style='width: 10%;'
+        td.text-right class="sm:hidden" data-label=@previous_month.strftime("%Y-%m")
+          - if @previous_month_data[k].present?
+            - @previous_month_data[k].split(',') do |sum|
+              = Amount.new(sum).to_s(:long)
+              br
         td class="sm:hidden" style='width: 20px;'
         td.text-right data-label=@date.strftime("%Y-%m")
           - if @current_month_data[k].present?
