@@ -25,7 +25,7 @@ class Entry < ApplicationRecord
 
   # Entries having postings associated with account.
   # Do not confuse with entries which directly associate with account, such as open, pad and balance directive
-  scope :with_account, -> (account) { left_joins(postings: :account).where("postings.account_id = ? OR entries.account_id = ?", account, account) }
+  scope :with_account, -> (account) { left_joins(postings: :account).where("postings.account_id = ? OR entries.account_id = ?", account, account).distinct }
 
   def transaction?
     self.txn? || self.asterisk? || self.exclamation?
